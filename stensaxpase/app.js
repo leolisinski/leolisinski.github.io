@@ -24,8 +24,8 @@ function win(userChoice,computerChoice) {
     userScore++;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
-    const smallUserWord = "spelare".fontsize(2).sub();
-    const smallCompWord = "dator".fontsize(2).sub();
+    const smallUserWord = "spelare".fontsize(2).sub().fontcolor("#E2584D");
+    const smallCompWord = "dator".fontsize(2).sub().fontcolor("#E2584D");
     result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} vinner över ${convertToWord(computerChoice)}${smallCompWord}. Du vann!`;
     
 }
@@ -34,8 +34,8 @@ function lose(userChoice,computerChoice) {
     computerScore++;
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
-    const smallUserWord = "spelare".fontsize(2).sub();
-    const smallCompWord = "dator".fontsize(2).sub();
+    const smallUserWord = "spelare".fontsize(2).sub().fontcolor("#E2584D");
+    const smallCompWord = "dator".fontsize(2).sub().fontcolor("#E2584D");
     result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} förlorar över ${convertToWord(computerChoice)}${smallCompWord}. Du förlorade.`;
 }
 
