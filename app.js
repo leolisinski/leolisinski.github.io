@@ -40,6 +40,10 @@ function lose(userChoice,computerChoice) {
 }
 
 function draw(userChoice) {
+    computerScore++;
+    userScore++;
+    userScore_span.innerHTML = userScore;
+    computerScore_span.innerHTML = computerScore;
     result_p.innerHTML = `Både du och datorn valde ${convertToWord(userChoice)}. Det blev oavgjort`;
 }
 
