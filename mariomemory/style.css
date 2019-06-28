@@ -125,7 +125,7 @@ body {
         font-size: 0;
     }
     to {
-        font-size: 10em;
+        font-size: 8em;
         background-color: rgba(0,0,0,.8);
     }
 }
@@ -184,4 +184,20 @@ body {
         flex-direction: column;
         align-items: center;
     }
+}
+
+footer {
+    font-size: 15px;
+    color: black;
+    text-align: center;
+    font-weight: normal;
+    font-family: Asap, sans-serif;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: blue;
 }

@@ -23,7 +23,7 @@ class AudioController {
     }
     victory() {
         this.stopMusic();
-        this.victory.play();
+        this.victorySound.play();
     }
     gameOver() {
         this.stopMusic();
@@ -82,10 +82,11 @@ class MixOrMatch {
         if(this.getCardType(card) === this.getCardType(this.cardToCheck))
             this.cardMatch(card, this.cardToCheck);
         else
-            this.CardMisMatch(card, this.cardToCheck);
+            this.cardMisMatch(card, this.cardToCheck);   
+        this.cardToCheck = null;
     }
 
-    cardMatc(card1, card2) {
+    cardMatch(card1, card2) {
         this.matchedCards.push(card1);
         this.matchedCards.push(card2);
         card1.classList.add('matched');
@@ -93,6 +94,15 @@ class MixOrMatch {
         this.audioController.match();
         if(this.matchedCards.length === this.cardsArray.length)
             this.victory();
+    }
+
+    cardMisMatch(card1, card2) {
+        this.busy = true;
+        setTimeout(() => {
+            card1.classList.remove('visible');
+            card2.classList.remove('visible');
+            this.busy = false;
+        }, 1000);
     }
 
     getCardType(card) {
@@ -118,6 +128,9 @@ class MixOrMatch {
         clearInterval(this.countDown);
         this.audioController.victory();
         document.getElementById('victory-text').classList.add('visible');
+        setTimeout(() => {
+            this.hideCards();
+        },1600);
     }
 
     shuffleCards() {
@@ -131,15 +144,14 @@ class MixOrMatch {
 
 
     canFlipCard(card) {
-        return true
-        /* return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck; */
+        return !this.busy && !this.matchedCards.includes(card) && card !== this.cardToCheck;
     }
 }
 
 function ready () {
     let overlays = Array.from(document.getElementsByClassName('overlay-text'));
     let cards = Array.from(document.getElementsByClassName('card'));
-    let game = new MixOrMatch(100, cards);
+    let game = new MixOrMatch(60, cards);
 
     overlays.forEach(overlay => {
         overlay.addEventListener('click', () => {
