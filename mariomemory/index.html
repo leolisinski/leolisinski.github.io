@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mario Memory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <h1 class="page-title">Mario Memory</h1>
+    <div class="overlay-text">
+        Click to start
+    </div>
+    <div id="game-over-text" class="overlay-text">
+        GAME OVER
+        <span class="overlay-text-small">
+            Click to Restart
+        </span>
+    </div>
+    <div id="victory-text" class="overlay-text">
+        VICTORY
+        <span class="overlay-text-small">
+            Click to Restart
+        </span>
+    </div>
+
+    <div class="game-container">
+        <div class="game-info-container">
+            <div class="game-info">
+                Time<span id="time-remaining">&nbsp;100</span>
+            </div>
+            <div class="game-info">
+                Flips <span id="flips">&nbsp;0</span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/flower.png">
+            </div>
+        </div>
+        <div class="card">
+                <div class="card-back card-face">
+                    <img class="card-logo"
+                    src="assets/images/logo.png">
+                </div>
+                <div class="card-front card-face">
+                    <img class="card-value"
+                    src="assets/images/flower.png">
+                </div>
+            </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/flower.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/flower.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/mushroom.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/mushroom.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/mushroom.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/mushroom.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/star.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/star.png">
+            </div>
+        </div>
+        <div class="card">
+                <div class="card-back card-face">
+                    <img class="card-logo"
+                    src="assets/images/logo.png">
+                </div>
+                <div class="card-front card-face">
+                    <img class="card-value"
+                    src="assets/images/star.png">
+                </div>
+            </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/star.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/10coins.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/10coins.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/20coins.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/20coins.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/1up.png">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-back card-face">
+                <img class="card-logo"
+                src="assets/images/logo.png">
+            </div>
+            <div class="card-front card-face">
+                <img class="card-value"
+                src="assets/images/1up.png">
+            </div>
+        </div>      
+
+    </div>
+
+
+</body>
+</html>
