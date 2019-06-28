@@ -32,7 +32,8 @@ body {
     font-family: SuperPlumberBrothers, serif;
     font-weight: normal;
     text-align: center;
-    font-size: 7em;
+    font-size: 10em;
+    margin-top: 60px;
 }
 
 .game-info-container {
@@ -117,6 +118,7 @@ body {
     display: flex;
     flex-direction: column;
     animation: overlay-grow 500ms forwards;
+    text-align: center;
 }
 
 @keyframes overlay-grow {
