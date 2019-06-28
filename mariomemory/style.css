@@ -74,7 +74,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     border-width: 3px;
     border-style: solid;
     border-radius: 10px;
