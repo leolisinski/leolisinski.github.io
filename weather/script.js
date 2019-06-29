@@ -3,13 +3,22 @@ window.addEventListener('load', () => {
    let lat;
    
    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(position =>{
+        navigator.geolocation.getCurrentPosition(position => {
             long = position.coords.longitude;
             lat = position.coords.latitude;
-        })
+
+            const api = `https://api.darksky.net/forecast/41d2c19d779d37c30f22a809a769662c/${lat},${long}`;
+            
+            fetch(api)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+            });
+        });
+
+
    }
    
-   else{
-       h1.textContent = "Hey, this is not working. Please allow browser to show location."
-   }
 });
