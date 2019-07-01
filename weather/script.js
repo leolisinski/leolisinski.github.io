@@ -7,15 +7,9 @@ window.addEventListener('load', () => {
             long = position.coords.longitude;
             lat = position.coords.latitude;
 
-            const api = `https://api.darksky.net/forecast/41d2c19d779d37c30f22a809a769662c/${lat},${long}`;
+            const api = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${long}/lat/${lat}/data.json`
             
             fetch(api)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-            });
         });
 
 
