@@ -15,7 +15,6 @@ body {
     color: white;
 }
 
-.location, 
 .temperature {
     height: 30vh;
     width: 50%;
@@ -42,3 +41,37 @@ body {
 .degree-section h2 {
     font-size: 40px;
 }
+
+.icon {
+    display: flex;
+    position: fixed;
+    top: 20px;
+}
+
+#icon1 {visibility: hidden;}
+#icon2 {visibility: hidden;}
+#icon3 {visibility: hidden;}
+#icon4 {visibility: hidden;}
+#icon5 {visibility: hidden;}
+#icon6 {visibility: hidden;}
+#icon7 {visibility: hidden;}
+#icon8 {visibility: hidden;}
+#icon9 {visibility: hidden;}
+#icon10 {visibility: hidden;}
+#icon11 {visibility: hidden;}
+#icon12 {visibility: hidden;}
+#icon13 {visibility: hidden;}
+#icon14 {visibility: hidden;}
+#icon15 {visibility: hidden;}
+#icon16 {visibility: hidden;}
+#icon17 {visibility: hidden;}
+#icon18 {visibility: hidden;}
+#icon19 {visibility: hidden;}
+#icon20 {visibility: hidden;}
+#icon21 {visibility: hidden;}
+#icon22 {visibility: hidden;}
+#icon23 {visibility: hidden;}
+#icon24 {visibility: hidden;}
+#icon25 {visibility: hidden;}
+#icon26 {visibility: hidden;}
+#icon27 {visibility: hidden;}
