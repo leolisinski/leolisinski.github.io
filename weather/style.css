@@ -15,37 +15,19 @@ body {
     color: white;
 }
 
-.temperature {
-    height: 30vh;
-    width: 50%;
+.heading {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.temperature {
-    flex-direction: column;
-}
-
-.degree-section {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.degree-section span {
-    margin: 10px;
+    position: fixed;
+    top: 10px;
     font-size: 30px;
-}
-
-.degree-section h2 {
-    font-size: 40px;
 }
 
 .icon {
     display: flex;
-    position: fixed;
-    top: 20px;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 40px;
 }
 
 #icon1 {visibility: hidden;}
@@ -75,3 +57,33 @@ body {
 #icon25 {visibility: hidden;}
 #icon26 {visibility: hidden;}
 #icon27 {visibility: hidden;}
+
+.temperature {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    top: 220px;
+}
+
+.degree-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.degree-section span {
+    margin: 10px;
+    font-size: 30px;
+}
+
+.degree-section h2 {
+    font-size: 40px;
+}
+
+.footer {
+    display:flex;
+    position:absolute;
+    top: 400px;
+    font-style: italic;
+}
