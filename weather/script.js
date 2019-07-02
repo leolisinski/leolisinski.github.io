@@ -8,8 +8,8 @@ window.addEventListener('load', () => {
 
    if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            long = Math.round(position.coords.longitude);
-            lat = Math.round(position.coords.latitude);
+            long = position.coords.longitude.toPrecision(7);
+            lat = position.coords.latitude.toPrecision(7);
 
             const api = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${long}/lat/${lat}/data.json`
             
