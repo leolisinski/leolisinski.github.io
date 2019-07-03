@@ -30,7 +30,7 @@ window.addEventListener('load', () => {
                 })
                 .then(data => {
                     const CurrentWeather = data.timeSeries[0].parameters;
-                    const CurrentTemperatureCelcius = CurrentWeather[11].values[0];
+                    const CurrentTemperatureCelcius = Math.round(CurrentWeather[11].values[0]);
                     const WeatherSituationCode = CurrentWeather[18].values[0];
                     let WeatherSituation = null;
                     let Icon = null;
