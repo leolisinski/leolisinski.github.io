@@ -8,9 +8,20 @@ window.addEventListener('load', () => {
 
    if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
-            long = position.coords.longitude.toPrecision(7);
-            lat = position.coords.latitude.toPrecision(7);
+            if(long < 10) {
+                long = position.coords.longitude.toPrecision(7);
+            }
+            else {
+                long = position.coords.longitude.toPrecision(8);
+            }
+            if(lat < 10) {
+                lat = position.coords.latitude.toPrecision(7);
+            }
+            else {
+                lat = position.coords.latitude.toPrecision(8);
+            }
 
+            console.log(long,lat);
             const api = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${long}/lat/${lat}/data.json`
             
             fetch(api)
