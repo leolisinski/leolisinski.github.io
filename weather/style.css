@@ -88,10 +88,10 @@ body {
     font-style: italic;
 }
 
-.a {
+a {
     color: white;
 }
 
-.a:hover {
+a:hover {
     color: blue;
 }
