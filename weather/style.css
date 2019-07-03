@@ -87,3 +87,11 @@ body {
     top: 400px;
     font-style: italic;
 }
+
+.a {
+    color: white;
+}
+
+.a:hover {
+    color: blue;
+}
