@@ -1,5 +1,6 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
+let pieceNumber = 0;
 
 context.scale(20,20);
 
@@ -22,6 +23,10 @@ function arenaSweep() {
 
 context.fillStyle = '#000';
 context.fillRect(0, 0, canvas.clientWidth, canvas.height);
+
+function checkHighScore(score) {
+    
+}
 
 function collide(arena, player) {
     const m = player.matrix;
@@ -162,15 +167,24 @@ function playerMove(dir) {
 }
 
 function playerReset() {
-    const pieces = 'ILJOTSZ'
-    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    pieceNumber += 1;
+    const pieces = 'ILJOTSZ';
+    let piece = pieces[pieces.length * Math.random() | 0];
+    if (pieceNumber !== 1) {
+        piece = nextPiece;
+    }
+    player.matrix = createPiece(piece);
     player.pos.y = 0;
-    player.pos.x = (arena[0].length / 2 | 0) -                 (player.matrix[0].length / 2 | 0);
+    player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
     if (collide(arena,player)) {
         arena.forEach(row => row.fill(0));
+        checkHighScore(player.score);
         player.score = 0;
         updateScore;
     }
+    nextPiece = pieces[pieces.length * Math.random() | 0];
+    document.getElementById(`${piece}`).classList.add('hidden');
+    document.getElementById(`${nextPiece}`).classList.remove('hidden');
 }
 
 function playerRotate(dir) {

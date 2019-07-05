@@ -9,17 +9,74 @@
     font-family: sans-serif;
     font-size: 2em;
     text-align: center;
+    box-sizing: border-box;
+    }
+
+    .game {
+        position: relative;
+        width: 240px;
+        height: 400px;
+        top: 50px;
+        left: 0;
+        right: 0;
+        margin: auto;
     }
 
     canvas {
     border: solid .2em #fff;
-    height: 90vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
     }
+
+    .info {
+        position: absolute;
+        top: -25px;
+        font-size: 15px;
+    }
+
+    #scoreText {
+        left: 0;
+    }
+
+    #score {
+        left: 50px;
+    }
+
+    #nextText {
+        left: 73%;
+    }
+
+    .nextImages {
+        left: 92%;
+        height: 20px;
+        width: auto;
+        top: -28px;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
     </style>
 </head>
 <body>
-    <div id="score"></div>
-    <canvas id="tetris" width="240" height="400"></canvas>
+    <div class="game">
+    <canvas id="tetris" width="240" height="400">
+    </canvas>
+    <span class="info" id="scoreText">Score:</span>
+    <span class="info" id="score"></span>
+    <span class="info" id="nextText">Next:</span>
+    <img class="info nextImages hidden" id="I" src="images/I.png">
+    <img class="info nextImages hidden" id="L" src="images/L.png">
+    <img class="info nextImages hidden" id="J" src="images/J.png">
+    <img class="info nextImages hidden" id="O" src="images/O.png">
+    <img class="info nextImages hidden" id="T" src="images/T.png">
+    <img class="info nextImages hidden" id="S" src="images/S.png">
+    <img class="info nextImages hidden" id="Z" src="images/Z.png">
+    </div>
     <script src="tetris.js"></script>   
 </body>
 </html>
