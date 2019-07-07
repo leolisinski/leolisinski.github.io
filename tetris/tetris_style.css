@@ -1,0 +1,68 @@
+container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr 1fr 1fr;
+    grid-template-areas: 
+        'scoreText score middle nextText next'
+        'game'
+        'footer 1'
+        'footer 2';
+}
+
+
+    body {
+    background: #202028;
+    color: #FFF;
+    font-family: sans-serif;
+    text-align: center;
+    box-sizing: border-box;
+    }
+
+    .game {
+        position: relative;
+        width: 288px;
+        height: 480px;
+        top: 50px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    canvas {
+    border: solid .2em #fff;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin:auto;
+    }
+
+    .info {
+        position: absolute;
+        top: -6%;
+        font-size: 0.9em;
+    }
+
+    #scoreText {
+        left: 0;
+    }
+
+    #score {
+        left: 20%;
+    }
+
+    #nextText {
+        left: 73%;
+    }
+
+    .nextImages {
+        left: 90%;
+        height: 20px;
+        width: auto;
+        top: -7%;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
