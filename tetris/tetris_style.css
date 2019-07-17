@@ -1,14 +1,3 @@
-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 4fr 1fr 1fr;
-    grid-template-areas: 
-        'scoreText score middle nextText next'
-        'game'
-        'footer 1'
-        'footer 2';
-}
-
-
     body {
     background: #202028;
     color: #FFF;

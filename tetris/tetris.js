@@ -189,6 +189,8 @@ function update(time = 0) {
     const deltaTime = time - lastTime;
     lastTime = time;
     dropCounter += deltaTime;
+    if (pieceNumber === 20) {dropInterval = 800};
+    if (pieceNumber === 40) {dropInterval = 600}; 
     if (dropCounter > dropInterval) {
         player.drop();
     }

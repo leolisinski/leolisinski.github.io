@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tetris</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tetris_style_grid.css">
+</head>
+<body>
+
+    <div class="container">
+    <div class="game">    
+    <canvas id="tetris" width="240" height="400">
+    </canvas>
+    </div>
+    <div class="info scoreText">Score:</div>
+    <div class="info score" id="score"></div>
+    <div class="info nextText">Next:</div>
+    <div class="nextImages">
+        <img class="info hidden" id="I" src="images/I.png">
+        <img class="info hidden" id="L" src="images/L.png">
+        <img class="info hidden" id="J" src="images/J.png">
+        <img class="info hidden" id="O" src="images/O.png">
+        <img class="info hidden" id="T" src="images/T.png">
+        <img class="info hidden" id="S" src="images/S.png">
+        <img class="info hidden" id="Z" src="images/Z.png">
+    </div>   
+    <div class="footer1">
+        Made using <a href="https://youtu.be/H2aW5V46khA">this</a> great turorial on YouTube. 
+    </div>
+    <div class="footer2">    
+        Background music: Sirkoto51. Licenced under CC BY 3.0<a href="https://freesound.org/people/Sirkoto51/sounds/443128/">Link</a>
+    </div>
+</div>
+    <script src="audio.js"></script>
+    <script src="player.js"></script> 
+    <script src="tetris.js"></script>
+</body>
+</html>

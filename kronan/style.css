@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-2deg);
+    }
+    75% {
+        transform: rotate(2deg);
+    }
+}
+
+.selected {
+    animation: dance 1s linear infinite 500ms; 
+}
+
+.container {
+    display: grid;
+    justify-content: center;
+    grid-template-areas: 
+        ". . c14 . ."
+        "c4 c5 . c9 c10"
+        "c3 c6 c7 c8 c11"
+        "c2 c1 . c13 c12";
+    grid-template-rows:
+        140px 140px 140px 140px;
+    grid-template-columns: 100px 100px 100px 100px 100px;
+}
+
+img {
+    width: 85px;
+    height: auto;
+    border: solid 1px black;
+    border-radius: 5%;
+}
+
+img:hover {
+    border: solid 2px black;
+}
+
+.kort {
+    display: flex; 
+    position: relative; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.c1 {grid-area: c1;}
+.c2 {grid-area: c2;}
+.c3 {grid-area: c3;}
+.c4 {grid-area: c4;}
+.c5 {grid-area: c5;}
+.c6 {grid-area: c6;}
+.c7 {grid-area: c7;}
+.c8 {grid-area: c8;}
+.c9 {grid-area: c9;}
+.c10 {grid-area: c10;}
+.c11 {grid-area: c11;}
+.c12 {grid-area: c12;}
+.c13 {grid-area: c13;}
+.c14 {grid-area: c14;}
+
+.button {
+    width: 100px;
+    text-align: center;
+    font-family: sans-serif;
+    border: solid 1px black;
+    margin: 20px auto;
+    top: 20px;
+    background: lightgreen;
+}
+
+.button:hover {
+    background: lightblue;
+    cursor: pointer;
+}
