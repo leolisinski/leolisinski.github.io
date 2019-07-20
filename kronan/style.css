@@ -30,6 +30,7 @@
     grid-template-rows:
         140px 140px 140px 140px;
     grid-template-columns: 100px 100px 100px 100px 100px;
+    row-gap: 15px;
 }
 
 img {
@@ -64,6 +65,30 @@ img:hover {
 .c12 {grid-area: c12;}
 .c13 {grid-area: c13;}
 .c14 {grid-area: c14;}
+
+.c1_main {
+    position: relative;
+    z-index: 3;
+}
+
+.c1_1 {
+    position: absolute;
+    z-index: 2;
+    top: -2px;
+}
+
+.c1_2 {
+    position: absolute;
+    z-index: 1;
+    top: -4px;
+}
+
+.c1_3 {
+    position: absolute;
+    z-index: 0;
+    top: -6px;
+}
+
 
 .button {
     width: 100px;
