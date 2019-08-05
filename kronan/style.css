@@ -31,6 +31,8 @@
         140px 140px 140px 140px;
     grid-template-columns: 100px 100px 100px 100px 100px;
     row-gap: 15px;
+    position: relative;
+    top: 10px;
 }
 
 img {
