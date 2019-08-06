@@ -293,8 +293,10 @@ img {
 }
 
 .credits {
+    font-family: sans-serif;
     font-size: 10px;
     text-align: center;
+    margin-top: 50px;
 }
 
 #button_restart:hover {
