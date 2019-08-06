@@ -1,13 +1,5 @@
 "use strict";
 
-const kortlek = new Deck()
-
-var pileNames = []
-
-for (let k = 1; k <= 14; k++) {
-    pileNames.push(`c${k}`)
-}
-
 var c1 = []; var c2 = []; var c3 = []; var c4 = []; var c5 = []; var c6 = []; var c7 = []; var c8 = []; var c9 = []; var c10 = []; var c11 = []; var c12 = []; var c13 = []; var c14 = [];
 
 function c(pileNr) {
@@ -47,6 +39,7 @@ function moveCard(clickedCards) {
 }
 
 function Reset() {
+    var kortlek = new Deck()
     kortlek.clear_deck()
     kortlek.generate_deck()
     kortlek.shuffle()
@@ -64,39 +57,36 @@ function Reset() {
     clickListener()
 }
 
+function hideBackCards(pileNr) {
+    if (c(pileNr).length == 0) {
+        document.getElementById(`c${pileNr}`).style.visibility='hidden'
+    }
+    else {
+    for (let k = c(pileNr).length+1; k <= 13; k++) {
+        document.getElementById(`c${pileNr}_${k}`).style.visibility='hidden'
+    }
+    for (let k = 2; k <= c(pileNr).length; k++) {
+        document.getElementById(`c${pileNr}_${k}`).style.visibility='visible'
+    }
+}
+}
+
 function updatePileImages() {
     for (let k = 1; k <= 14; k++) {
-        if (c(k).length == 0) {
-            document.getElementById(`c${k}_1`).style.visibility='hidden'
-            document.getElementById(`c${k}_2`).style.visibility='hidden'
-            document.getElementById(`c${k}`).style.visibility='hidden'
-        }
-        else if (c(k).length == 1) {
-            document.getElementById(`c${k}_1`).style.visibility='hidden'
-            document.getElementById(`c${k}_2`).style.visibility='hidden'
-            updateTopImage(k)
-        }
-
-        else if (c(k).length == 2) {
-            document.getElementById(`c${k}_1`).style.visibility='visible'
-            document.getElementById(`c${k}_2`).style.visibility='hidden'
-            updateTopImage(k)
-        }
-
-        else if (c(k).length > 2) {
-            document.getElementById(`c${k}_1`).style.visibility='visible'
-            document.getElementById(`c${k}_2`).style.visibility='visible'
-            updateTopImage(k)
-        }
+        hideBackCards(k)
+        updateTopImage(k)
     }
 }
 
 function updateTopImage(pileNr) {
+    if (c(pileNr).length != 0) {
     if (c(pileNr)[0].frontside) {c(pileNr)[0].imgSrc = c(pileNr)[0].f_imgSrc}
     else {c(pileNr)[0].imgSrc = c(pileNr)[0].b_imgSrc}
     document.getElementById(`c${pileNr}`).src = `${c(pileNr)[0].imgSrc}`
     document.getElementById(`c${pileNr}`).style.visibility = `visible`
     }
+    else {document.getElementById(`c${pileNr}`).style.visibility = `hidden`}
+}
 
 Reset()
 
