@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 @keyframes dance {
@@ -8,15 +9,15 @@
         transform: rotate(0);
     }
     25% {
-        transform: rotate(-2deg);
+        transform: rotate(-1deg);
     }
     75% {
-        transform: rotate(2deg);
+        transform: rotate(1deg);
     }
 }
 
 .selected {
-    animation: dance 1s linear infinite 500ms; 
+    animation: dance 1s linear infinite 100ms; 
 }
 
 .container {
@@ -44,6 +45,7 @@ img {
 
 .main:hover {
     border: solid 2px black;
+    cursor: pointer;
 }
 
 .kort {
@@ -69,60 +71,60 @@ img {
 .c14 {grid-area: c14;}
 
 .c14_0 {position: relative;z-index: 3;}
-.c14_1 {position: absolute;z-index: 2;right: -2px;}
-.c14_2 {position: absolute;z-index: 1;right: -4px;}
+.c14_1 {position: absolute;z-index: 2;left: 10px;}
+.c14_2 {position: absolute;z-index: 1;left: 12px;}
 
 .c1_0 {position: relative;z-index: 3;}
-.c1_1 {position: absolute;z-index: 2;top: -2px;}
-.c1_2 {position: absolute;z-index: 1;top: -4px;}
+.c1_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c1_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c2_0 {position: relative;z-index: 3;}
-.c2_1 {position: absolute;z-index: 2;top: -2px;}
-.c2_2 {position: absolute;z-index: 1;top: -4px;}
+.c2_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c2_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c3_0 {position: relative;z-index: 3;}
-.c3_1 {position: absolute;z-index: 2;top: -2px;}
-.c3_2 {position: absolute;z-index: 1;top: -4px;}
+.c3_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c3_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c4_0 {position: relative;z-index: 3;}
-.c4_1 {position: absolute;z-index: 2;top: -2px;}
-.c4_2 {position: absolute;z-index: 1;top: -4px;}
+.c4_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c4_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c5_0 {position: relative;z-index: 3;}
-.c5_1 {position: absolute;z-index: 2;top: -2px;}
-.c5_2 {position: absolute;z-index: 1;top: -4px;}
+.c5_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c5_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c6_0 {position: relative;z-index: 3;}
-.c6_1 {position: absolute;z-index: 2;top: -2px;}
-.c6_2 {position: absolute;z-index: 1;top: -4px;}
+.c6_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c6_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c7_0 {position: relative;z-index: 3;}
-.c7_1 {position: absolute;z-index: 2;top: -2px;}
-.c7_2 {position: absolute;z-index: 1;top: -4px;}
+.c7_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c7_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c8_0 {position: relative;z-index: 3;}
-.c8_1 {position: absolute;z-index: 2;top: -2px;}
-.c8_2 {position: absolute;z-index: 1;top: -4px;}
+.c8_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c8_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c9_0 {position: relative;z-index: 3;}
-.c9_1 {position: absolute;z-index: 2;top: -2px;}
-.c9_2 {position: absolute;z-index: 1;top: -4px;}
+.c9_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c9_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c10_0 {position: relative;z-index: 3;}
-.c10_1 {position: absolute;z-index: 2;top: -2px;}
-.c10_2 {position: absolute;z-index: 1;top: -4px;}
+.c10_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c10_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c11_0 {position: relative;z-index: 3;}
-.c11_1 {position: absolute;z-index: 2;top: -2px;}
-.c11_2 {position: absolute;z-index: 1;top: -4px;}
+.c11_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c11_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c12_0 {position: relative;z-index: 3;}
-.c12_1 {position: absolute;z-index: 2;top: -2px;}
-.c12_2 {position: absolute;z-index: 1;top: -4px;}
+.c12_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c12_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .c13_0 {position: relative;z-index: 3;}
-.c13_1 {position: absolute;z-index: 2;top: -2px;}
-.c13_2 {position: absolute;z-index: 1;top: -4px;}
+.c13_1 {position: absolute;z-index: 2;bottom: 5px;}
+.c13_2 {position: absolute;z-index: 1;bottom: 7px;}
 
 .button {
     width: 100px;
@@ -131,10 +133,10 @@ img {
     border: solid 1px black;
     margin: 20px auto;
     top: 20px;
-    background: lightgreen;
+    background: white;
 }
 
 .button:hover {
-    background: lightblue;
+    background:lightgreen;
     cursor: pointer;
 }

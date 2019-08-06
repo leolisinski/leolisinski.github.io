@@ -4,12 +4,6 @@ const kortlek = new Deck()
 
 var pileNames = []
 
-var clickedPile = null
-
-var moveFrom = null
-
-var moveTo = null
-
 for (let k = 1; k <= 14; k++) {
     pileNames.push(`c${k}`)
 }
@@ -21,20 +15,35 @@ function c(pileNr) {
 }
 
 function clickListener() {
-    var gameFinished = false
-    var clicks = 0
+    var stopListen = false
+    var clickedCards = []
     for (let k = 1; k <= 14; k++) {
         document.getElementById(`c${k}`).addEventListener('click', () => {
-            if (clicks == 2) {return}
-            else if (clicks == 0) {moveFrom = k; clicks++}
-            else {moveTo = k; clicks++}
+            if (stopListen) {return}
+            else if (c(k)[0].frontside == false) {c(k)[0].frontside = true; updatePileImages()}
+            clickedCards.push(k)
+            document.getElementById(`c${k}`).classList.add('selected')
+            switch(clickedCards.length) {
+                case 1:
+                    return
+                case 2:
+                    stopListen = true
+                    document.getElementById(`c${clickedCards[0]}`).classList.remove('selected')
+                    document.getElementById(`c${clickedCards[1]}`).classList.remove('selected')
+                    moveCard(clickedCards)
+            }
         })
     }
-    if (gameFinished) {return}
+    if (stopListen) {return}
 }
 
-function move() {
-    console.log("Hello")
+function moveCard(clickedCards) {
+    var fromPileNr = clickedCards[0]
+    var toPileNr = clickedCards[1]
+    c(toPileNr).push(c(fromPileNr).shift())
+    c(toPileNr)[0].frontside = true
+    updatePileImages()
+    clickListener()
 }
 
 function Reset() {
@@ -48,11 +57,11 @@ function Reset() {
             }
         }
     for (let k = 0; k<13; k++) {
-        kortlek.deck[0].frontside = false
         c14.unshift(kortlek.deal())
         }
         c14[0].frontside = true
     updatePileImages()
+    clickListener()
 }
 
 function updatePileImages() {
@@ -91,4 +100,6 @@ function updateTopImage(pileNr) {
 
 Reset()
 
-clickListener()
+document.getElementById("button").addEventListener("click", () => {
+    Reset()
+})
