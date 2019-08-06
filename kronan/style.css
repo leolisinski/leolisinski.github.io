@@ -289,6 +289,14 @@ img {
 }
 
 .button:hover {
-    background:lightgreen;
     cursor: pointer;
+}
+
+.credits {
+    font-size: 10px;
+    text-align: center;
+}
+
+#button_restart:hover {
+    background:lightgreen;
 }
