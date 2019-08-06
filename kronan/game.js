@@ -90,6 +90,10 @@ function updateTopImage(pileNr) {
 
 Reset()
 
-document.getElementById("button").addEventListener("click", () => {
+document.getElementById("button_restart").addEventListener("click", () => {
     Reset()
+})
+
+document.getElementById("button_music").addEventListener("click", () => {
+    console.log("music")
 })

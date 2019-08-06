@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "FrederickatheGreat";
+    src: url(fonts/FrederickatheGreat-Regular.ttf) format("truetype");
+}
+
 @keyframes dance {
     0%, 100% {
         transform: rotate(0);
@@ -14,6 +19,12 @@
     75% {
         transform: rotate(1deg);
     }
+}
+
+.header {
+    font-family: 'FrederickatheGreat', cursive;
+    font-size: 150px;
+    text-align: center;
 }
 
 .selected {
@@ -270,7 +281,7 @@ img {
 .button {
     width: 100px;
     text-align: center;
-    font-family: sans-serif;
+    font-family: 'FrederickatheGreat', cursive;
     border: solid 1px black;
     margin: 20px auto;
     top: 20px;
