@@ -27,6 +27,29 @@
     text-align: center;
 }
 
+.lower_header {
+    display: table;
+    position: relative;
+    top: -20px;
+    margin: 0 auto;
+    font-family: 'FrederickatheGreat', cursive;
+    font-size: 20px;
+}
+
+.victory_text {
+    grid-area: 1 / 1 / span 1 / span 5;
+    font-family: 'FrederickatheGreat', cursive;
+    text-align: center;
+}
+
+#victory {
+    visibility: hidden;
+}
+
+.big_text {font-size: 50px;}
+
+.small_text {font-size: 20px;}
+
 .selected {
     animation: dance 1s linear infinite 100ms; 
 }
@@ -278,14 +301,29 @@ img {
 .c13_12 {position: absolute;z-index: 2;bottom: 25px;}
 .c13_13 {position: absolute;z-index: 1;bottom: 27px;}
 
+.buttons {
+    display: grid;
+    grid-template-columns: 100px 100px;
+    column-gap: 20px;
+    grid-template-areas: 
+        "restart music";
+    justify-content: center;
+    margin-top: 30px;
+}
+
 .button {
-    width: 100px;
     text-align: center;
     font-family: 'FrederickatheGreat', cursive;
     border: solid 1px black;
-    margin: 20px auto;
-    top: 20px;
     background: white;
+}
+
+#button_restart {
+    grid-area: restart;
+}
+
+#button_music {
+    grid-area: music;
 }
 
 .button:hover {
@@ -297,4 +335,8 @@ img {
     font-size: 10px;
     text-align: center;
     margin-top: 50px;
+}
+
+.completed {
+    border: black 2px solid;
 }

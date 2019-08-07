@@ -4,6 +4,8 @@ class Ljud {
     constructor() {
         this.bgMusic = new Audio('audio/346454__airwolf89__calm-game-music-1.mp3');
         this.cardSound = new Audio('audio/240776__f4ngy__card-flip.wav');
+        this.completedSound = new Audio('audio/242501__gabrielaraujo__powerup-success.wav')
+        this.victorySound = new Audio('audio/320653__rhodesmas__success-01.wav')
         this.bgMusic.volume = 0.5; 
         this.bgMusic.loop = true;
     }
@@ -17,23 +19,46 @@ class Ljud {
     playCardSound() {
         this.cardSound.play();
     }
+    playCompletedSound() {
+        this.completedSound.play()
+    }
+    playVictorySound() {
+        this.victorySound.play()
+    }
+
 }
 
 const audiocontroller = new Ljud()
 
+const kortlek = new Deck()
+
+var c1 = []; var c2 = []; var c3 = []; var c4 = []; var c5 = []; var c6 = []; var c7 = []; var c8 = []; var c9 = []; var c10 = []; var c11 = []; var c12 = []; var c13 = []; var c14 = [];
+
+var clickedCards = []
+
 var audioOn = false
+
+var numberOfMoves = null
 
 function c(pileNr) {
     return eval(`c${pileNr}`)
 }
 
+function checkIfCompletedPile(pileNr) {
+    var CompletedPile = true
+    for (let k = 0; k < c(pileNr).length; k++) {
+        if (c(pileNr)[k].frontside == false || c(pileNr)[k].value != pileNr || c(pileNr).length != 4) {CompletedPile = false}
+    }
+    return CompletedPile
+}
+
 function clickListener() {
     var stopListen = false
-    var clickedCards = []
+    clickedCards = []
     for (let k = 1; k <= 14; k++) {
         document.getElementById(`c${k}`).addEventListener('click', () => {
             if (stopListen) {return}
-            else if (c(k)[0].frontside == false) {c(k)[0].frontside = true; updatePileImages()}
+            if (c(k)[0].frontside == false) {c(k)[0].frontside = true; updatePileImages()}
             clickedCards.push(k)
             document.getElementById(`c${k}`).classList.add('selected')
             switch(clickedCards.length) {
@@ -52,18 +77,47 @@ function clickListener() {
     if (stopListen) {return}
 }
 
+function markCompletedPiles (clickedCards) {
+    for (let k = 0; k < 2; k++) {
+        if (checkIfCompletedPile(clickedCards[k])) {
+            audiocontroller.playCompletedSound()
+            document.getElementById(`c${clickedCards[k]}`).classList.add('completed')
+        }
+    }
+}
+
+function checkIfWon () {
+    var allCompleted = true
+    for (let k = 1; k <= 14; k++) {
+        if (checkIfCompletedPile(k) == false) {allCompleted = false}
+    }
+    if (allCompleted) {
+        for (let k = 1; k <= 14; k++) {
+            document.getElementById(`c${k}`).classList.add('selected')
+        }
+        audiocontroller.playVictorySound()
+        document.getElementById('moveNumbers').innerHTML=`Antal drag: ${numberOfMoves}`
+        document.getElementById('victory').style.visibility='visible'
+    }
+}
+
 function moveCard(clickedCards) {
     var fromPileNr = clickedCards[0]
     var toPileNr = clickedCards[1]
     c(toPileNr).push(c(fromPileNr).shift())
     c(toPileNr)[0].frontside = true
     updatePileImages()
+    markCompletedPiles(clickedCards)
+    numberOfMoves++
+    checkIfWon()
     clickListener()
 }
 
+
 function Reset() {
-    var kortlek = new Deck()
-    window.c1 = []; window.c2 = []; window.c3 = []; window.c4 = []; window.c5 = []; window.c6 = []; window.c7 = []; window.c8 = []; window.c9 = []; window.c10 = []; window.c11 = []; window.c12 = []; window.c13 = []; window.c14 = [];
+    numberOfMoves = 0
+    document.getElementById('victory').style.visibility='hidden'
+    c1 = []; c2 = []; c3 = []; c4 = []; c5 = []; c6 = []; c7 = []; c8 = []; c9 = []; c10 = []; c11 = []; c12 = []; c13 = []; c14 = [];
     kortlek.clear_deck()
     kortlek.generate_deck()
     kortlek.shuffle()
@@ -77,6 +131,9 @@ function Reset() {
         c14.unshift(kortlek.deal())
         }
         c14[0].frontside = true
+    for (let k = 1; k <= 14; k++) {
+        document.getElementById(`c${k}`).classList.remove('selected', 'completed')
+        }
     updatePileImages()
     clickListener()
 }
@@ -112,8 +169,6 @@ function updateTopImage(pileNr) {
     else {document.getElementById(`c${pileNr}`).style.visibility = `hidden`}
 }
 
-Reset()
-
 document.getElementById("button_restart").addEventListener("click", () => {
     Reset()
 })
@@ -132,3 +187,5 @@ document.getElementById("button_music").addEventListener("click", () => {
     audioOn = true}
     
 })
+
+Reset()

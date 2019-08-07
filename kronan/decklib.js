@@ -18,7 +18,7 @@ class Deck {
             return {name:this.name, suit: this.suit, value:this.value, f_imgSrc: this.f_imgSrc, b_imgSrc: this.b_imgSrc, imgSrc: this.imgSrc, frontside: this.frontside, marker: this.marker}
         }
 
-        let values_and_names = [[2,'2'],[3,'3'],[4,'4'],[5,'5'],[6,'6'],[7,'7'],[8,'8'],[9,'9'],[10,'10'],[11,'knekt'],[12,'dam'],[13,'kung'],[14,'ess']]
+        let values_and_names = [[2,'2'],[3,'3'],[4,'4'],[5,'5'],[6,'6'],[7,'7'],[8,'8'],[9,'9'],[10,'10'],[11,'knekt'],[12,'dam'],[13,'kung'],[1,'ess']]
         let suits = ['hjärter', 'ruter', 'spader', 'klöver']
 
         for ( let s = 0; s < suits.length; s++ ) {
