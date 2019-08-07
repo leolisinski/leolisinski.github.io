@@ -30,15 +30,7 @@ class Ljud {
 
 const audiocontroller = new Ljud()
 
-const kortlek = new Deck()
-
-var c1 = []; var c2 = []; var c3 = []; var c4 = []; var c5 = []; var c6 = []; var c7 = []; var c8 = []; var c9 = []; var c10 = []; var c11 = []; var c12 = []; var c13 = []; var c14 = [];
-
-var clickedCards = []
-
-var audioOn = false
-
-var numberOfMoves = null
+var timeToReturn = false
 
 function c(pileNr) {
     return eval(`c${pileNr}`)
@@ -52,13 +44,16 @@ function checkIfCompletedPile(pileNr) {
     return CompletedPile
 }
 
-function clickListener() {
-    var stopListen = false
+
+
+function clickListener () {
+
+    if (stopListen) {stopListen = false; clickedCards = []; return}
     clickedCards = []
     for (let k = 1; k <= 14; k++) {
         document.getElementById(`c${k}`).addEventListener('click', () => {
             if (stopListen) {return}
-            if (c(k)[0].frontside == false) {c(k)[0].frontside = true; updatePileImages()}
+            else if (c(k)[0].frontside == false) {c(k)[0].frontside = true; updatePileImages()}
             clickedCards.push(k)
             document.getElementById(`c${k}`).classList.add('selected')
             switch(clickedCards.length) {
@@ -70,12 +65,19 @@ function clickListener() {
                     document.getElementById(`c${clickedCards[1]}`).classList.remove('selected')
                     if (audioOn) {audiocontroller.playCardSound()}
                     moveCard(clickedCards)
-                    
             }
         })
     }
-    if (stopListen) {return}
 }
+
+function definitions() {
+    window.kortlek = new Deck()
+    window.c1 = []; window.c2 = []; window.c3 = []; window.c4 = []; window.c5 = []; window.c6 = []; window.c7 = []; window.c8 = []; window.c9 = []; window.c10 = []; window.c11 = []; window.c12 = []; window.c13 = []; window.c14 = [];
+    window.clickedCards = []
+    window.audioOn = false
+    window.stopListen = false
+    window.numberOfMoves = null
+    }
 
 function markCompletedPiles (clickedCards) {
     for (let k = 0; k < 2; k++) {
@@ -115,9 +117,8 @@ function moveCard(clickedCards) {
 
 
 function Reset() {
-    numberOfMoves = 0
+    definitions()
     document.getElementById('victory').style.visibility='hidden'
-    c1 = []; c2 = []; c3 = []; c4 = []; c5 = []; c6 = []; c7 = []; c8 = []; c9 = []; c10 = []; c11 = []; c12 = []; c13 = []; c14 = [];
     kortlek.clear_deck()
     kortlek.generate_deck()
     kortlek.shuffle()
@@ -170,7 +171,7 @@ function updateTopImage(pileNr) {
 }
 
 document.getElementById("button_restart").addEventListener("click", () => {
-    Reset()
+    location.reload()
 })
 
 document.getElementById("button_music").addEventListener("click", () => {
