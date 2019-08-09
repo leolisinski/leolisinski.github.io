@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    background-color: lightslategray;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-1deg);
+    }
+    75% {
+        transform: rotate(1deg);
+    }
+}
+
+.selected {
+    animation: dance 1s linear infinite 100ms; 
+}
+
+container {
+    position: relative;
+    top: 20vh;
+    display: grid;
+    grid-template-areas: 
+        "header header header header header"
+        "cards cards cards cards cards"
+        "footer1 footer1 footer1 footer1 footer1"
+        "footer2 footer2 footer2 footer2 footer2";
+    grid-template-columns: repeat(5, 100px);
+    justify-content: center;
+    align-items: center;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+}
+
+header {
+    grid-area: header;
+    top: 100px;
+    font-family: sans-serif;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    font-size: 3em;
+}
+
+knapp {
+    margin: 50px;
+    grid-area: knapp;
+    border: solid 1px black;
+    font-family: sans-serif;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2em;
+}
+
+
+pile {
+    grid-area: pile;
+}
+
+div {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+.footer1 {grid-area: footer1;}
+.footer2 {grid-area: footer2;}
