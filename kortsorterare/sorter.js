@@ -87,7 +87,10 @@ function question(clickedCards) {
 }
 
 //Delar ut kort//
-for (let k = 1; k<=5; k++) {
+var pile = []
+p(1).unshift(kortlek.deal())
+for (let k = 2; k<=5; k++) {
+    while (kortlek.deck[0].value === p(k-1)[0].value) {pile.unshift(kortlek.deal())}
     kortlek.deck[0].frontside = false
     p(k).unshift(kortlek.deal())
     }
