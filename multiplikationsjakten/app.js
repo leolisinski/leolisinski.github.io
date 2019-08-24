@@ -52,9 +52,9 @@ const button = document.getElementById('checkButton')
 button.addEventListener('click', () => startTimer())
 
 function startTimer() {
-bgMusic.play()
+startSound.play()
 generateFactors()
-setTimeout(() => {countdownFunction();bgColorShifter()},2000)
+setTimeout(() => {bgMusic.play();countdownFunction();bgColorShifter()},2000)
 }
 
 function countdownFunction() {
