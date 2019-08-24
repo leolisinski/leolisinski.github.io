@@ -67,7 +67,6 @@ form > input {
     height: 150px;
     font-size: 20px;
     font-family: 'Lexend Zetta', sans-serif;
-    -webkit-appearance: none;
     -webkit-border-radius: 0;
 }
 
