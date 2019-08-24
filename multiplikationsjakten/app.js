@@ -26,7 +26,7 @@ function checkAnswers() {
 }
 
 function generateFactors() {
-    if (window.matchMedia('(max-width: 900px').matches) {
+    if (window.matchMedia('(max-width: 900px)').matches) {
         var k = 1
         var generator = setInterval(() => {
             document.getElementById(`ch${k}_f1`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
