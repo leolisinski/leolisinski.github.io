@@ -1,28 +1,40 @@
 const bgMusic = new Audio('audio/338371__hmmm101__pixel-song-21.wav')
 const tickSound = new Audio('audio/422642__trullilulli__sfx-ambiance-clock-tick.wav')
 const startSound = new Audio('audio/458416__tolerabledruid6__game-start-nes-style-2.wav')
-const endSound = new Audio('audio/173079__deameon1427__bold-pen-stroke.wav')
+const correctSound = new Audio('audio/431329__someguy22__8-bit-powerup.wav')
 
 startSound.volume = .2
 bgMusic.volume = .6
+correctSound.volume = .6
 
 bgMusic.loop=false
 
 var SoundStatus = false
 
 function checkAnswers() {
-    var allCorrect = true
+    var numberOfCorrectAnswers = 20
     for (let k = 1; k <= 20; k++) {
         var faktor1 = eval(document.getElementById(`ch${k}_f1`).innerHTML)
         var faktor2 = eval(document.getElementById(`ch${k}_f2`).innerHTML)
         var answer = eval(document.getElementById(`ans${k}`).value)
-        if(faktor1 * faktor2 != answer) {allCorrect = false}
+        if(faktor1 * faktor2 != answer) {numberOfCorrectAnswers += -1}
     }
-    if (allCorrect) {document.getElementById('responseText').innerHTML='Alla rätt!'}
-    else {document.getElementById('responseText').innerHTML='Minst ett fel...'}
+    if (numberOfCorrectAnswers == 20) {document.getElementById('responseText').innerHTML='Alla rätt!'}
+    else {document.getElementById('responseText').innerHTML=`Du fick ${numberOfCorrectAnswers} rätt.`}
+    document.getElementById('responseText').style.visibility='visible'
 }
 
 function generateFactors() {
+    if (window.matchMedia('(max-width: 900px').matches) {
+        var k = 1
+        var generator = setInterval(() => {
+            document.getElementById(`ch${k}_f1`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
+            document.getElementById(`ch${k}_f2`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
+            k++
+            if (k==21) {clearInterval(generator)}
+            },60)
+        }
+    else {
     var k = 1
     var generator = setInterval(() => {
         document.getElementById(`ch${k}_f1`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
@@ -31,7 +43,7 @@ function generateFactors() {
         if (k==21) {k=2}
         if (k==22) {clearInterval(generator)}
         },60)
-
+    }
     }
 
 const button = document.getElementById('checkButton')
@@ -83,3 +95,16 @@ function bgColorShifter() {
         
     },10)
     }
+
+for (let k = 1; k <= 20; k++) {
+
+    document.getElementById(`ans${k}`).addEventListener('keyup', () => playSoundIfRight(k))
+
+}
+
+function playSoundIfRight(k) {
+    var faktor1 = eval(document.getElementById(`ch${k}_f1`).innerHTML)
+    var faktor2 = eval(document.getElementById(`ch${k}_f2`).innerHTML)
+    var answer = eval(document.getElementById(`ans${k}`).value)
+    if (faktor1*faktor2 == answer) {correctSound.play()}
+}
