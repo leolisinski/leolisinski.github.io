@@ -54,9 +54,8 @@ button.addEventListener('click', () => startTimer())
 function startTimer() {
 startSound.play()
 generateFactors()
-
-var timeout = setInterval(()=> {
 bgMusic.play()
+var timeout = setInterval(()=> {
 countdownFunction()
 bgColorShifter()
 clearInterval(timeout)
