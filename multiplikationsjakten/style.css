@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-body {
+#game {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -23,11 +23,13 @@ body {
     height: 600px;
     background-color: rgb(86, 160, 84);
     margin-right: 10px;
+    border-radius: 1%;
+    border: 2px solid black;
 }
 
 .container div {
     display: flex;
-    border: solid black 1px;
+    border: 1px solid black;
 }
 
 
@@ -58,16 +60,19 @@ form > input {
     margin-left: 10px;
     width: 300px;
     height: 600px;
-    background-color: rgb(150, 184, 149)
+    background-color: rgb(150, 184, 149);
+    border-radius: 1%;
+    border: 2px solid black;
 }
 
 .gameInfo button {
     margin: 20px;
     width: 150px;
-    height: 150px;
+    height: 100px;
     font-size: 20px;
     font-family: 'Lexend Zetta', sans-serif;
-    -webkit-border-radius: 0;
+    -webkit-border-radius: 2%;
+    border-radius: 2%;
 }
 
 .gameInfo p {
