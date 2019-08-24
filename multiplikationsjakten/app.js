@@ -18,7 +18,11 @@ function checkAnswers() {
         var faktor1 = eval(document.getElementById(`ch${k}_f1`).innerHTML)
         var faktor2 = eval(document.getElementById(`ch${k}_f2`).innerHTML)
         var answer = eval(document.getElementById(`ans${k}`).value)
-        if(faktor1 * faktor2 != answer) {numberOfCorrectAnswers += -1}
+        if(faktor1 * faktor2 != answer) {
+            numberOfCorrectAnswers += -1
+            document.getElementById(`eq${k}`).innerHTML='≠'
+            document.getElementById(`eq${k}`).style.color='rgb(236, 81, 81)'
+        }
     }
     if (numberOfCorrectAnswers == 20) {document.getElementById('responseText').innerHTML='Alla rätt!'}
     else {document.getElementById('responseText').innerHTML=`Du fick ${numberOfCorrectAnswers} rätt.`}
