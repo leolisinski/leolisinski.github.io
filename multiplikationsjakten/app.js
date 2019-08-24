@@ -55,12 +55,11 @@ function startTimer() {
 startSound.play()
 generateFactors()
 
-setTimeout(()=> {
-
+var timeout = setInterval(()=> {
 bgMusic.play()
 countdownFunction()
 bgColorShifter()
-
+clearInterval(timeout)
 },2000)
 }
 
