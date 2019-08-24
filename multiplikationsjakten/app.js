@@ -11,6 +11,10 @@ bgMusic.loop=false
 
 var SoundStatus = false
 
+fetch('https://leolisinski.github.io/multiplikationsjakten/audio/338371__hmmm101__pixel-song-21.wav')
+
+fetch('https://leolisinski.github.io/multiplikationsjakten/audio/458416__tolerabledruid6__game-start-nes-style-2.wav')
+
 function checkAnswers() {
     var numberOfCorrectAnswers = 20
     for (let k = 1; k <= 20; k++) {
