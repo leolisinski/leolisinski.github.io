@@ -9,11 +9,8 @@ correctSound.volume = .6
 
 bgMusic.loop=false
 
-var SoundStatus = false
+var SoundOn = true
 
-fetch('https://leolisinski.github.io/multiplikationsjakten/audio/338371__hmmm101__pixel-song-21.wav')
-
-fetch('https://leolisinski.github.io/multiplikationsjakten/audio/458416__tolerabledruid6__game-start-nes-style-2.wav')
 
 function checkAnswers() {
     var numberOfCorrectAnswers = 20
@@ -56,8 +53,9 @@ button.addEventListener('click', () => startTimer())
 
 function startTimer() {
 startSound.play()
+bgMusic.play()
 generateFactors()
-setTimeout(() => {bgMusic.play();countdownFunction();bgColorShifter()},2000)
+setTimeout(() => {countdownFunction();bgColorShifter()},2000)
 }
 
 function countdownFunction() {
