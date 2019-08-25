@@ -57,6 +57,8 @@ const button = document.getElementById('checkButton')
 button.addEventListener('click', () => startTimer())
 
 function startTimer() {
+document.getElementById('checkButton').innerHTML='go!'
+document.getElementById('checkButton').style.backgroundColor='rgb(75, 235, 35)'
 startSound.play()
 bgMusic.play()
 generateFactors()
