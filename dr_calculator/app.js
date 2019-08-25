@@ -3,9 +3,9 @@ const tickSound = new Audio('audio/422642__trullilulli__sfx-ambiance-clock-tick.
 const startSound = new Audio('audio/458416__tolerabledruid6__game-start-nes-style-2.mp3')
 const correctSound = new Audio('audio/431329__someguy22__8-bit-powerup.mp3')
 
-startSound.volume = .2
-bgMusic.volume = .6
-correctSound.volume = .6
+startSound.volume = 0.2
+bgMusic.volume = 0.4
+correctSound.volume = 0.2
 
 bgMusic.loop=false
 
