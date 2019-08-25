@@ -4,6 +4,21 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "SuperPlumberBrothers";
+    src: url(fonts/SuperPlumberBrothers.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Pretendo";
+    src: url(fonts/Pretendo.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "EarlyGameBoy";
+    src: url(fonts/EarlyGameBoy.ttf) format("truetype");
+}
+
 #game {
     width: 100vw;
     height: 100vh;
@@ -56,7 +71,7 @@ form > input {
 .gameInfo {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
     width: 300px;
@@ -67,7 +82,7 @@ form > input {
 }
 
 .gameInfo button {
-    margin: 20px;
+    margin: 50px;
     width: 150px;
     height: 100px;
     font-size: 20px;
@@ -80,7 +95,16 @@ form > input {
     height: 50px;
     display: flex;
     justify-content: center;
+    font-size: 30px;
     font-family: 'Lexend Zetta', sans-serif;
+}
+
+.timeText {
+    font-weight: bold;
+}
+
+#timeRemaining {
+    font-size: 50px;
 }
 
 input, textarea {
@@ -91,7 +115,38 @@ input, textarea {
 
 #responseText {
     visibility: hidden;
+    font-size: 20px;
 }
+
+.logo {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.logo p {
+    font-family: Pretendo, 'sans-serif';
+    font-size: 35px;
+}
+
+#l_1 {color:black}
+#l_2 {color:black}
+#l_3 {color:black}
+#l_4 {color:black}
+#l_5 {color:black}
+#l_6 {color:black}
+#l_7 {color:black}
+#l_8 {color:black}
+#l_9 {color:black}
+#l_10 {color:black}
+#l_11 {color:black}
+#l_12 {color:black}
+
+
+
+
+
+
 
 @media only screen and (max-width: 900px) {
 
@@ -120,10 +175,11 @@ input, textarea {
 .gameInfo p {
     height: auto;
     font-family: 'Lexend Zetta', sans-serif;
+    font-size: 25px;
 }
 
 .gameInfo button {
-    margin: 5px;
+    margin: 0px;
     width: 200px;
     height: 50px;
     font-size: 18px;
@@ -133,9 +189,27 @@ input, textarea {
 }
 
 .timeText {
-    margin-top: 5px;
     display: flex;
+}
+
+#timeRemaining {
     font-size: 25px;
+}
+
+.logo {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.logo p {
+    font-family: Pretendo, 'sans-serif';
+    font-size: 35px;
+}
+
+#responseText {
+    font-size: 20px;
+    visibility: hidden;
 }
 
 }

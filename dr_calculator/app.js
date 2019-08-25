@@ -23,9 +23,10 @@ function checkAnswers() {
             document.getElementById(`eq${k}`).innerHTML='≠'
             document.getElementById(`eq${k}`).style.color='rgb(236, 81, 81)'
         }
+        else {document.getElementById(`eq${k}`).style.color='rgb(75, 235, 35)'}
     }
     if (numberOfCorrectAnswers == 20) {document.getElementById('responseText').innerHTML='Alla rätt!'}
-    else {document.getElementById('responseText').innerHTML=`Du fick ${numberOfCorrectAnswers} rätt.`}
+    else {document.getElementById('responseText').innerHTML=`Du fick ${numberOfCorrectAnswers} rätt`}
     document.getElementById('responseText').style.visibility='visible'
 }
 
@@ -66,15 +67,24 @@ bgColorShifter()
 }
 
 function countdownFunction() {
+    var k = 1
     var moment = Math.round(new Date().getTime() / 1000)
     var endMoment = moment + 60
     var remaining = endMoment - moment
     var countdown = setInterval(() => {
         tickSound.play()
+        document.getElementById(`l_${k}`).style.color='rgb(255, 72, 0)'
+        if (k != 1) {document.getElementById(`l_${k-1}`).style.color='black'}
+        else {document.getElementById('l_12').style.color='black'}
+        if (k != 12) {k++}
+        else {k = 1} 
         moment = Math.round(new Date().getTime() / 1000)
         remaining = endMoment - moment
         document.getElementById('timeRemaining').innerHTML=`${remaining}`
         if (eval(document.getElementById('timeRemaining').innerHTML) == 0) {
+            for (let k = 1; k <= 12; k++) {
+                document.getElementById(`l_${k}`).style.color='black'   
+            }
             clearInterval(countdown)
             checkAnswers()
             }
