@@ -1,7 +1,20 @@
-const bgMusic = new Audio('audio/338371__hmmm101__pixel-song-21.wav')
+// const bgMusic = new Audio('audio/338371__hmmm101__pixel-song-21.wav')
 const tickSound = new Audio('audio/422642__trullilulli__sfx-ambiance-clock-tick.wav')
 const startSound = new Audio('audio/458416__tolerabledruid6__game-start-nes-style-2.wav')
 const correctSound = new Audio('audio/431329__someguy22__8-bit-powerup.wav')
+
+var bgMusic = document.createElement('audio')
+bgMusic.id = 'audio'
+bgMusic.src = 'audio/338371__hmmm101__pixel-song-21.wav'
+bgMusic.type = 'audio/wav'
+document.body.appendChild(bgMusic)
+
+function playBgMusic() {
+  document.getElementById('audio').play();
+}
+
+
+
 
 startSound.volume = .2
 bgMusic.volume = .6
@@ -56,9 +69,9 @@ const button = document.getElementById('checkButton')
 button.addEventListener('click', () => startTimer())
 
 function startTimer() {
+setTimeout(() => playBgMusic(), 2000) 
 startSound.play()
 generateFactors()
-bgMusic.play()
 var timeout = setInterval(()=> {
 countdownFunction()
 bgColorShifter()
