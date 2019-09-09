@@ -10,24 +10,41 @@
 <body>
 
     <input type="file" multiple id="selectedPhotos">
-    <input type="submit" onclick="photoSelector()">
+    <div class="button" id="selectFilesButton">1. Välj filer</div>
+    <div class="button" id="submitButton">2. Starta</div>
+    <p id="numberOfFiles">Antal valda bilder</p>    
 
+    <section id="logo"></section>
 
 <section class="container">
 
-    <img src="" id="photo">
+    <div class="photos">
+
+    <img src="" id="photo1">
+    <img src="" id="photo2">
+    <img src="" id="photo3">
+
+    </div>
 
     <p id="instruction"></p>
 
-    <div class="alternatives">
-    <p id="alt1"></p>
-    <p id="alt2"></p>
-    <p id="alt3"></p>
+    <div id="alternatives">
+        <p id="alt1"></p>
+        <p id="alt2"></p>
+        <p id="alt3"></p>
     </div>
 
-    <p id="score"></p>
-    
+    <div id="scoreSection">
+    <p id="scoreText">Poäng:&nbsp;</p>
+    <p id="score">0</p>
+    </div>
+
+
+
 </section>
+
+
+
 
 <script src="js/script.js"></script>
 </body>
