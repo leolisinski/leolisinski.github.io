@@ -31,6 +31,7 @@ document.getElementById('selectedPhotos').addEventListener('change', ()=> {
     photos = document.getElementById('selectedPhotos').files
     document.getElementById('numberOfFiles').innerHTML = `${photos.length} valda bilder`
     document.getElementById('numberOfFiles').style.visibility = 'visible'
+    document.getElementById('submitButton').style.visibility = 'visible'
 })
 
 //default styling

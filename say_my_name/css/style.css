@@ -74,7 +74,7 @@ p {
     position: fixed;
     top: 150px;
     left: 0px;
-    font-size: 6em;
+    font-size: 3em;
     transform: rotate(-40deg);
     font-family: 'Dancing Script', cursive;
 }
@@ -99,6 +99,7 @@ p {
 }
 
 #submitButton {   
+    visibility: hidden;
     top: 8px;
     left: 200px;
 }
