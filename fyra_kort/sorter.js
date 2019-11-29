@@ -60,4 +60,5 @@ document.addEventListener('keydown', event => {
     if (event.keyCode === 13) {
         number = eval(document.getElementById('text').value)
         dealNrOfTimes(number)
+        document.getElementById('text').value = ""
     }})
