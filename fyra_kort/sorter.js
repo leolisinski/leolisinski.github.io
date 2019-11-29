@@ -48,10 +48,10 @@ for (let k = 1; k<=4; k++) {
         counter++
         document.getElementById('nrOfTimes').innerHTML = counter
     if (counter > 0) {
-        document.getElementById('relFreq').innerHTML = `${(heartCounter/counter).toFixed(5)}`
+        document.getElementById('relFreq').innerHTML = `${(heartCounter/counter).toFixed(7)}`
     }
     if (counter > 0) {
-        document.getElementById('relFreqOneHeart').innerHTML = `${(oneHeartCounter/counter).toFixed(5)}`
+        document.getElementById('relFreqOneHeart').innerHTML = `${(oneHeartCounter/counter).toFixed(7)}`
     }
     heartCounterLocal = 0
 }
