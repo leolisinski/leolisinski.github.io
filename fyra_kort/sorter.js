@@ -4,6 +4,7 @@ var clickedCards = []
 var stopListen = false
 var listen = false
 var heartCounter = 0
+var oneHeartCounter = 0
 var counter = 0
 kortlek.clear_deck()
 kortlek.generate_deck()
@@ -32,18 +33,27 @@ for (let k = 1; k<=4; k++) {
     }
     updatePileImages()
     var heart = false
+    var heartCounterLocal = 0
     for (let i = 1; i <= 4; i++) {
-        if (p(i)[0].suit == "hjärter") {heart = true}
+        if (p(i)[0].suit == "hjärter") {heart = true; heartCounterLocal++}
     }
     if (heart) {
         heartCounter++
         document.getElementById('nrOfHearts').innerHTML = heartCounter
+    }
+    if (heartCounterLocal == 1) {
+        oneHeartCounter++
+        document.getElementById('nrOfOneHeart').innerHTML = oneHeartCounter
     }
         counter++
         document.getElementById('nrOfTimes').innerHTML = counter
     if (counter > 0) {
         document.getElementById('relFreq').innerHTML = `${(heartCounter/counter).toFixed(5)}`
     }
+    if (counter > 0) {
+        document.getElementById('relFreqOneHeart').innerHTML = `${(oneHeartCounter/counter).toFixed(5)}`
+    }
+    heartCounterLocal = 0
 }
 
 function dealNrOfTimes(number) {

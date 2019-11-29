@@ -28,7 +28,9 @@
         "cards cards cards cards"
         "footer1 footer1 footer1 footer1"
         "footer2 footer2 footer2 footer2"
-        "footer3 footer3 footer3 footer3";
+        "footer3 footer3 footer3 footer3"
+        "footer4 footer4 footer4 footer4"
+        "footer5 footer5 footer5 footer5";
     grid-template-columns: repeat(4, 100px);
     justify-content: center;
     align-items: center;
@@ -63,6 +65,8 @@ div {
 .footer1 {grid-area: footer1; font-size: 20px;display:flex;}
 .footer2 {grid-area: footer2; font-size: 20px; display: flex;}
 .footer3 {grid-area: footer3; font-size: 20px; display: flex;}
+.footer4 {grid-area: footer4; font-size: 20px; display: flex;}
+.footer5 {grid-area: footer5; font-size: 20px; display: flex;}
 
 #text {
     resize: none;
