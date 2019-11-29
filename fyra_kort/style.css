@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    background-color: lightslategray;
+}
+
+@keyframes dance {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    25% {
+        transform: rotate(-1deg);
+    }
+    75% {
+        transform: rotate(1deg);
+    }
+}
+
+.selected {
+    animation: dance 1s linear infinite 100ms; 
+}
+
+.container {
+    position: relative;
+    top: 20vh;
+    display: grid;
+    grid-template-areas: 
+        "header header header header"
+        "cards cards cards cards"
+        "footer1 footer1 footer1 footer1"
+        "footer2 footer2 footer2 footer2"
+        "footer3 footer3 footer3 footer3";
+    grid-template-columns: repeat(4, 100px);
+    justify-content: center;
+    align-items: center;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+}
+
+header {
+    display: flex;
+    grid-area: header;
+    top: 100px;
+    font-family: sans-serif;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2em;
+}
+
+header p {
+    margin-right: 10px;
+}
+
+header textarea {
+    margin-right: 10px;
+}
+
+div {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1em;
+}
+.footer1 {grid-area: footer1; font-size: 20px;display:flex;}
+.footer2 {grid-area: footer2; font-size: 20px; display: flex;}
+.footer3 {grid-area: footer3; font-size: 20px; display: flex;}
+
+#text {
+    resize: none;
+    width: 100px;
+    height: 50px;
+    font-size: 30px;
+    overflow: hidden;
+    background: rgb(98, 202, 67);
+}
+
+#knapp {
+    border: 1px solid black;
+    background: rgb(55, 223, 125);
+    font-size: 30px;
+    height: 100px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#knapp:hover {
+    background: lightgreen;
+    cursor: pointer;
+}
+
+.dealer {
+    border: 1px solid black;
+    height: 100px;
+    width: 200px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(98, 202, 67);
+}
+
+.dealer p {
+    background: rgb(98, 202, 67);
+}

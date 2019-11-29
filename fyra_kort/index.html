@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minst ett hjärter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        
+<div class="container">
+        
+    <header>
+        <div id="knapp">Blanda och dra 4 kort</div>
+        <div class="dealer"><p>Dra flera gånger: </p>
+        <textarea id="text" cols="1" rows="1"></textarea>
+    </div>
+    </header>
+    <pile1 class="pile">
+        <img id="p1" scr="">
+    </pile1>
+
+    <pile2 class="pile">
+        <img id="p2" scr="">
+    </pile2>
+
+    <pile3 class="pile">
+        <img id="p3" scr="">    
+    </pile3>
+
+    <pile4 class="pile">
+        <img id="p4" scr="">    
+    </pile4>
+    <div class="footer1">Antal dragningar:&nbsp;<p id="nrOfTimes">0</p></div>
+    <div class="footer2">Antal gånger minst en hjärter:&nbsp;<p id="nrOfHearts">0</p></div>
+    <div class="footer3">Relativ frekvens minst en hjärter:&nbsp;<p id="relFreq">0</p></div>
+</div>
+
+
+<script src="decklib.js"></script>
+<script src="sorter.js"></script>
+</body>
+</html>
