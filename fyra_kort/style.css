@@ -76,7 +76,7 @@ div {
 #knapp {
     border: 1px solid black;
     background: rgb(55, 223, 125);
-    font-size: 30px;
+    font-size: 20px;
     height: 100px;
     width: 200px;
     display: flex;
