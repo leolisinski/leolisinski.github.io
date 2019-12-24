@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    background-color: lightslategray;
+}
+
+.container {
+    position: relative;
+    top: 5vh;
+    display: grid;
+    grid-template-areas: 
+        "header"
+        "cards"
+        "res1"
+        "res2"
+        "res3"
+        "res4"
+        "res5"
+        "res5"
+        "res6"
+        "res7"
+        "res8"
+        "res9"
+        "res10"
+        "res11"
+        "res12"
+        "res13"
+        "res14"
+        "res15"
+        "res16"
+        "res17"
+        "res18"
+        "res19"
+        "res20"
+        "res21"
+        "res22"
+        "res23"
+        ;
+
+    grid-template-columns: 600px;
+    justify-content: center;
+    align-items: center;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+}
+
+.cards {
+    grid-area: cards;
+    display: flex;
+    justify-content: space-around;
+}
+
+header {
+    display: flex;
+    grid-area: header;
+    top: 100px;
+    font-family: sans-serif;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2em;
+}
+
+header p {
+    margin-right: 10px;
+}
+
+header textarea {
+    margin-right: 10px;
+}
+
+.result {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 0.5em;
+}
+
+.res1 {grid-area: res1; display:flex;}
+.res2 {grid-area: res2; display: flex;}
+.res3 {grid-area: res3; display: flex;}
+.res4 {grid-area: res4; display: flex;}
+.res5 {grid-area: res5; display: flex;}
+.res6 {grid-area: res6; display: flex;}
+.res7 {grid-area: res7; display: flex;}
+.res8 {grid-area: res8; display: flex;}
+.res9 {grid-area: res9; display: flex;}
+.res10 {grid-area: res10; display: flex;}
+.res11 {grid-area: res11; display: flex;}
+.res12 {grid-area: res12; display: flex;}
+.res13 {grid-area: res13; display: flex;}
+.res14 {grid-area: res14; display: flex;}
+.res15 {grid-area: res15; display: flex;}
+.res16 {grid-area: res16; display: flex;}
+.res17 {grid-area: res17; display: flex;}
+.res18 {grid-area: res18; display: flex;}
+.res19 {grid-area: res19; display: flex;}
+.res20 {grid-area: res20; display: flex;}
+.res21 {grid-area: res21; display: flex;}
+.res22 {grid-area: res22; display: flex;}
+.res23 {grid-area: res23; display: flex;}
+.res24 {grid-area: res22; display: flex;}
+.res25 {grid-area: res23; display: flex;}
+
+
+#text {
+    resize: none;
+    width: 100px;
+    height: 50px;
+    font-size: 30px;
+    overflow: hidden;
+    background: rgb(98, 202, 67);
+}
+
+#knapp {
+    border: 1px solid black;
+    background: rgb(55, 223, 125);
+    font-size: 20px;
+    height: 100px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#knapp:hover {
+    background: lightgreen;
+    cursor: pointer;
+}
+
+.dealer {
+    border: 1px solid black;
+    height: 100px;
+    width: 200px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(98, 202, 67);
+}
+
+.dealer p {
+    background: rgb(98, 202, 67);
+}

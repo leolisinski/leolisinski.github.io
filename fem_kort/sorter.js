@@ -11,7 +11,7 @@ kortlek.generate_deck()
 kortlek.shuffle()
 
 function updatePileImages() {
-    for (let k = 1; k <= 4; k++) {
+    for (let k = 1; k <= 5; k++) {
         if (p(k)[0].frontside) {p(k)[0].imgSrc = p(k)[0].f_imgSrc}
         else {p(k)[0].imgSrc = p(k)[0].b_imgSrc}
         document.getElementById(`p${k}`).src = `${p(k)[0].imgSrc}`
@@ -27,14 +27,14 @@ function dealCards() {
     kortlek.clear_deck()
     kortlek.generate_deck()
     kortlek.shuffle()
-for (let k = 1; k<=4; k++) {
+for (let k = 1; k<=5; k++) {
     kortlek.deck[0].frontside = true
     p(k).unshift(kortlek.deal())
     }
     updatePileImages()
     var heart = false
     var heartCounterLocal = 0
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 5; i++) {
         if (p(i)[0].suit == "hjärter") {heart = true; heartCounterLocal++}
     }
     if (heart) {
