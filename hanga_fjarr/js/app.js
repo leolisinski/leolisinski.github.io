@@ -175,7 +175,7 @@ function addChar(event) {
             document.getElementById('firstGameInstructions').style.visibility = 'hidden'
             document.getElementById('description_wrapper').style.visibility = 'visible'
             firstGame = false
-            musicSwitch()
+            if (musicPlaying == false) {musicSwitch()}
             startGame(0)
         }
         else {
