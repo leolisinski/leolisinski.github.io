@@ -84,14 +84,14 @@ const images_array = [
 ]
 
 const sentences = [
-    "SOLEN SKINER PÅ MIN DATORSKÄRM",
-    "GOOGLE MEET VS DISCORD",
-    "SNABBNUDLAR TILL LUNCH",
-    "KAFFEKOKAREN GÅR VARM MELLAN LEKTIONERNA",
-    "EN VARM HÄLSNING MED ARMBÅGEN",
-    "DET EKAR TOMT PÅ JOHANNEBERG",
-    "TILL HÖSTEN SYNS VI PÅ SKOLAN IGEN",
-    "TORSDAGSFOTBOLLEN ÖVERLEVER ALLT",
+    "U09MRU4gU0tJTkVSIFDFIE1JTiBEQVRPUlNLxFJN",
+    "R09PR0xFIE1FRVQgVlMgRElTQ09SRA==",
+    "U05BQkJOVURMQVIgVElMTCBMVU5DSA==",
+    "S0FGRkVLT0tBUkVOIEfFUiBWQVJNIE1FTExBTiBMRUtUSU9ORVJOQQ==",
+    "RU4gVkFSTSBIxExTTklORyBNRUQgQVJNQsVHRU4=",
+    "REVUIEVLQVIgVE9NVCBQxSBKT0hBTk5FQkVSRw==",
+    "VElMTCBI1lNURU4gU1lOUyBWSSBQxSBTS09MQU4gSUdFTg==",
+    "VE9SU0RBR1NGT1RCT0xMRU4g1lZFUkxFVkVSIEFMTFQ=",
 ]
 
 const local_high_score_html = document.getElementById('your_high_score') 
@@ -430,7 +430,7 @@ function startGame(starting_points) {
     graphics.innerHTML = images_array[currentImageId]
     points.innerHTML = current_points
     charPresent = false
-    gameSentence = gameSentences.splice(0,1)[0]
+    gameSentence = atob(gameSentences.splice(0,1)[0])
     respons.innerHTML = ''
     guess.innerHTML = ''
     document.getElementById('sentence_length').innerHTML = `${letterCounter(gameSentence)}`
