@@ -92,6 +92,7 @@ const sentences = [
     "REVUIEVLQVIgVE9NVCBQxSBKT0hBTk5FQkVSRw==",
     "VElMTCBI1lNURU4gU1lOUyBWSSBQxSBTS09MQU4gSUdFTg==",
     "VE9SU0RBR1NGT1RCT0xMRU4g1lZFUkxFVkVSIEFMTFQ=",
+    "REVUIMRSIE3ES1RJR1QgQVRUIEhBIEZKxFJSS09OVFJPTEw="
 ]
 
 const local_high_score_html = document.getElementById('your_high_score') 
