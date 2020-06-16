@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inconsolata', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: lightskyblue;
+}
+
+header {
+    margin: 40px;
+    font-weight: 1000;
+    color: orange;
+}
+
+.graphics_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 660px;
+    position: relative;
+    background: turquoise;
+    border: 1px solid black;
+}
+
+.game_text {
+    margin-top: 40px;
+}
+
+.hidden {
+    display: none;
+}
+
+#point_section {
+    width: 200px;
+    position: absolute;
+    left: 350px;
+    top: 40px;
+}
+
+#points_text {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+#points {
+    position: absolute;
+    left: 150px;
+}
+
+#your_high_score_text {
+    position: absolute;
+    top: 30px;
+    left: 0px;
+}
+
+#your_high_score {
+    position: absolute;
+    top: 30px;
+    left: 150px;
+}
+
+#your_high_score:hover {
+    cursor: pointer;
+}
+
+#music_logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: auto;
+}
+
+#music_logo:hover {
+    cursor: pointer;
+}
+
+#music_logo.faded {
+    opacity: 0.5;
+}
+
+#music_logo.faded:hover {
+    opacity: 1;
+}
+
+#description_wrapper {
+    visibility: hidden;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hänga fjärr</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;_<br>        
+&nbsp;&nbsp;&nbsp;__ _(_)(_)&nbsp;_&nbsp;&nbsp;__________&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;_(_)(_)&nbsp;___&nbsp;&nbsp;___<br>
+&nbsp;&nbsp;/ // / _ | / |/ / ___/ _ |&nbsp;&nbsp;&nbsp;/ ____ / / _ | / _ \/ _ \<br>
+&nbsp;/ _&nbsp;&nbsp;/ __ |/&nbsp;&nbsp;&nbsp;&nbsp;/ (_ / __ |&nbsp;&nbsp;/ _// // / __ |/ , _/ , _/<br>
+/_//_/_/ |_/_/|_/\___/_/ |_| /_/&nbsp;&nbsp;\___/_/ |_/_/|_/_/|_|<br> 
+                                                              
+    </header>
+    <main>
+<div class="graphics_wrapper">
+    <section id="graphics">
+    </section>
+    <section id="point_section">
+        <span id="points_text">POÄNG:</span>
+        <span id="points">0</span>
+        <span id="your_high_score_text">HIGH SCORE:</span>
+        <span id="your_high_score">0</span>
+    </section>
+    <img src="img/musik.png" id="music_logo" class="faded" alt="symbol med noter">
+</div>
+
+<section class="game_text">
+    <p id="firstGameInstructions">Skriv SPELA och tryck ENTER för att börja spela.</p>
+    <div id="description_wrapper">
+        <p>Jag tänker på en mening med totalt <span id="sentence_length">13</span> bokstäver. Gissa på en bokstav!</p>
+        <p>Du kan också gissa på hela meningen, men då riskerar du mer om du gissar fel.</p>
+        <br>
+        <span>Gissade bokstäver: </span><span id="guessed_characters"></span>
+        <br>
+        <p>Den hemliga meningen:</p>
+        <p id="word_process">*** ***** ** ***</p>
+        <br>
+    </div>
+<span id="guess"></span><span id="input">█</span>
+<br><br>
+<p id="respons"></p>
+
+</section>
+
+    </main>
+    <script src="js/audio.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
