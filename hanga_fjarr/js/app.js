@@ -87,8 +87,11 @@ const sentences = [
     "SOLEN SKINER PÅ MIN DATORSKÄRM",
     "GOOGLE MEET VS DISCORD",
     "SNABBNUDLAR TILL LUNCH",
-    "LÄNGTAR TILL MAKERSPACE",
     "KAFFEKOKAREN GÅR VARM MELLAN LEKTIONERNA",
+    "EN VARM HÄLSNING MED ARMBÅGEN",
+    "DET EKAR TOMT PÅ JOHANNEBERG",
+    "TILL HÖSTEN SYNS VI PÅ SKOLAN IGEN",
+    "TORSDAGSFOTBOLLEN ÖVERLEVER ALLT",
 ]
 
 const local_high_score_html = document.getElementById('your_high_score') 
@@ -128,7 +131,7 @@ var guessed_characters
 var gameSentences = randomizeArray(sentences)
 var gameSentence
 var notWaiting = true
-var charPresent
+var charPresent = false
 var currentImageId
 var current_points
 var firstGame = true
@@ -254,6 +257,36 @@ function playCharacter(playerGuess) {
                 word_process.innerHTML = `${playerGuess}`
                 updatePointSection(200)
                 setTimeout(() => startGame(current_points), 2000)
+            }
+            else if (playerGuess.length > 1) {
+                if (currentImageId <= 4) {
+                respons.innerHTML=`Fel gissat, och du gissade på mer än en bokstav.<br>Bilden går två steg framåt tyvärr...`
+                currentImageId += 2
+                graphics.innerHTML = images_array[currentImageId]
+                audio.playWrong
+            }
+            else {
+                respons.innerHTML = 'Fel gissat, du hittade tyvärr inte den hemliga meningen.<br>Skriv IGEN om du vill spela igen.'
+                currentImageId += 1
+                graphics.innerHTML = images_array[currentImageId]
+                running = false
+                if (current_points > local_high_score) {
+                    local_high_score = current_points
+                    localStorage.setItem("high_score", local_high_score)
+                    local_high_score_html.innerHTML = local_high_score
+                    document.getElementById('your_high_score_text').style.fontWeight = 'bold'
+                    document.getElementById('your_high_score_text').style.color = 'red'
+                    local_high_score_html.style.fontWeight = 'bold'
+                    local_high_score_html.style.color = 'red'
+                    setTimeout(() => {
+                        local_high_score_html.style.fontWeight = 'normal'
+                        local_high_score_html.style.color = 'black'
+                        document.getElementById('your_high_score_text').style.fontWeight = 'normal'
+                        document.getElementById('your_high_score_text').style.color = 'black'
+                    }, 2000)
+                    
+                }
+            }
             }
             else {
                 if (currentImageId <= 5) {
