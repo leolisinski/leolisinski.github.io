@@ -92,7 +92,8 @@ const sentences = [
     "REVUIEVLQVIgVE9NVCBQxSBKT0hBTk5FQkVSRw==",
     "VElMTCBI1lNURU4gU1lOUyBWSSBQxSBTS09MQU4gSUdFTg==",
     "VE9SU0RBR1NGT1RCT0xMRU4g1lZFUkxFVkVSIEFMTFQ=",
-    "REVUIMRSIE3ES1RJR1QgQVRUIEhBIEZKxFJSS09OVFJPTEw="
+    "REVUIMRSIE3ES1RJR1QgQVRUIEhBIEZKxFJSS09OVFJPTEw=",
+    "VU5EUkFSIE9NIEdSSUQgVklFVyBGVU5HRVJBUiBJREFH"
 ]
 
 const local_high_score_html = document.getElementById('your_high_score') 
@@ -324,7 +325,7 @@ function playCharacter(playerGuess) {
             if (matchCharacter(playerGuess)) {
                 updateWordProgress(playerGuess)
                 if (word_process.innerHTML == gameSentence) {
-                    respons.innerHTML = 'Rätt gissat på hela meningen!<br>Nu kommer nästa mening.'
+                    respons.innerHTML = 'Rätt gissat, du hittade meningen!<br>Nu kommer nästa mening.'
                     updatePointSection(200)
                     setTimeout(() => startGame(current_points), 2000)
                 }
