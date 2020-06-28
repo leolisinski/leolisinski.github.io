@@ -6,6 +6,8 @@ var listen = false
 var heartCounter = 0
 var oneHeartCounter = 0
 var counter = 0
+var pairCounter = 0
+var twoPairCounter = 0
 kortlek.clear_deck()
 kortlek.generate_deck()
 kortlek.shuffle()
@@ -32,6 +34,13 @@ for (let k = 1; k<=5; k++) {
     p(k).unshift(kortlek.deal())
     }
     updatePileImages()
+    counter++
+    document.getElementById('nrOfTimes').innerHTML = counter
+    heartChecker()
+    pairChecker()
+}
+
+function heartChecker() {
     var heart = false
     var heartCounterLocal = 0
     for (let i = 1; i <= 5; i++) {
@@ -45,8 +54,6 @@ for (let k = 1; k<=5; k++) {
         oneHeartCounter++
         document.getElementById('nrOfOneHeart').innerHTML = oneHeartCounter
     }
-        counter++
-        document.getElementById('nrOfTimes').innerHTML = counter
     if (counter > 0) {
         document.getElementById('relFreq').innerHTML = `${(heartCounter/counter).toFixed(7)}`
     }
@@ -55,6 +62,38 @@ for (let k = 1; k<=5; k++) {
     }
     heartCounterLocal = 0
 }
+
+function pairChecker() {
+    var twoPair = false
+    var pair = false
+    var nrOfPairs = 0
+    var tempCounter = 0
+    for (let i = 1; i <= 5; i++) {
+        tempCounter = 0
+        for (let j = 1; j <= 5; j++) {
+            if (p(i)[0].value == p(j)[0].value) {
+                tempCounter += 1}
+        }
+        if (tempCounter == 2) {
+            nrOfPairs ++
+            pair = true
+            if (nrOfPairs == 4) {pair = false; twoPair = true}}
+        if (tempCounter > 2) {pair = false}
+    }
+    if (pair) {
+        pairCounter += 1
+        document.getElementById('nrOfPair').innerHTML = `${pairCounter}`
+        document.getElementById('relFreqPair').innerHTML = `${(pairCounter/counter).toFixed(7)}`
+        }
+    if (twoPair) {
+        twoPairCounter += 1
+        document.getElementById('nrOfOneTwoPairs').innerHTML = `${twoPairCounter}`
+        document.getElementById('relFreqTwoPairs').innerHTML = `${(twoPairCounter/counter).toFixed(7)}`
+        }
+    }
+
+
+
 
 function dealNrOfTimes(number) {
     var i = 1
