@@ -70,7 +70,6 @@ header {
 footer {
     height: 100%;
     width: 100vw;
-    bottom: 0px;
     background: lightskyblue;
     grid-area: fo;
 }
