@@ -5,10 +5,14 @@ const playButton = document.getElementById('play_button')
 const wrongButton = document.getElementById('wrong_button')
 const rightButton = document.getElementById('right_button')
 const gamePicture = document.getElementById('game_picture')
+const countDownCharacter = document.getElementById('count_down')
 var time = 0
 var timeInSeconds = 0
 var timeCounter = 0
 var timerRunning = false
+var pictureNumbers = [1,2,3,4,5,6,7,8,9,10]
+var points = 0
+var picture
 
 function pictureTrue(pictureNr) {
     var pictureNrString = pictureNr.toString()
@@ -30,12 +34,20 @@ function pictureTrue(pictureNr) {
 }
 
 
-playButton.addEventListener('click', () => play())
+playButton.addEventListener('click', () => countDown())
 
 wrongButton.addEventListener('click', () => {
     if (timerRunning) {
         timeCharacters.innerHTML = Number(time).toFixed(2)
         stopTime()
+        if (pictureTrue(picture) == false) {
+            points += 500
+            console.log(points)
+        }
+        else if (pictureTrue(picture)) {
+            points -= 200
+            console.log(points)
+        }
     }
 } )
 
@@ -43,8 +55,37 @@ rightButton.addEventListener('click', () => {
     if (timerRunning) {
         timeCharacters.innerHTML = Number(time).toFixed(2)
         stopTime()
+        if (pictureTrue(picture)) {
+            points += 500
+            console.log(points)
+        }
+        else if (pictureTrue(picture) == false) {
+            points -= 200
+            console.log(points)
+        }
     }
 } )
+
+function chosePicture() {
+    var randomIndex = Math.floor(Math.random() * pictureNumbers.length)
+    var newPictureNumbers = []
+    for (let i = 0; i < pictureNumbers.length; i++) {
+        if (i != randomIndex) {
+            newPictureNumbers.push(pictureNumbers[i])
+        }
+    }
+    output = pictureNumbers[randomIndex]
+    pictureNumbers = newPictureNumbers
+    return output
+}
+
+function startGame() {
+    points = 0
+    pictureNumbers = [1,2,3,4,5,6,7,8,9,10]
+    picture = chosePicture() 
+    startTime()
+    gamePicture.style.background = `url('../img/game_pictures/${picture}.png')`
+}
 
 function startTime() {
     if (timerRunning) {stopTime(); timerRunning = false}
@@ -69,8 +110,27 @@ function stopTime() {
     timerRunning = false
 }
 
-function play() {
-    var number = Math.floor(Math.random()*2 + 1)
-    gamePicture.src = `img/game_pictures/${number}.png`
-    startTime()
+function countDown() {
+    toggleCountDownVisibility()
+    var counter = 4
+    var stopCountDown = false
+    var countDownTimer = setInterval(() => {
+        if (counter == 0) {stopCountDown = true}
+        if (stopCountDown) {
+            clearInterval(countDownTimer)
+            toggleCountDownVisibility()
+            startGame()
+        }
+        countDownCharacter.innerHTML = counter.toString()
+        counter -= 1
+    },1000)
+}
+
+function toggleCountDownVisibility() {
+    if (countDownCharacter.style.visibility == "visible") {
+        countDownCharacter.style.visibility = "hidden"
+    }
+    else {
+        countDownCharacter.style.visibility = "visible"
+    }
 }
