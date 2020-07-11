@@ -22,13 +22,13 @@ nav {
 #nav_list {
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr 2fr;
+    grid-template-columns: repeat(7, 1fr);
 }
 
 a {
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     color: black;
 }
 
@@ -76,8 +76,19 @@ footer {
 }
 
 main {
+    align-items: center;
+    justify-content: center;
+    display: grid;
     height: 100%;
     grid-area: ma;
+    grid-template-areas: 
+    "he he he"
+    ".  .  . "
+    "au .  ip"
+    ".  .  . "
+    ;
+    grid-template-columns: 1fr 5px 1fr;
+    grid-template-rows: 100px 5px 80px 20px;
 }
 
 #wrapper_main_site {
@@ -89,4 +100,38 @@ main {
     "na"
     "ma"
     "fo";
+}
+
+.arbetsuppgifter {
+    grid-area: au;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+
+.infor_prov {
+    grid-area: ip;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.rubrik {
+    font-size: 20px;
+    font-family: 'Holtwood One SC', serif;
+    grid-area: he;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    color: black;
+    font-weight: normal;
 }
