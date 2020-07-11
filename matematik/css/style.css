@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+nav {
+    width: 100%;
+    height: 100%;
+    background: lightskyblue;
+    grid-area: na;
+}
+
+#nav_list {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 2fr;
+}
+
+a {
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: black;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+.btn {
+    background-color: lightskyblue;
+    border: none;
+    color: white; 
+    font-size: 40px;
+  }
+  
+.btn:hover {
+    color: black;
+    cursor: pointer;
+}
+
+#home_button_area {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: he;
+}
+
+#main_header {
+    font-family: 'Holtwood One SC', serif;
+}
+
+footer {
+    height: 100%;
+    width: 100vw;
+    bottom: 0px;
+    background: lightskyblue;
+    grid-area: fo;
+}
+
+main {
+    height: 100%;
+    grid-area: ma;
+}
+
+#wrapper_main_site {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 70px 70px 1fr 30px;
+    grid-template-areas:
+    "he"
+    "na"
+    "ma"
+    "fo";
+}
