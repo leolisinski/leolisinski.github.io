@@ -135,3 +135,11 @@ main {
     color: black;
     font-weight: normal;
 }
+
+@media screen and (max-width: 500px) {
+    #main_header {
+        font-size: 1em;
+    }
+    
+
+}
