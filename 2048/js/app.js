@@ -18,6 +18,7 @@ const brick4_4 = document.getElementById('4_4')
 const brickArray = [brick1_1, brick1_2, brick1_3, brick1_4, brick2_1, brick2_2, brick2_3, brick2_4, brick3_1, brick3_2, brick3_3, brick3_4, brick4_1, brick4_2, brick4_3, brick4_4]
 
 
+
 function placeNumber() {
     if (anyEmptyBricksLeft()) {
         var brickIndex = randomEmptyBrickIndex()
@@ -54,3 +55,4 @@ function anyEmptyBricksLeft() {
     }
     return outcome
 }
+

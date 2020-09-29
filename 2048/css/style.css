@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body {
@@ -10,6 +11,7 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 #grid_wrapper {
@@ -28,7 +30,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: sans-serif;
     font-size: 40px;
     font-weight: bold;
 }
@@ -40,4 +41,62 @@ main {
     background: grey;
     width: 380px;
     height: 380px;
+}
+
+#new_number_button {
+    width: 200px;
+    height: 70px;
+    background: lightskyblue;
+    margin: 20px;
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+#buttons_grid {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 50px 20px 50px;
+    grid-template-rows: 50px 20px 50px;
+    gap: 10px;
+    grid-template-areas: 
+        ". u ."
+        "l . r"
+        ". d .";
+}
+
+#buttons_grid div {
+    background: lightyellow;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttons_grid.horizontal_button {
+    width: 50px;
+    height: 20px;
+}
+
+#buttons_grid.vertical_button {
+    width: 20px;
+    height: 50px;
+}
+
+#up_button {
+    grid-area: u;
+}
+
+#down_button {
+    grid-area: d;
+}
+
+#left_button {
+    grid-area: l;
+}
+
+#right_button {
+    grid-area: r;
 }
