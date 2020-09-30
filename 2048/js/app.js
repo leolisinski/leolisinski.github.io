@@ -23,6 +23,7 @@ upButton.addEventListener('click', () => placeNumber())
 
 function colorPicker(number) {
     if (number == 2) {return "rgb(211,211,211"}
+    else if (number == 0) {return "rgba(211, 211, 211, 0.479)"}
     else {
     var rgbValue_1 = Math.floor(105.5*number % 255)
     var rgbValue_2 = Math.floor(number**2 % 255)
@@ -91,27 +92,71 @@ function drawBoard(boardArray) {
             let brick = eval(`brick${i}_${j}`)
             let number = boardArray[i-1][j-1]
             brick.innerHTML = drawNumber(number)
-            if (number != "") {brick.style.background = colorPicker(number)}
+            brick.style.background = colorPicker(number)
         }
     }
 }
 
-function brickOver([i,j]) {
-    if (i == 1) {return null}
+function brickOver(i,j) {
+    if (i == 0) {return null}
     else {return [i-1, j]}  
 } 
 
-function brickUnder([i,j]) {
-    if (i == 4) {return null}
+function brickUnder(i,j) {
+    if (i == 3) {return null}
     else {return [i+1, j]}  
 }
 
-function brickRight([i,j]) {
-    if (j == 4) {return null}
+function brickRight(i,j) {
+    if (j == 3) {return null}
     else {return [i, j+1]}  
 }
 
-function brickLeft([i,j]) {
-    if (j == 1) {return null}
+function brickLeft(i,j) {
+    if (j == 0) {return null}
     else {return [i, j-1]}  
+}
+
+function move(direction, i, j) {
+    switch(direction) {
+        case "l":
+            if (brickLeft(i,j) == null || extractBoard()[i][j-1] != 0) {return}
+            else {
+                let board = extractBoard()
+                board[i][j-1] = board[i][j] 
+                board[i][j] = 0 
+                drawBoard(board)
+            }
+        break
+
+        case "r":
+            if (brickRight(i,j) == null || extractBoard()[i][j+1] != 0) {return}
+            else {
+                let board = extractBoard()
+                board[i][j+1] = board[i][j] 
+                board[i][j] = 0 
+                drawBoard(board)
+            }
+        break
+
+        case "d":
+            if (brickUnder(i,j) == null || extractBoard()[i+1][j] != 0) {return}
+            else {
+                let board = extractBoard()
+                board[i+1][j] = board[i][j] 
+                board[i][j] = 0 
+                drawBoard(board)
+            }
+        break
+
+        case "u":
+            if (brickOver(i,j) == null || extractBoard()[i-1][j] != 0) {return}
+            else {
+                let board = extractBoard()
+                board[i-1][j] = board[i][j] 
+                board[i][j] = 0 
+                drawBoard(board)
+            }
+        break
+    }
 }

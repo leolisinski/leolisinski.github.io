@@ -23,6 +23,7 @@ body {
 }
 
 #grid_wrapper div {
+    transition: all ease-in-out 0.1s;
     width: 80px;
     height: 80px;
     background:rgba(211, 211, 211, 0.479);
