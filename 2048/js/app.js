@@ -17,9 +17,16 @@ const brick4_4 = document.getElementById('4_4')
 
 const brickArray = [brick1_1, brick1_2, brick1_3, brick1_4, brick2_1, brick2_2, brick2_3, brick2_4, brick3_1, brick3_2, brick3_3, brick3_4, brick4_1, brick4_2, brick4_3, brick4_4]
 
+var mergedMarkingArray = [[0,0,0,0,],[0,0,0,0,],[0,0,0,0,],[0,0,0,0,]]
+
 const upButton = document.getElementById('up_button')
+const downButton = document.getElementById('down_button')
+const leftButton = document.getElementById('left_button')
+const rightButton = document.getElementById('right_button')
 
 upButton.addEventListener('click', () => placeNumber())
+leftButton.addEventListener('click', () => moveAll("l"))
+rightButton.addEventListener('click', () => moveAll("r"))
 
 function colorPicker(number) {
     if (number == 2) {return "rgb(211,211,211"}
@@ -117,7 +124,7 @@ function brickLeft(i,j) {
     else {return [i, j-1]}  
 }
 
-function move(direction, i, j) {
+function moveBrick(direction, i, j) {
     switch(direction) {
         case "l":
             if (brickLeft(i,j) == null || extractBoard()[i][j-1] != 0) {return}
@@ -159,4 +166,112 @@ function move(direction, i, j) {
             }
         break
     }
+}
+
+function valueNextTo(direction, i, j) {
+    switch(direction) {
+        case "l":
+            if (brickLeft(i, j) != null) {
+                return extractBoard()[i][j-1]
+            }
+        break
+
+        case "r":
+            if (brickRight(i, j) != null) {
+                return extractBoard()[i][j+1]
+            }
+        break
+
+        case "d":
+            if (brickUnder(i, j) != null) {
+                return extractBoard()[i+1][j]
+            }
+        break
+
+        case "u":
+            if (brickOver(i, j) != null) {
+                return extractBoard()[i-1][j]
+            }
+        break
+    }
+}
+
+function moveAll(direction) {
+    
+    switch(direction) {
+
+        case "l":
+            while (canMove("l")) {
+            for (let j = 1; j <= 3; j++) {
+                for (let i = 0; i <= 3; i++) {
+                    if (valueNextTo("l", i, j) == 0) {
+                        moveBrick("l", i, j)  
+                    }
+                    else if (valueNextTo("l", i, j) == extractBoard()[i][j]) {
+                        let board = extractBoard()
+                        let value = board[i][j]
+                        board[i][j-1] = value*2
+                        board[i][j] = 0
+                        mergedMarkingArray[i][j-1] = 1
+                        drawBoard(board)
+                    }
+
+                }
+            }
+        }
+        break
+
+        case "r":
+            while (canMove("r")) {
+            for (let j = 0; j <= 2; j++) {
+                for (let i = 0; i <= 3; i++) {
+                    if (valueNextTo("r", i, j) == 0) {
+                        moveBrick("r", i, j)  
+                    }
+                    else if (valueNextTo("r", i, j) == extractBoard()[i][j]) {
+                        let board = extractBoard()
+                        let value = board[i][j]
+                        board[i][j+1] = value*2
+                        board[i][j] = 0
+                        mergedMarkingArray[i][j+1] = 1
+                        drawBoard(board)
+                    }
+
+                }
+            }
+            console.log(mergedMarkingArray)
+        }
+        break
+
+
+
+    }
+    clearMergeMarkings()
+}
+
+function canMove(direction) {
+    switch(direction) {
+        case "l":
+            for (let j = 1; j <= 3; j++) {
+                for (let i = 0; i <= 3; i++) {
+                    let board = extractBoard()
+                    let value = board[i][j]
+                    if (
+                        ((valueNextTo("l", i, j) == 0 && value != 0) && mergedMarkingArray[i][j] == 0)
+                        ||
+                        ((valueNextTo("l", i, j) == value) && (mergedMarkingArray[i][j] == 0 && mergedMarkingArray[i][j-1] == 0))
+                    )
+                    {
+                        return true
+                    }
+                }
+            }
+
+        break
+    }
+    return false
+}
+
+function clearMergeMarkings() {
+    mergedMarkingArray = [[0,0,0,0,],[0,0,0,0,],[0,0,0,0,],[0,0,0,0,]]
 }
