@@ -38,7 +38,7 @@ function placeNumber() {
         brick.innerHTML = `${number}`
     }
     else
-    console.log("no empty bricks left, game over")
+    gameOver()
 }
 
 
@@ -103,13 +103,10 @@ function brickLeft(i,j) {
 function moveBrick(direction, i, j) {
     switch(direction) {
         case "l":
-            if (brickLeft(i,j) == null || extractBoard()[i][j-1] != 0) {return}
-            else {
-                let board = extractBoard()
-                board[i][j-1] = board[i][j] 
-                board[i][j] = 0 
-                drawBoard(board)
-            }
+            let board = extractBoard()
+            board[i][j-1] = board[i][j] 
+            board[i][j] = 0 
+            drawBoard(board)
         break
 
         case "r":
@@ -180,7 +177,7 @@ function moveAll(direction) {
             while (canMove("l")) {
             for (let j = 1; j <= 3; j++) {
                 for (let i = 0; i <= 3; i++) {
-                    if (valueNextTo("l", i, j) == 0) {
+                    if ((valueNextTo("l", i, j) == 0) && extractBoard()[i][j] != 0) {
                         moveBrick("l", i, j)  
                     }
                     else if (valueNextTo("l", i, j) == extractBoard()[i][j]) {
@@ -189,6 +186,7 @@ function moveAll(direction) {
                         board[i][j-1] = value*2
                         board[i][j] = 0
                         mergedMarkingArray[i][j-1] = 1
+                        mergedMarkingArray[i][j] = 1
                         drawBoard(board)
                     }
 
@@ -237,7 +235,8 @@ function canMove(direction) {
                         ||
                         ((valueNextTo("l", i, j) == value) && (mergedMarkingArray[i][j] == 0 && mergedMarkingArray[i][j-1] == 0))
                     )
-                    {
+                    {   
+                        console.log("true")
                         return true
                     }
                 }
@@ -250,4 +249,8 @@ function canMove(direction) {
 
 function clearMergeMarkings() {
     mergedMarkingArray = [[0,0,0,0,],[0,0,0,0,],[0,0,0,0,],[0,0,0,0,]]
+}
+
+function gameOver() {
+    console.log("Game over")
 }

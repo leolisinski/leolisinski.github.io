@@ -59,8 +59,8 @@ main {
 #buttons_grid {
     margin: 20px;
     display: grid;
-    grid-template-columns: 50px 20px 50px;
-    grid-template-rows: 50px 20px 50px;
+    grid-template-columns: 100px 50px 100px;
+    grid-template-rows: 100px 50px 100px;
     gap: 10px;
     grid-template-areas: 
         ". u ."
