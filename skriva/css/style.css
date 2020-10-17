@@ -13,8 +13,8 @@
         "a s d f g h j k l ö ä"
         ". . z x c v b n m . ."
     ;
-    grid-template-rows: repeat(3,25px);
-    grid-template-columns: repeat(11, 25px);
+    grid-template-rows: repeat(3,50px);
+    grid-template-columns: repeat(11, 50px);
     gap: 5px;
 }
 
