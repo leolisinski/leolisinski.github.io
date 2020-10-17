@@ -76,4 +76,5 @@ header {
 
 #progress_section {
     visibility: hidden;
+    font-family: 'Courier New', Courier, monospace;
 }
