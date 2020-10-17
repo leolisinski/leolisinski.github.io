@@ -7,7 +7,6 @@
 #alphabet_section {
     margin-top: 50px;
     display: grid;
-    width: 550px;
     height: 150px;
     grid-template-areas: 
         "q w e r t y u i o p å"
