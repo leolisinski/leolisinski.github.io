@@ -62,7 +62,7 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: rgb(251, 215, 220);
+    background-color: rgb(251, 215, 220);
 }
 
 header {
