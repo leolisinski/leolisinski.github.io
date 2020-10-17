@@ -19,6 +19,9 @@ const wordsArray = [
 const letters = document.getElementsByClassName('letter')
 
 function newGame() {
+    for (let i = 0; i < letters.length; i++) {
+        letters[i].style.background = 'lightgray'
+    }
     header.innerHTML = "Ska vi skriva?"
     var notGuessedWords = wordsArray.slice()
     if (notGuessedWords.length > 0) {
@@ -51,8 +54,11 @@ function playCharacter(character) {
     if (character == pickedWord[i]) {
         correctCharacters += character
         progressSection.innerHTML = progressGenerator(correctCharacters, pickedWord)
+        for (let i = 0; i < letters.length; i++) {
+            if (letters[i].innerHTML == character) {letters[i].style.background = 'green'}
+        }
         if (correctCharacters == pickedWord) {
-            header.innerHTML = "BRA JOBBAT!"
+            header.innerHTML = "Bra jobbat!"
             setTimeout(() => {newGame()}, 2000)
         }
     }
