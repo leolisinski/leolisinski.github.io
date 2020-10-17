@@ -65,4 +65,11 @@ for (let i = 0; i < letters.length; i++) {
     })
 }
 
+for (let i = 0; i < letters.length; i++) {
+    letters[i].addEventListener('touchstart', (press) => {
+        let character = press.path[0].innerHTML
+        playCharacter(character)
+    })
+}
+
 newGame()
