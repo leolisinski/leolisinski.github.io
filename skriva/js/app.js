@@ -64,3 +64,5 @@ for (let i = 0; i < letters.length; i++) {
         playCharacter(character)
     })
 }
+
+newGame()
