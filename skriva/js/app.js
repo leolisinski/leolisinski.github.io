@@ -43,7 +43,7 @@ function progressGenerator(correctCharacters, pickedWord) {
         i += 1
     }
     while (i < pickedWord.length) {
-        progressString += "&#x25AE;"
+        progressString += ""
         i += 1
     }
     return progressString
@@ -54,9 +54,7 @@ function playCharacter(character) {
     if (character == pickedWord[i]) {
         correctCharacters += character
         progressSection.innerHTML = progressGenerator(correctCharacters, pickedWord)
-        for (let i = 0; i < letters.length; i++) {
-            if (letters[i].innerHTML == character) {letters[i].style.background = 'green'}
-        }
+        
         if (correctCharacters == pickedWord) {
             header.innerHTML = "Bra jobbat!"
             setTimeout(() => {newGame()}, 2000)
@@ -66,14 +64,8 @@ function playCharacter(character) {
 
 for (let i = 0; i < letters.length; i++) {
     letters[i].addEventListener('click', (press) => {
-        let character = press.path[0].innerHTML
-        playCharacter(character)
-    })
-}
-
-for (let i = 0; i < letters.length; i++) {
-    letters[i].addEventListener('touchstart', (press) => {
-        let character = press.path[0].innerHTML
+        let character = press.target.innerHTML
+        console.log(press.target.innerHTML)
         playCharacter(character)
     })
 }
