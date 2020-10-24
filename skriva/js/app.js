@@ -43,7 +43,7 @@ function progressGenerator(correctCharacters, pickedWord) {
         i += 1
     }
     while (i < pickedWord.length) {
-        progressString += ""
+        progressString += "."
         i += 1
     }
     return progressString
