@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#alphabet_section {
+    margin-top: 50px;
+    display: grid;
+    height: 90px;
+    grid-template-areas: 
+        "q w e r t y u i o p å"
+        "a s d f g h j k l ö ä"
+        ". . z x c v b n m . ."
+    ;
+    grid-template-rows: repeat(3,30px);
+    grid-template-columns: repeat(11, 30px);
+    gap: 5px;
+}
+
+#alphabet_section div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    border: 2px solid black;
+    background: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#alphabet_section div:hover {
+    cursor: pointer;
+}
+
+#a {grid-area: a;}
+#b {grid-area: b;}
+#c {grid-area: c;}
+#d {grid-area: d;}
+#e {grid-area: e;}
+#f {grid-area: f;}
+#g {grid-area: g;}
+#h {grid-area: h;}
+#i {grid-area: i;}
+#j {grid-area: j;}
+#k {grid-area: k;}
+#l {grid-area: l;}
+#m {grid-area: m;}
+#n {grid-area: n;}
+#o {grid-area: o;}
+#p {grid-area: p;}
+#q {grid-area: q;}
+#r {grid-area: r;}
+#s {grid-area: s;}
+#t {grid-area: t;}
+#u {grid-area: u;}
+#v {grid-area: v;}
+#w {grid-area: w;}
+#x {grid-area: x;}
+#y {grid-area: y;}
+#z {grid-area: z;}
+#å {grid-area: å;}
+#ä {grid-area: ä;}
+#ö {grid-area: ö;}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(251, 215, 220);
+}
+
+header {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+#instruction_section {
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+#progress_section {
+    margin: 20px;
+    font-size: 30px;
+    visibility: hidden;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+@media only screen and (orientation: landscape) {
+
+    #alphabet_section {
+        margin-top: 0px;
+        display: grid;
+        height: 180px;
+        grid-template-areas: 
+            "q w e r t y u i o p å"
+            "a s d f g h j k l ö ä"
+            ". . z x c v b n m . ."
+        ;
+        grid-template-rows: repeat(3,60px);
+        grid-template-columns: repeat(11, 60px);
+        gap: 5px;
+    }
+
+    #alphabet_section div {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 30px;
+        border: 2px solid black;
+        background: lightgray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+}
