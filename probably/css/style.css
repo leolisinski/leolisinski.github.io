@@ -23,7 +23,7 @@ body {
     cursor: pointer;
 }
 
-.grid_wrapper {
+.flex_wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
