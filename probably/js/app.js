@@ -18,16 +18,16 @@ function rollDice(diceIndex) {
                 dice.src = dice.src.slice(0, dice.src.length - 5) + `${diceFace}` + ".png"
                 switch (direction) {
                     case 0: 
-                        dice.style.top = "7px"
+                        dice.style.top = "5px"
                     break
                     case 1: 
-                    dice.style.left = "7px"
+                    dice.style.left = "5px"
                     break
                     case 2: 
-                    dice.style.left = "-7px"
+                    dice.style.left = "-5px"
                     break
                     case 3: 
-                    dice.style.top = "-7px"
+                    dice.style.top = "-5px"
                     break
                 }
             }, 100 + 200*i)
