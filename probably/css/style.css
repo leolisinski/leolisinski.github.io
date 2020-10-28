@@ -5,21 +5,30 @@
 }
 
 body {
-    position: relative;
+    display: flex;
     width: 100vw;
     height: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#dice {
+.dice {
     position: relative;
     width: 100px;
     height: 100px;
+    margin: 20px;
 }
 
-#dice:hover {
+.dice:hover {
     cursor: pointer;
 }
 
+.grid_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    width: 700px;
+    height: 400px;
+}

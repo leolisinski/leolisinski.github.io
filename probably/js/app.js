@@ -1,6 +1,8 @@
-const dice = document.getElementById('dice')
+const dices = document.getElementsByClassName('dice')
 
-function rollDice() {
+
+function rollDice(diceIndex) {
+    var dice = dices[diceIndex] 
     var i = 0
     var direction = Math.floor(Math.random() * 4)
     var diceFace = Math.floor(Math.random() * 6) + 1
@@ -42,6 +44,17 @@ function rollDice() {
         }
     }
 
-dice.addEventListener('click', () => {rollDice()})
+function rollAllDices() {
+for (let i = 0; i < dices.length; i++) {
+    rollDice(i)
+}}
 
+function initialize() {
+for (let i = 0; i < dices.length; i++) {
+    let firstDiceFace = Math.floor(Math.random() * 6) + 1
+    let dice = dices[i]
+    dice.src = dice.src.slice(0, dice.src.length - 5) + `${firstDiceFace}` + ".png"
+    dice.addEventListener('click', () => rollAllDices())
+}}
 
+initialize()
