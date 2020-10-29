@@ -1,4 +1,6 @@
 const dices = document.getElementsByClassName('dice')
+const counter = document.getElementById('counter')
+var counterValue = 0
 
 function changeDiceFace(diceIndex, newFace) {
     var dice = dices[diceIndex]
@@ -62,11 +64,67 @@ function rollAllManyTimes(times, milliSecondsPerRoll) {
     }
 }
 
+function rollAllFastManyTimesUntilAllSame(times) {
+    var notReachedAllSame = true
+    for (let i = 0; i < times; i++) {
+        if (notReachedAllSame) {
+        setTimeout(() => {
+            result = rollAllOneTime()
+            if (allSame(result)) {notReachedAllSame = false}
+            counterValue += 1
+            counter.innerHTML = `${counterValue}`
+        }, 1*times)
+    }
+    }
+}
+
+function rollAllFastManyTimesUntilFiveSame(times) {
+    counterValue = 0
+    counter.innerHTML = `${counterValue}`
+    var i = 0
+    var notReachedFiveSame = true
+    while (i <= times && notReachedFiveSame == true) {
+        setTimeout(() => {
+            result = rollAllOneTime()
+            if (fiveSame(result)) {
+                console.log("FIVE SAME!")
+                notReachedFiveSame = false
+                console.log(notReachedFiveSame == true)
+                }
+            counterValue += 1
+            counter.innerHTML = `${counterValue}`
+        }, 1*i)
+        i += 1
+    }
+}
+
 function allSame(result) {
     for (let i = 1; i < result.length; i++) {
         if (result[i] != result[0]) {return false}
     }
     return true
+}
+
+function fiveSame(result) {
+    var equalCounter = []
+    var tempCounter
+    for (let i = 1; i <= 6; i++) {
+        tempCounter = 0
+        for (let j = 0; j < result.length; j++) {
+            if (result[j] == i) {tempCounter += 1}
+        }
+        equalCounter.push(tempCounter)
+    }
+    return highestInArray(equalCounter) == 5
+}
+
+function highestInArray(array) {
+    output = array[0]
+    if (array.length == 1) {return output}
+    for (let i = 1; i < array.length; i++) {
+        if (array[i] > output) {output = array[i]} 
+    }
+    return output
 }
 
 function rollAllDicesAnimated(time) {
