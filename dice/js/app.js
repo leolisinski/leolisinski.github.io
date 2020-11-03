@@ -1,6 +1,96 @@
 const dices = document.getElementsByClassName('dice')
-const counter = document.getElementById('counter')
-var counterValue = 0
+const rollCounter = document.getElementById('counterRolls')
+const twoCounter = document.getElementById('counterTwo')
+const threeCounter = document.getElementById('counterThree')
+const fourCounter = document.getElementById('counterFour')
+const fiveCounter = document.getElementById('counterFive')
+const sixCounter = document.getElementById('counterSix')
+const sevenCounter = document.getElementById('counterSeven')
+const eightCounter = document.getElementById('counterEight')
+const nineCounter = document.getElementById('counterNine')
+const tenCounter = document.getElementById('counterTen')
+const button = document.getElementById('button')
+const inputField = document.getElementById('input_box')
+
+button.addEventListener('click', ()=> {
+    rollAllFastNrOfTimes(eval(inputField.value))
+})
+
+var rollValue = 0
+var twoValue = 0
+var threeValue = 0
+var fourValue = 0
+var fiveValue = 0
+var sixValue = 0
+var sevenValue = 0
+var eightValue = 0
+var nineValue = 0
+var tenValue = 0
+
+function updateValueAndHTML(identifier, value) {
+    switch (identifier) {
+        case 1:
+            rollValue = value
+            rollCounter.innerHTML = `${value}`
+            break
+        case 2:
+            twoValue = value
+            twoCounter.innerHTML = `${value}`
+            break
+        case 3:
+            threeValue = value
+            threeCounter.innerHTML = `${value}`
+            break
+        case 4:
+            fourValue = value
+            fourCounter.innerHTML = `${value}`
+            break
+        case 5:
+            fiveValue = value
+            fiveCounter.innerHTML = `${value}`
+            break
+        case 6:
+            sixValue = value
+            sixCounter.innerHTML = `${value}`
+            break
+        case 7:
+            sevenValue = value
+            sevenCounter.innerHTML = `${value}`
+            break
+        case 8:
+            eightValue = value
+            eightCounter.innerHTML = `${value}`
+            break
+        case 9:
+            nineValue = value
+            nineCounter.innerHTML = `${value}`
+            break
+        case 10:
+            tenValue = value
+            tenCounter.innerHTML = `${value}`
+            break
+    }
+}
+
+function clearValuesAndHTML() {
+    for (let i = 1; i <= 10; i++) {
+        updateValueAndHTML(i, 0)
+    }
+}
+
+function updateHTMLfromValues() {
+    updateValueAndHTML(1, rollValue)
+    updateValueAndHTML(2, twoValue)
+    updateValueAndHTML(3, threeValue)
+    updateValueAndHTML(4, fourValue)
+    updateValueAndHTML(5, fiveValue)
+    updateValueAndHTML(6, sixValue)
+    updateValueAndHTML(7, sevenValue)
+    updateValueAndHTML(8, eightValue)
+    updateValueAndHTML(9, nineValue)
+    updateValueAndHTML(10, tenValue)
+}
+
 
 function changeDiceFace(diceIndex, newFace) {
     var dice = dices[diceIndex]
@@ -64,38 +154,102 @@ function rollAllManyTimes(times, milliSecondsPerRoll) {
     }
 }
 
-function rollAllFastManyTimesUntilAllSame(times) {
-    var notReachedAllSame = true
-    for (let i = 0; i < times; i++) {
-        if (notReachedAllSame) {
-        setTimeout(() => {
-            result = rollAllOneTime()
-            if (allSame(result)) {notReachedAllSame = false}
-            counterValue += 1
-            counter.innerHTML = `${counterValue}`
-        }, 1*times)
-    }
-    }
-}
-
-function rollAllFastManyTimesUntilFiveSame(times) {
+function rollAllFastManyTimesUntilAllSame() {
     counterValue = 0
     counter.innerHTML = `${counterValue}`
-    var i = 0
-    var notReachedFiveSame = true
-    while (i <= times && notReachedFiveSame == true) {
-        setTimeout(() => {
-            result = rollAllOneTime()
-            if (fiveSame(result)) {
-                console.log("FIVE SAME!")
-                notReachedFiveSame = false
-                console.log(notReachedFiveSame == true)
-                }
-            counterValue += 1
-            counter.innerHTML = `${counterValue}`
-        }, 1*i)
+    var interval = setInterval(() => {
+        result = rollAllOneTime()
+        if (allSame(result)) {
+            clearInterval(interval)
+        }
+        counterValue += 1
+        counter.innerHTML = `${counterValue}`
+    },1) 
+}
+
+function rollAllFastNrOfTimes(number) {
+    var i = 1
+    clearValuesAndHTML()
+    var interval = setInterval(() => {
+        rollValue += 1
+        result = rollAllOneTime()
+        switch(nrOfSame(result)) {
+            case 0:
+                zeroValue += 1
+                break
+            case 2:
+                twoValue += 1
+                break
+            case 3: 
+                threeValue += 1
+                break
+            case 4:
+                fourValue += 1
+                break
+            case 5:
+                fiveValue += 1
+                break
+            case 6:
+                sixValue += 1
+                break
+            case 7:
+                sevenValue += 1
+                break
+            case 8:
+                eightValue += 1
+                break
+            case 9:
+                nineValue += 1
+                break
+            case 10:
+                tenValue += 1
+                break
+        } 
+        updateHTMLfromValues()
+        if (i == number) {clearInterval(interval)}
         i += 1
-    }
+},1)
+}
+
+function rollAllFastManyTimesUntilFiveSame() {
+    counterValue = 0
+    counter.innerHTML = `${counterValue}`
+    var interval = setInterval(() => {
+        result = rollAllOneTime()
+        if (nrOfSame(result) == 5) {
+            clearInterval(interval)
+        }
+        counterValue += 1
+        counter.innerHTML = `${counterValue}`
+    },1) 
+}
+
+function rollAllFastManyTimesUntilNrOfSame(number) {
+    counterValue = 0
+    counter.innerHTML = `${counterValue}`
+    var interval = setInterval(() => {
+        result = rollAllOneTime()
+        if (nrOfSame(result) == number) {
+            clearInterval(interval)
+        }
+        counterValue += 1
+        counter.innerHTML = `${counterValue}`
+    },1) 
+}
+
+function rollAllFastNumberOfTimesUntilNrOfSame(numberOfTimes, nrToGet) {
+    counterValue = 0
+    counter.innerHTML = `${counterValue}`
+    var i = 1
+    var interval = setInterval(() => {
+        result = rollAllOneTime()
+        if (nrOfSame(result) == nrToGet) {
+            counterValue += 1
+        }
+        counter.innerHTML = `${counterValue}`
+        if (i == numberOfTimes) {clearInterval(interval)}
+        i += 1
+    },1) 
 }
 
 function allSame(result) {
@@ -116,6 +270,19 @@ function fiveSame(result) {
         equalCounter.push(tempCounter)
     }
     return highestInArray(equalCounter) == 5
+}
+
+function nrOfSame(result) {
+    var equalCounter = []
+    var tempCounter
+    for (let i = 1; i <= 6; i++) {
+        tempCounter = 0
+        for (let j = 0; j < result.length; j++) {
+            if (result[j] == i) {tempCounter += 1}
+        }
+        equalCounter.push(tempCounter)
+    }
+    return highestInArray(equalCounter)
 }
 
 function highestInArray(array) {
@@ -141,8 +308,6 @@ for (let i = 0; i < dices.length; i++) {
     )
     dice.addEventListener('dblclick', () => rollAllDicesAnimated(10))
 }}
-
-initialize()
 
 function rollDice() { 
     return Math.floor(Math.random() * 6) + 1
@@ -175,3 +340,5 @@ function rollUntilAllSame() {
     }
     return iteration
 }
+
+initialize()
