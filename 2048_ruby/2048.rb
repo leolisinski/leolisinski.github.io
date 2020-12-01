@@ -29,7 +29,34 @@ def draw_board()
     puts "              -------------          "
     puts "                 +ENTER              "
     puts "                                     "
+    puts "                  SCORE:             "
+    points_row(@current_points)
 end
+
+def points_row(points)
+    case points.to_s.length
+    when 1
+        puts "                    #{points}                "
+    when 2
+        puts "                   #{points}                "
+    when 3
+        puts "                   #{points}               "
+    when 4
+        puts "                  #{points}               "
+    when 5
+        puts "                  #{points}              "
+    when 6
+        puts "                 #{points}              "
+    when 7
+        puts "                 #{points}             "
+    when 8
+        puts "                #{points}             "
+    when 9
+        puts "                #{points}            "
+    end
+end
+
+@current_points = 0
 
 def assign()
     @a_11 = @value_vector[0][0][0]
@@ -233,6 +260,7 @@ def move_brick_one_step(i, j, direction)
             if brick_value(i, j) == brick_value(i, j-1)
                 if @joined_markers[i][j-1] == false 
                     place_value(i, j-1, brick_value(i, j)*2)
+                    @current_points += brick_value(i, j)*2
                     clear_brick(i, j)
                     @brick_moved = true
                     @joined_markers[i][j-1] = true
@@ -250,6 +278,7 @@ def move_brick_one_step(i, j, direction)
             if brick_value(i, j) == brick_value(i, j+1)
                 if @joined_markers[i][j+1] == false 
                     place_value(i, j+1, brick_value(i, j)*2)
+                    @current_points += brick_value(i, j)*2
                     clear_brick(i, j)
                     @brick_moved = true
                     @joined_markers[i][j+1] = true 
@@ -267,6 +296,7 @@ def move_brick_one_step(i, j, direction)
             if brick_value(i, j) == brick_value(i+1, j)
                 if @joined_markers[i+1][j] == false 
                     place_value(i+1, j, brick_value(i, j)*2)
+                    @current_points += brick_value(i, j)*2
                     clear_brick(i, j)
                     @brick_moved = true
                     @joined_markers[i+1][j] = true 
@@ -284,6 +314,7 @@ def move_brick_one_step(i, j, direction)
             if brick_value(i, j) == brick_value(i-1, j)
                 if @joined_markers[i-1][j] == false 
                     place_value(i-1, j, brick_value(i, j)*2)
+                    @current_points += brick_value(i, j)*2
                     clear_brick(i, j)
                     @brick_moved = true
                     @joined_markers[i-1][j] == true 
@@ -600,6 +631,7 @@ def create_new_brick()
         number = 2
     end
     @value_vector[random_row_index][random_column_index][3] = number
+    @current_points += number
     draw_board()
 end
 
