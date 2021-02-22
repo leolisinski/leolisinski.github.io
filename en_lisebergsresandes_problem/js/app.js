@@ -84,6 +84,7 @@ for (let i = 0; i < places.length; i++) {
     places[i].addEventListener('click', (event) => {
         stepCounter += 1
         if (clickPassive) {
+            storedDistance = 0
             tabell.style.visibility = "visible"
             hideAllLines()
             clickPassive = false; 
