@@ -1,6 +1,6 @@
 def draw_board()
     assign()
-    system("clear")
+    system("cls")
     puts"
     ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
     ■       ■       ■       ■       ■
