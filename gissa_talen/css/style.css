@@ -1,7 +1,13 @@
+@font-face {
+    font-family: "SuperPlumberBrothers";
+    src: url(../fonts/SuperPlumberBrothers.ttf) format("truetype");
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background: rgb(243, 173, 145);
 }
 
 section {
@@ -23,8 +29,13 @@ section {
     width: 70px;
     height: 110px;
     background: lightgreen;
-    border: 2px solid black;
+    border: 2px solid grey;
     border-radius: 10%;
+}
+
+.number_box:hover {
+    border: 2px solid black;
+    cursor: pointer;
 }
 
 .number_box.hidden {
@@ -43,6 +54,7 @@ section {
 header {
     margin: 70px;
     font-size: 100px;
+    font-family: SuperPlumberBrothers;
 }
 
 body {
