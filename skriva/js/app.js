@@ -14,6 +14,15 @@ const wordsArray = [
     "KATT",
     "CYKEL",
     "ÄGG",
+    "KULBANA",
+    "ÄNGGÅRDEN",
+    "PASTA",
+    "FÖRSKOLAN",
+    "SOVA",
+    "FRUKOST",
+    "MAT",
+    "ÄPPELJUICE",
+    "LEGO"
 ]
 
 const letters = document.getElementsByClassName('letter')
@@ -65,7 +74,6 @@ function playCharacter(character) {
 for (let i = 0; i < letters.length; i++) {
     letters[i].addEventListener('click', (press) => {
         let character = press.target.innerHTML
-        console.log(press.target.innerHTML)
         playCharacter(character)
     })
 }
