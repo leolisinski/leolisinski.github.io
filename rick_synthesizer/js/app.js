@@ -63,10 +63,14 @@ document.getElementById('c2').addEventListener('click', () => {
 })
 
 document.getElementById('tetris_button').addEventListener('click', () => {
+    rick.pause()
+    rick.currentTime = 0
     tetris.play()
 })
 
 document.getElementById('rick_button').addEventListener('click', () => {
+    tetris.pause()
+    tetris.currentTime = 0
     rick.play()
 })
 
