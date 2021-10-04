@@ -32,7 +32,7 @@ var obstacleList = []
 
 // Lyssnare
 
-headerHTML.innerHTML = "Test"
+headerHTML.innerHTML = "Test2"
 
 
 document.addEventListener('keydown', keyEvent => keyListener(keyEvent))
