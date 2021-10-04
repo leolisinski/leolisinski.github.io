@@ -32,15 +32,8 @@ var obstacleList = []
 
 // Lyssnare
 
-headerHTML.innerHTML = "Test2"
-
-
 document.addEventListener('keydown', keyEvent => keyListener(keyEvent))
 document.addEventListener('click', clickEvent => main(clickEvent))
-
-window.addEventListener('devicemotion', event => {
-    stepY += 1
-  });
 
 // Funktioner
 
