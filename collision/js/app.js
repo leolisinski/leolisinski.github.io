@@ -206,6 +206,14 @@ function main(clickEvent) {
             distanceFromObstacle("c", 6, playerX, playerY) < 0
             ||
             distanceFromObstacle("c", 7, playerX, playerY) < 0
+            ||
+            y < 0
+            ||
+            600 - y < 0
+            ||
+            x < 0
+            ||
+            800 - x < 0
         ) {
             clearInterval(gameInterval)
             timeHTML.innerHTML = 'Collision, Game Over'
