@@ -9,7 +9,7 @@ const timeHTML = document.getElementById('time_html')
 const headerHTML = document.getElementById('main_header')
 var intervalCounter = 0
 var points = 0
-var time = 60
+var time = 10
 var stepX = 0
 var stepY = 0
 var playerRadius = 10
@@ -219,6 +219,13 @@ function main(clickEvent) {
             timeHTML.innerHTML = 'Collision, Game Over'
             headerHTML.innerHTML = 'Browser refresh to play again'
             headerHTML.style.color = 'black'
+            gameContext.clearRect(0, 0, 800, 600)
+            gameContext.beginPath()
+            gameContext.arc(playerX, playerY, playerRadius, 0, 2 * Math.PI)
+            gameContext.fillStyle = 'red'
+            gameContext.strokeStyle = 'green'
+            gameContext.stroke()
+            gameContext.fill()
         }
 
         playerX = playerX + stepX
@@ -236,9 +243,16 @@ function main(clickEvent) {
 
         if (time <= 0) {
             clearInterval(gameInterval)
-            timeHTML.innerHTML = 'Time is up, Game over'
+            timeHTML.innerHTML = 'Time up, Game over'
             headerHTML.innerHTML = 'Browser refresh to play again'
             headerHTML.style.color = 'black'
+            gameContext.clearRect(0, 0, 800, 600)
+            gameContext.beginPath()
+            gameContext.arc(playerX, playerY, playerRadius, 0, 2 * Math.PI)
+            gameContext.fillStyle = 'red'
+            gameContext.strokeStyle = 'green'
+            gameContext.stroke()
+            gameContext.fill()
         }
     }, 100)
 }
