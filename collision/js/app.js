@@ -239,7 +239,7 @@ function main(clickEvent) {
         }
 
         points += (Math.abs(stepX) + Math.abs(stepY))
-        pointsHTML.innerHTML = points
+        pointsHTML.innerHTML = `POINTS: ${points}`
 
         if (time <= 0) {
             clearInterval(gameInterval)
