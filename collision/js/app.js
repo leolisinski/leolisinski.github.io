@@ -39,7 +39,7 @@ document.addEventListener('keydown', keyEvent => keyListener(keyEvent))
 document.addEventListener('click', clickEvent => main(clickEvent))
 
 window.addEventListener('devicemotion', event => {
-    headerHTML.innerHTML = "Hej"
+    stepY += 1
   });
 
 // Funktioner
