@@ -59,73 +59,73 @@ function drawDistanceToObstacle(type, pl_x, pl_y, index_of_obstacle) {
             var obst_r = obstacles[index_of_obstacle][3]
             // context.lineTo(obst_x, obst_y)
             // context.stroke()
-            var distance = Math.sqrt(((obst_x - pl_x)**2) + ((obst_y - pl_y)**2)) - obst_r - radius 
+            var distance = Math.sqrt(((obst_x - pl_x)**2) + ((obst_y - pl_y)**2)) - obst_r - radius*0.8 
             return distance 
         case "r":
             var obst_left_border = obstacles[index_of_obstacle][1]
             var obst_right_border = obstacles[index_of_obstacle][1] + obstacles[index_of_obstacle][3] 
-            var obst_top_border = obstacles[index_of_obstacle][2]
-            var obst_bottom_border = obstacles[index_of_obstacle][2] + obstacles[index_of_obstacle][4]
-            
+            var obst_top_border = obstacles[index_of_obstacle][2] - 5
+            var obst_bottom_border = obstacles[index_of_obstacle][2] + obstacles[index_of_obstacle][4] - 5
+
             // context.moveTo(pl_x, pl_y)
             // Rakt till vänster
-            if (pl_x <= obst_left_border && pl_y >= obst_top_border && pl_y <= obst_bottom_border) {
+            if (pl_x + radius <= obst_left_border && pl_y >= obst_top_border && pl_y <= obst_bottom_border) {
                 // context.lineTo(obst_left_border, pl_y)
                 // context.stroke()
-                return obst_left_border - pl_x
+                return obst_left_border - pl_x - radius
                 
             }
             // Rakt ovanför
-            else if (pl_x >= obst_left_border && pl_x <= obst_right_border && pl_y <= obst_top_border) {
+            else if (pl_x >= obst_left_border && pl_x <= obst_right_border && pl_y + 10 <= obst_top_border) {
                 // context.lineTo(pl_x, obst_top_border)
                 // context.stroke()
-                return obst_top_border - pl_y
+                return obst_top_border - pl_y - radius
             }
             // Rakt till höger
-            else if (pl_x >= obst_right_border && pl_y >= obst_top_border && pl_y <= obst_bottom_border) {
+            else if (pl_x - radius >= obst_right_border && pl_y >= obst_top_border && pl_y <= obst_bottom_border) {
                 // context.lineTo(obst_right_border, pl_y)
                 // context.stroke()
-                return pl_x - obst_right_border
+                return pl_x - radius - obst_right_border
                 
             }
             // Rakt nedanför
-            else if (pl_x >= obst_left_border && pl_x <= obst_right_border && pl_y >= obst_bottom_border) {
+            else if (pl_x >= obst_left_border && pl_x <= obst_right_border && pl_y - radius >= obst_bottom_border) {
                 // context.lineTo(pl_x, obst_bottom_border)
                 // context.stroke()
-                return pl_y - obst_bottom_border
+                return pl_y - radius - obst_bottom_border
                 
             }
             // Snett nere till vänster
             else if (pl_x <= obst_left_border && pl_y >= obst_bottom_border) {
                 // context.lineTo(obst_left_border, obst_bottom_border)
                 // context.stroke()
-                return Math.sqrt((obst_left_border - pl_x)**2 + (obst_bottom_border - pl_y)**2)
+                return (Math.sqrt((obst_left_border - pl_x)**2 + (obst_bottom_border - pl_y)**2) - radius)
                 
             }
             // Snett uppe till vänster
             else if (pl_x <= obst_left_border && pl_y <= obst_top_border) {
                 // context.lineTo(obst_left_border, obst_top_border)
                 // context.stroke()
-                return Math.sqrt((obst_left_border - pl_x)**2 + (obst_top_border - pl_y)**2)
+                return (Math.sqrt((obst_left_border - pl_x)**2 + (obst_top_border - pl_y)**2) - radius)
                 
             }
             // Snett upp till höger
             else if (pl_x >= obst_right_border && pl_y <= obst_top_border) {
                 // context.lineTo(obst_right_border, obst_top_border)
                 // context.stroke()
-                return Math.sqrt((obst_right_border - pl_x)**2 + (obst_top_border - pl_y)**2)
+                return (Math.sqrt((obst_right_border - pl_x)**2 + (obst_top_border - pl_y)**2) - radius)
                 
             }
             // Snett nere till höger
             else if (pl_x >= obst_right_border && pl_y >= obst_bottom_border) {
                 // context.lineTo(obst_right_border, obst_bottom_border)
                 // context.stroke()
-                return Math.sqrt((obst_right_border - pl_x)**2 + (obst_bottom_border - pl_y)**2)
+                return (Math.sqrt((obst_right_border - pl_x)**2 + (obst_bottom_border - pl_y)**2) - radius)
                 
             }
             
             // Inne i figuren (gått för långt)
-            if (pl_x >= obst_left_border && pl_x <= obst_right_border && pl_y >= obst_top_border && pl_y <= obst_bottom_border) {
+            if (pl_x + radius >= obst_left_border && pl_x - radius <= obst_right_border && pl_y + radius >= obst_top_border && pl_y - radius <= obst_bottom_border) {
                 return -1
             }
 
@@ -135,10 +135,13 @@ function drawDistanceToObstacle(type, pl_x, pl_y, index_of_obstacle) {
 function createForbiddenArea(shape, arg1, arg2, arg3, arg4) {
     switch(shape) {
         case "rect":
+            var color = colors[Math.floor(Math.random() * colors.length)]
             background.beginPath()
             background.rect(arg1, arg2, arg3, arg4)
-            background.fillStyle = colors[Math.floor(Math.random() * colors.length)]
+            background.fillStyle = color
+            background.strokeStyle = 'black'
             background.fill()
+            background.stroke()
             obstacles.push(["r", arg1, arg2, arg3, arg4])
             break
         case "circ":
@@ -201,22 +204,12 @@ function main(clickEvent) {
     instructionHTML.innerHTML = 'RACE!'
     instructionHTML.style.color = 'lightgreen'
     var x = clickEvent.clientX - background_canvas.getBoundingClientRect().x
-    var y = clickEvent.clientY - background_canvas.getBoundingClientRect().y
+    var y = clickEvent.clientY - background_canvas.getBoundingClientRect().y - 5
+
 
     const gameInterval = setInterval(() => {
     
     context.clearRect(0, 0, 640, 480)
-
-    x_new = incrementX(x, stepX)
-    y_new = incrementY(y, stepY)
-
-    x = x_new
-    y = y_new
-
-    context.beginPath()
-    context.arc(x, y , radius, 0, 2 * Math.PI)
-    context.fillStyle = `black` 
-    context.fill()
 
     if (
         drawDistanceToObstacle("r", x, y, 0) < 0 
@@ -248,13 +241,25 @@ function main(clickEvent) {
         instructionHTML.innerHTML = 'Refresh: play again'
         instructionHTML.style.color = 'black'
     }
+
+    x_new = incrementX(x, stepX)
+    y_new = incrementY(y, stepY)
+
+    x = x_new
+    y = y_new
+
+    context.beginPath()
+    context.arc(x, y , radius, 0, 2 * Math.PI)
+    context.fillStyle = `black` 
+    context.strokeStyle = `red`
+    context.fill()
+    context.stroke()
     
     counter += 1
     if (counter % 10 == 0) {
         time -= 1
         timeHTML.innerHTML = `TIME: ${time}`
     }
-    console.log(Math.abs(stepX) + Math.abs(stepY))
     points += (Math.abs(stepX) + Math.abs(stepY))
     pointsHTML.innerHTML = points
 
