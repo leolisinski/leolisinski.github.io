@@ -17,11 +17,12 @@ body {
     width: 800px;
     height: 700px;
     grid-template-columns: 350px 100px 350px;
-    grid-template-rows: 50px 600px 50px;
+    grid-template-rows: 50px 600px 40px 20px;
     grid-template-areas: 
         "he he he"
         "ga ga ga"
-        "ps .  ts";
+        "ps .  ts"
+        "hs .  . ";
 }
 
 #main_header {
@@ -58,6 +59,14 @@ body {
 
 #points_html {
     grid-area: ps;
+}
+
+#high_score_html{
+    grid-area: hs;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 20px;
 }
 
 #time_html {
