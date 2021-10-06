@@ -170,6 +170,27 @@ function distanceFromObstacle(obstacleType, indexOfObstacle, playerX, playerY) {
     }
 }
 
+function generatePlayerPixelList(playerX, playerY, playerRadius) {
+    var playerPixelList = []
+    for (let angle = 0; angle <= 2*Math.PI; angle += (2*Math.PI)/180) {
+        playerPixelList.push([
+            Math.floor(playerX + playerRadius * Math.cos(angle)),
+            Math.floor(playerY + playerRadius * Math.sin(angle))
+        ])
+    }
+    return playerPixelList
+}
+
+function backgroundNotAllWhite(playerPixelList) {
+    for (let i = 0; i < playerPixelList.length; i++) {
+        var pixelImageData = backgroundContext.getImageData(playerPixelList[i][0], playerPixelList[i][1], 1, 1).data
+        if (pixelImageData[0] != 0 || pixelImageData[1] != 0 || pixelImageData[2] != 0) {
+            return true
+        }
+    }
+    return false
+}
+
 function main(clickEvent) {
 
     headerHTML.innerHTML = 'RACE!'
@@ -190,31 +211,9 @@ function main(clickEvent) {
         gameContext.stroke()
         gameContext.fill()
 
-        if (
-            distanceFromObstacle("r", 0, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("r", 1, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("r", 2, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("r", 3, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("c", 4, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("c", 5, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("c", 6, playerX, playerY) < 0
-            ||
-            distanceFromObstacle("c", 7, playerX, playerY) < 0
-            ||
-            playerY - playerRadius < 0
-            ||
-            600 - playerY - playerRadius < 0
-            ||
-            playerX - playerRadius < 0
-            ||
-            800 - playerX - playerRadius < 0
-        ) {
+        var playerPixelList = generatePlayerPixelList(playerX, playerY, playerRadius)
+
+        if (backgroundNotAllWhite(playerPixelList)) {
             clearInterval(gameInterval)
             timeHTML.innerHTML = 'Collision, Game Over'
             headerHTML.innerHTML = 'Browser refresh to play again'
@@ -258,6 +257,10 @@ function main(clickEvent) {
 }
 
 // Setup (skapa spelplan)
+backgroundContext.beginPath()
+backgroundContext.strokeStyle = 'rgba(255, 255, 255, 1)'
+backgroundContext.rect(0, 0, 800, 600)
+backgroundContext.stroke()
 createObstacleRectangle(Math.floor(Math.random() * 400), Math.floor(Math.random() * 300), 40 + Math.floor(Math.random() * 400), 40 + Math.floor(Math.random() * 300))
 createObstacleRectangle(Math.floor(Math.random() * 400), Math.floor(Math.random() * 300), 40 + Math.floor(Math.random() * 400), 40 + Math.floor(Math.random() * 300))
 createObstacleRectangle(Math.floor(Math.random() * 400), Math.floor(Math.random() * 300), 40 + Math.floor(Math.random() * 400), 40 + Math.floor(Math.random() * 300))
