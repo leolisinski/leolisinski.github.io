@@ -10,6 +10,7 @@ const timeHTML = document.getElementById('time_html')
 const headerHTML = document.getElementById('main_header')
 var nrOfCircles = 4
 var nrOfRectangles = 4
+var maxSpeedInOneAxis = 3
 var intervalCounter = 0
 var gameWidth = 600
 var gameHeight = 480
@@ -71,17 +72,17 @@ function keyListener(keyEvent) {
 function createObstacle(type) {
     switch(type) {
         case "r":
-            var width = 40 + Math.floor(Math.random() * gameWidth/3) 
-            var height = 40 + Math.floor(Math.random() * gameHeight/3)
+            var width = 40 + Math.floor(Math.random() * (gameWidth * 0.5))
+            var height = 40 + Math.floor(Math.random() * (gameHeight * 0.5))
 
-            var x_upperLeft = 20 + Math.floor(Math.random() * (gameWidth - 2*width))
-            var y_upperLeft = 20 + Math.floor(Math.random() * (gameHeight - 2*height))
+            var x_upperLeft = 20 + Math.floor(Math.random() * (gameWidth - width -2*20))
+            var y_upperLeft = 20 + Math.floor(Math.random() * (gameHeight - height - 2*20))
             
             var randomColor = gameColorList[Math.floor(Math.random() * gameColorList.length)]
-            if(Math.floor(Math.random() * 2) == 0) {var firstXDirection = Math.floor(Math.random() * 5)}
-            else {var firstXDirection = - Math.floor(Math.random() * 5)}
-            if(Math.floor(Math.random() * 2) == 0) {var firstYDirection = Math.floor(Math.random() * 5)}
-            else {var firstYDirection = - Math.floor(Math.random() * 5)}
+            if(Math.floor(Math.random() * 2) == 0) {var firstXDirection = Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
+            else {var firstXDirection = - Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
+            if(Math.floor(Math.random() * 2) == 0) {var firstYDirection = Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
+            else {var firstYDirection = - Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
             obstacleList.push(["r", x_upperLeft, y_upperLeft, null, width, height, randomColor, firstXDirection, firstYDirection])
             break
         case "c":
@@ -92,9 +93,9 @@ function createObstacle(type) {
             var randomColor = gameColorList[Math.floor(Math.random() * gameColorList.length)]
 
             if(Math.floor(Math.random() * 2) == 0) {var firstXDirection = Math.floor(radius/20)}
-            else {var firstXDirection = - Math.floor(Math.random() * 5)}
+            else {var firstXDirection = - Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
             if(Math.floor(Math.random() * 2) == 0) {var firstYDirection = Math.floor(radius/20)}
-            else {var firstYDirection = - Math.floor(Math.random() * 5)}
+            else {var firstYDirection = - Math.floor(Math.random() * (1 + maxSpeedInOneAxis))}
 
             obstacleList.push(["c", x_center, y_center, radius, null, null, randomColor, firstXDirection, firstYDirection])
             break    
@@ -211,6 +212,8 @@ function prepareGame() {
     }
 
     drawBackground()
+
+
 }
 
 function drawBackground() {
