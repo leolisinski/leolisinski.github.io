@@ -1,5 +1,7 @@
 // Variabler
 
+const music = new Audio('audio/music.wav')
+
 var gameCanvas = document.getElementById('game_canvas')
 var backgroundCanvas = document.getElementById('background_canvas')
 var gameContext = gameCanvas.getContext('2d')
@@ -64,6 +66,9 @@ function keyListener(keyEvent) {
             break
         case "Enter":
             if (gameRunning == false) {prepareGame()}
+        case "m":
+            if (music.currentTime != 0) {music.pause(); music.currentTime = 0}
+            else {music.play()}
         default:
             break
     }
@@ -212,7 +217,8 @@ function prepareGame() {
     }
 
     drawBackground()
-
+    points = 0
+    pointsHTML.innerHTML = `POINTS: ${points}`
 
 }
 
@@ -234,6 +240,8 @@ function main(clickEvent) {
     headerHTML.innerHTML = 'RACE!'
 
     headerHTML.style.color = 'lightgreen'
+
+    music.play()
 
     var playerX = clickEvent.clientX - backgroundCanvas.getBoundingClientRect().x
     var playerY = clickEvent.clientY - backgroundCanvas.getBoundingClientRect().y
@@ -286,6 +294,7 @@ function main(clickEvent) {
             gameContext.stroke()
             gameContext.fill()
             gameRunning = false
+            
         }
 
         if (backgroundNotAllWhite(playerPixelList)) {
@@ -306,6 +315,7 @@ function main(clickEvent) {
             gameContext.stroke()
             gameContext.fill()
             gameRunning = false
+            
         }
     }, 100)
 }
