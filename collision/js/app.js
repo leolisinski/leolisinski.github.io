@@ -19,7 +19,7 @@ var gameHeight = 480
 var gameRunning = false
 var obstacleList = []
 var points = 0
-var time = 60
+var time = 90
 var stepX = 0
 var stepY = 0
 var playerRadius = 10
@@ -200,7 +200,7 @@ function prepareGame() {
     obstacleList = []
     stepX = 0
     stepY = 0
-    time = 60
+    time = 90
     timeHTML.innerHTML = `TIME: ${time}`
     clearPlayerArea()
     clearBackground()
@@ -237,7 +237,7 @@ function main(clickEvent) {
 
     gameRunning = true
 
-    headerHTML.innerHTML = 'RACE!'
+    headerHTML.innerHTML = 'Try to survive the whole song!'
 
     headerHTML.style.color = 'lightgreen'
 
