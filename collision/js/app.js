@@ -237,9 +237,9 @@ function main(clickEvent) {
 
     gameRunning = true
 
-    headerHTML.innerHTML = 'Try to survive the whole song!'
+    headerHTML.innerHTML = 'Lets race!'
 
-    headerHTML.style.color = 'lightgreen'
+    headerHTML.style.color = 'darkgreen'
 
     music.play()
 
