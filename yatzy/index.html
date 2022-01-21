@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yatzy one roll</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="flex_wrapper">
+    <img id="0" class="dice" src="img/dice_1.png" alt="">
+    <img id="1" class="dice" src="img/dice_1.png" alt="">
+    <img id="2" class="dice" src="img/dice_1.png" alt="">
+    <img id="3" class="dice" src="img/dice_1.png" alt="">
+    <img id="4" class="dice" src="img/dice_1.png" alt="">
+    </div>
+    <div class="counters_wrapper">
+        <input id="input_box" type="text" value="Antal slag + ENTER"></input>
+        <div>Antal slag totalt: <span id="counterRolls">0</span></div>
+        <br>
+        <div>Antal par: <span id="counterTwo">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal två-par:  <span id="counterTwoPair">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal triss: <span id="counterThree">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal fyrtal: <span id="counterFour">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal liten stege: <span id="counterSmallStraight">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal stor stege: <span id="counterLargeStraight">0</span> (<span id="relativeTwo">0</span>%)</div>
+        <div>Antal Yatzy: <span id="counterFive">0</span> (<span id="relativeTwo">0</span>%)</div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.dice {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 20px;
+}
+
+.dice:hover {
+    cursor: pointer;
+}
+
+.flex_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 700px;
+    height: 300px;
+}
+
+#input_wrapper {
+    height: auto;
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+#input_box {
+    width: 170px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#input_box_one_dice {
+    width: 170px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.button {
+    background: lightslategrey;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+}
+
+.button:hover {
+    background: lightgreen;
+    cursor: pointer;
+}
+
+.counters_wrapper {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
