@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <h1>Yatzy one roll</h1>
     <div class="flex_wrapper">
+        
     <img id="0" class="dice" src="img/dice_1.png" alt="">
     <img id="1" class="dice" src="img/dice_1.png" alt="">
     <img id="2" class="dice" src="img/dice_1.png" alt="">
@@ -16,15 +18,60 @@
     </div>
     <div class="counters_wrapper">
         <input id="input_box" type="text" value="Antal slag + ENTER"></input>
-        <div>Antal slag totalt: <span id="counterRolls">0</span></div>
-        <br>
-        <div>Antal par: <span id="counterTwo">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal två-par:  <span id="counterTwoPair">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal triss: <span id="counterThree">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal fyrtal: <span id="counterFour">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal liten stege: <span id="counterSmallStraight">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal stor stege: <span id="counterLargeStraight">0</span> (<span id="relativeTwo">0</span>%)</div>
-        <div>Antal Yatzy: <span id="counterFive">0</span> (<span id="relativeTwo">0</span>%)</div>
+
+        <table id="counters_table">
+            <tr>
+              <td>Antal slag totalt:</td>
+              <td>&nbsp;<span id="counterRolls">0</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Antal par:</td>
+              <td>&nbsp;<span id="counterTwo">0</span></td>
+              <td><span id="relativeTwo">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal två-par:</td>
+                <td>&nbsp;<span id="counterTwoPair">0</span></td>
+                <td><span id="relativeTwoPair">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal triss:</td>
+                <td>&nbsp;<span id="counterThree">0</span></td>
+                <td><span id="relativeThree">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal fyrtal:</td>
+                <td>&nbsp;<span id="counterFour">0</span></td>
+                <td><span id="relativeFour">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal kåk:</td>
+                <td>&nbsp;<span id="counterFullHouse">0</span></td>
+                <td><span id="relativeFullHouse">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal liten stege:</td>
+                <td>&nbsp;<span id="counterSmallStraight">0</span></td>
+                <td><span id="relativeSmallStraight">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal stor stege:</td>
+                <td>&nbsp;<span id="counterLargeStraight">0</span></td>
+                <td><span id="relativeLargeStraight">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal Yatzy:</td>
+                <td>&nbsp;<span id="counterFive">0</span></td>
+                <td><span id="relativeFive">0</span>%</td>
+            </tr>
+            <tr>
+                <td>Antal Inget:</td>
+                <td>&nbsp;<span id="counterNone">0</span></td>
+                <td><span id="relativeNone">0</span>%</td>
+            </tr>
+          </table>
+    
     </div>
     <script src="js/app.js"></script>
 </body>
