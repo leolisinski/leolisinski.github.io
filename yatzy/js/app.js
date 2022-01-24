@@ -292,7 +292,7 @@ function outcome(result) {
 }
 
 function equalArrays(array1, array2) {
-    for (i = 0; i < array1.length; i ++) {
+    for (let i = 0; i < array1.length; i ++) {
         if (array1[i] != array2[i]) {return false}
     }
     return true
@@ -308,7 +308,7 @@ function isLargeStraight(result) {
 
 function nrOfValues(result) {
     var values = [result[0]]
-    for (i = 1; i < result.length; i++) {
+    for (let i = 1; i < result.length; i++) {
         if (!values.includes(result[i])) {
             values.push(result[i])
         }
