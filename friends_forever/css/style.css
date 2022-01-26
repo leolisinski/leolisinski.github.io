@@ -5,25 +5,128 @@
 
 body {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
 
 #instructions {
-    margin-top: 150px;
+    margin-top: 50px;
     width: 600px;
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: justify;
+}
+
+#ppl {
+    margin-top: 50px;
 }
 
 .person {
     font-size: 3rem;
     letter-spacing: 3rem;
     font-weight: bold;
-    color: lightgray;
+    color: rgb(63, 60, 60);
+    position: relative;
 }
 
-section {
-    margin: 50px;
+.heart {
+    width: 15px;
+    height: auto;
+    position: absolute;
+    top: 5;
+    left:23px;
+    display: none;
+}
+
+
+#counters_table {
+    width: 650px;
+    font-family: monospace;
+    font-size: 18px;
+    border: dashed 2px black;
+    border-radius: 10px;
+    padding: 10px;
+    background: #dfedf5;
+}
+
+td:nth-child(1) {
+    width: 350px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+td:nth-child(2) {
+    width: 50%;
+    text-align: left;
+}
+
+td:nth-child(3) {
+    width: 50%;
+    text-align: left;
+}
+
+.counters_wrapper {
+    margin-top: 50px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#input_box {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+#try_button:hover {
+    cursor: pointer;
+    background: rgb(193, 242, 193);
+}
+
+#try_until_all_button:hover {
+    cursor: pointer;
+    background: rgb(193, 242, 193);
+}
+
+#try_button {
+    width: 120px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 10px;
+    border: 2px solid black;
+}
+
+#try_until_all_button {
+    width: 120px;
+    height: 30px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+#try_section {
+    width: 400px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }

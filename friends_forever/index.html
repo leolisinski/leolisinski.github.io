@@ -19,8 +19,72 @@
 
 
     <section id="ppl">
-    <span class="person" id="p1">웃</span><span class="person" id="p2">웃</span><span class="person" id="p3">웃</span><span class="person" id="p4">웃</span><span class="person" id="p5">웃</span><span class="person" id="p6">웃</span><span class="person" id="p7">웃</span><span class="person" id="p8">웃</span><br><span class="person" id="p9">웃</span><span class="person" id="p10">웃</span><span class="person" id="p11">웃</span><span class="person" id="p12">웃</span><span class="person" id="p13">웃</span><span class="person" id="p14">웃</span><span class="person" id="p15">웃</span><span class="person" id="p16">웃</span><br><span class="person" id="p17">웃</span><span class="person" id="p18">웃</span><span class="person" id="p19">웃</span><span class="person" id="p20">웃</span><span class="person" id="p21">웃</span><span class="person" id="p22">웃</span><span class="person" id="p23">웃</span><span class="person" id="p24">웃</span><br><span class="person" id="p25">웃</span><span class="person" id="p26">웃</span><span class="person" id="p27">웃</span><span class="person" id="p28">웃</span><span class="person" id="p29">웃</span><span class="person" id="p30">웃</span><span class="person" id="p31">웃</span><span class="person" id="p0">웃</span>
+    <span class="person" id="p1">웃<img class="heart" id="h1" src="img/heart.svg"></span>
+    <span class="person" id="p2">웃<img class="heart" id="h2" src="img/heart.svg"></span>
+    <span class="person" id="p3">웃<img class="heart" id="h3" src="img/heart.svg"></span>
+    <span class="person" id="p4">웃<img class="heart" id="h4" src="img/heart.svg"></span>
+    <span class="person" id="p5">웃<img class="heart" id="h5" src="img/heart.svg"></span>
+    <span class="person" id="p6">웃<img class="heart" id="h6" src="img/heart.svg"></span>
+    <span class="person" id="p7">웃<img class="heart" id="h7" src="img/heart.svg"></span>
+    <span class="person" id="p8">웃<img class="heart" id="h8" src="img/heart.svg"></span><br>
+    <span class="person" id="p9">웃<img class="heart" id="h9" src="img/heart.svg"></span>
+    <span class="person" id="p10">웃<img class="heart" id="h10" src="img/heart.svg"></span>
+    <span class="person" id="p11">웃<img class="heart" id="h11" src="img/heart.svg"></span>
+    <span class="person" id="p12">웃<img class="heart" id="h12" src="img/heart.svg"></span>
+    <span class="person" id="p13">웃<img class="heart" id="h13" src="img/heart.svg"></span>
+    <span class="person" id="p14">웃<img class="heart" id="h14" src="img/heart.svg"></span>
+    <span class="person" id="p15">웃<img class="heart" id="h15" src="img/heart.svg"></span>
+    <span class="person" id="p16">웃<img class="heart" id="h16" src="img/heart.svg"></span><br>
+    <span class="person" id="p17">웃<img class="heart" id="h17" src="img/heart.svg"></span>
+    <span class="person" id="p18">웃<img class="heart" id="h18" src="img/heart.svg"></span>
+    <span class="person" id="p19">웃<img class="heart" id="h19" src="img/heart.svg"></span>
+    <span class="person" id="p20">웃<img class="heart" id="h20" src="img/heart.svg"></span>
+    <span class="person" id="p21">웃<img class="heart" id="h21" src="img/heart.svg"></span>
+    <span class="person" id="p22">웃<img class="heart" id="h22" src="img/heart.svg"></span>
+    <span class="person" id="p23">웃<img class="heart" id="h23" src="img/heart.svg"></span>
+    <span class="person" id="p24">웃<img class="heart" id="h24" src="img/heart.svg"></span><br>
+    <span class="person" id="p25">웃<img class="heart" id="h25" src="img/heart.svg"></span>
+    <span class="person" id="p26">웃<img class="heart" id="h26" src="img/heart.svg"></span>
+    <span class="person" id="p27">웃<img class="heart" id="h27" src="img/heart.svg"></span>
+    <span class="person" id="p28">웃<img class="heart" id="h28" src="img/heart.svg"></span>
+    <span class="person" id="p29">웃<img class="heart" id="h29" src="img/heart.svg"></span>
+    <span class="person" id="p30">웃<img class="heart" id="h30" src="img/heart.svg"></span>
+    <span class="person" id="p31">웃<img class="heart" id="h31" src="img/heart.svg"></span>
+    <span class="person" id="p0">웃<img class="heart" id="h0" src="img/heart.svg"></span>
     </section>
+
+    <div class="counters_wrapper">
+        
+        <input id="input_box" type="text" value="Nr of tries + ENTER"></input>
+        <section id="try_section">
+          <div id="try_button">Try one time</div>
+          <div id="try_until_all_button">Try until all</div>
+        </section>
+        <table id="counters_table">
+            <tr>
+              <td>Number of tries:</td>
+              <td>&nbsp;<span id="counterTries">0</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Number of all in same group:</td>
+              <td>&nbsp;<span id="counterAllInSame">0</span></td>
+              <td><span id="relativeAllInSame">0</span>%</td>
+            </tr>
+            <tr>
+              <td>Number of three in same group:</td>
+              <td>&nbsp;<span id="counterThreeInSame">0</span></td>
+              <td><span id="relativeThreeInSame">0</span>%</td>
+            </tr>
+            <tr>
+              <td>Number of two in same group:</td>
+              <td>&nbsp;<span id="counterTwoInSame">0</span></td>
+              <td><span id="relativeTwoInSame">0</span>%</td>
+            </tr>
+            
+          </table>
+    
+    </div>
 
     <script src="js/script.js"></script>
 
