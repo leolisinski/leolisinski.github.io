@@ -19,11 +19,11 @@ var triesCounter = 0
 function updateValuesAndHTML() {
     triesCounterHTML.innerHTML = triesCounter
     allInSameCounterHTML.innerHTML = allInSameCounter
-    relativeAllInSameHTML.innerHTML = Math.round(((allInSameCounter / triesCounter) * 100) * 100) / 100
+    relativeAllInSameHTML.innerHTML = Math.round(((allInSameCounter / triesCounter) * 1000) * 1000) / 1000
     threeInSameCounterHTML.innerHTML = threeInSameCounter
-    relativeThreeInSameHTML.innerHTML = Math.round(((threeInSameCounter / triesCounter) * 100) * 100) / 100
+    relativeThreeInSameHTML.innerHTML = Math.round(((threeInSameCounter / triesCounter) * 1000) * 1000) / 1000
     twoInSameCounterHTML.innerHTML = twoInSameCounter
-    relativeTwoInSameHTML.innerHTML = Math.round(((twoInSameCounter / triesCounter) * 100) * 100) / 100
+    relativeTwoInSameHTML.innerHTML = Math.round(((twoInSameCounter / triesCounter) * 1000) * 1000) / 1000
 }
 
 inputField.addEventListener('click', () => {
@@ -107,9 +107,8 @@ function nrOfFriendsInSameGroup(groups) {
     var highestCounter = 0
     for (let i = 0; i < 8; i++) {
         var tempCounter = 0
-        groups[i].sort()
         for (j = 0; j < 4; j++) {
-            if (groups[i][j] == friends[j]) {tempCounter += 1}
+            if (friends.includes(groups[i][j])) {tempCounter += 1}
         }
         if (tempCounter > highestCounter) {highestCounter = tempCounter}
     }
@@ -134,11 +133,11 @@ function createGroups() {
         groups.push(temp_group)
     }
     for (let i = 0; i < 4; i++) {
-        document.getElementById(`p${groups[0][i]}`).style.color = 'DarkSlateBlue'
+        document.getElementById(`p${groups[0][i]}`).style.color = 'DeepPink'
         document.getElementById(`p${groups[1][i]}`).style.color = 'DarkViolet'
         document.getElementById(`p${groups[2][i]}`).style.color = 'DeepSkyBlue'
         document.getElementById(`p${groups[3][i]}`).style.color = 'DarkSalmon'
-        document.getElementById(`p${groups[4][i]}`).style.color = 'DarkSeaGreen'
+        document.getElementById(`p${groups[4][i]}`).style.color = 'DarkGreen'
         document.getElementById(`p${groups[5][i]}`).style.color = 'Maroon'
         document.getElementById(`p${groups[6][i]}`).style.color = 'Gold'
         document.getElementById(`p${groups[7][i]}`).style.color = 'MediumAquaMarine'

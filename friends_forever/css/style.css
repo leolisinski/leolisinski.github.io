@@ -19,6 +19,8 @@ body {
 
 #ppl {
     margin-top: 50px;
+    position: relative;
+    left: 15px;
 }
 
 .person {
@@ -56,12 +58,12 @@ td:nth-child(1) {
 }
 
 td:nth-child(2) {
-    width: 50%;
+    width: 70px;
     text-align: left;
 }
 
 td:nth-child(3) {
-    width: 50%;
+    width: 150px;
     text-align: left;
 }
 
