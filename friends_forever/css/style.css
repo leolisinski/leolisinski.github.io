@@ -52,18 +52,18 @@ body {
 }
 
 td:nth-child(1) {
-    width: 350px;
+    width: 320px;
     display: flex;
     justify-content: flex-end;
 }
 
 td:nth-child(2) {
-    width: 70px;
+    width: 165px;
     text-align: left;
 }
 
 td:nth-child(3) {
-    width: 150px;
+    width: 100px;
     text-align: left;
 }
 
