@@ -19,11 +19,11 @@ var triesCounter = 0
 function updateValuesAndHTML() {
     triesCounterHTML.innerHTML = triesCounter
     allInSameCounterHTML.innerHTML = allInSameCounter
-    relativeAllInSameHTML.innerHTML = Math.round(((allInSameCounter / triesCounter) * 1000) * 1000) / 1000
+    relativeAllInSameHTML.innerHTML = Math.round(((allInSameCounter / triesCounter) * 1000) * 100) / 1000
     threeInSameCounterHTML.innerHTML = threeInSameCounter
-    relativeThreeInSameHTML.innerHTML = Math.round(((threeInSameCounter / triesCounter) * 1000) * 1000) / 1000
+    relativeThreeInSameHTML.innerHTML = Math.round(((threeInSameCounter / triesCounter) * 1000) * 100) / 1000
     twoInSameCounterHTML.innerHTML = twoInSameCounter
-    relativeTwoInSameHTML.innerHTML = Math.round(((twoInSameCounter / triesCounter) * 1000) * 1000) / 1000
+    relativeTwoInSameHTML.innerHTML = Math.round(((twoInSameCounter / triesCounter) * 1000) * 100) / 1000
 }
 
 inputField.addEventListener('click', () => {
