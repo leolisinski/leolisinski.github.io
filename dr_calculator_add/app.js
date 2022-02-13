@@ -43,8 +43,8 @@ function generateFactors() {
     else {
     var k = 1
     var generator = setInterval(() => {
-        document.getElementById(`ch${k}_f1`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
-        document.getElementById(`ch${k}_f2`).innerHTML = `${(Math.floor(Math.random() * 15) + 1)}`
+        document.getElementById(`ch${k}_f1`).innerHTML = `${(Math.floor(Math.random() * 10) + 1)}`
+        document.getElementById(`ch${k}_f2`).innerHTML = `${(Math.floor(Math.random() * 10) + 1)}`
         k+=2
         if (k==21) {k=2}
         if (k==22) {clearInterval(generator)}
@@ -127,5 +127,5 @@ function playSoundIfRight(k) {
     var faktor1 = eval(document.getElementById(`ch${k}_f1`).innerHTML)
     var faktor2 = eval(document.getElementById(`ch${k}_f2`).innerHTML)
     var answer = eval(document.getElementById(`ans${k}`).value)
-    if (faktor1*faktor2 == answer) {correctSound.play()}
+    if (faktor1+faktor2 == answer) {correctSound.play()}
 }
