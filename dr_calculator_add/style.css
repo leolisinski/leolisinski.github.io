@@ -186,6 +186,12 @@ input, textarea {
     border-radius: 2%;
 }
 
+.gameInfo button:hover {
+    cursor: pointer;
+}
+
+
+
 .timeText {
     display: flex;
 }
