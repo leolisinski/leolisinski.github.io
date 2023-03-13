@@ -15,10 +15,10 @@ canvas {
 
 h1, h2, p {
     font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 
 h1 {
-    font-weight: bold;
     font-size: 30px;
 }
 
