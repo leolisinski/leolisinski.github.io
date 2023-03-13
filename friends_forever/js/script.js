@@ -107,8 +107,8 @@ function nrOfFriendsInSameGroup(groups) {
     var highestCounter = 0
     for (let i = 0; i < 8; i++) {
         var tempCounter = 0
-        for (j = 0; j < 4; j++) {
-            if (friends.includes(groups[i][j])) {tempCounter += 1}
+        for (let j = 0; j < 4; j++) {
+            if (groups[i].includes(friends[j])) {tempCounter += 1}
         }
         if (tempCounter > highestCounter) {highestCounter = tempCounter}
     }

@@ -117,7 +117,7 @@ function updateValueAndHTML(identifier, value) {
         case "fh":
             fullHouseValue = value
             if (rollValue != 0) {
-                relativeFullHouseValue = Math.round(((fullHouseValue / rollValue) * 100) * 100) / 100
+                relativeFullHouseValue = Math.round(((fullHouseValue / rollValue) * 100) * 100000) / 100000
             }
             else {
                 relativeFullHouseValue = 0
