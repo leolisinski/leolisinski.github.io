@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometrisk sannolikhet demo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Två tal x och y slumpas på följande vis:</h1>
+    <p>0 &#60; x &#60; 8 och 0 &#60; y &#60; 3 </p>
+    <p>Hur stor är sannolikheten att y &#60; √x ?</p>
+
+    <br><br>
+    <h2>Slumpad x-koordinat: <span id="x_number"></span></h2>
+    <h2>Slumpad y-koordinat: <span id="y_number"></span></h2>
+    <h2>Antal punkter: <span id="repetitions"></span></h2>
+    <h2>Antal punkter då y &#60; √x: <span id="true_repetitions"></span></h2>
+    <h2>Experimentell sannolikhet: <span id="ratio"></span></h2>
+    <section>
+        <canvas id="canvas" width="800px" height="300px"></canvas>
+        <canvas id="canvas_points" width="800px" height="300px"></canvas>
+    </section>
+
+    <script src="js/app.js"></script>
+    
+</body>
+</html>
