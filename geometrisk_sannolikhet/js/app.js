@@ -117,7 +117,7 @@ context.fillText("7.0", 690, 285)
 context.moveTo(750, 300)
 context.lineTo(750, 295)
 context.stroke()
-context.fillText("8.5", 740, 285)
+context.fillText("7.5", 740, 285)
 
 for (let i = 0; i <= 10000; i++) {
     var x = (0 + (i/10000)*8)
