@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "SuperPlumberBrothers";
+    src: url(fonts/SuperPlumberBrothers.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Pretendo";
+    src: url(fonts/Pretendo.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "EarlyGameBoy";
+    src: url(fonts/EarlyGameBoy.ttf) format("truetype");
+}
+
+#game {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(111, 0, 255)
+}
+
+.container {
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 600px;
+    background-color: rgb(86, 160, 84);
+    margin-right: 10px;
+    border-radius: 1%;
+    border: 2px solid black;
+}
+
+.container div {
+    display: flex;
+    border: 1px solid black;
+
+}
+
+
+
+.challenge p {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 20px;
+}
+
+form > input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Lexend Zetta', sans-serif;
+}
+
+.gameInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 10px;
+    width: 300px;
+    height: 600px;
+    background-color: rgb(150, 184, 149);
+    border-radius: 1%;
+    border: 2px solid black;
+}
+
+.gameInfo button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    width: 250px;
+    height: 80px;
+    background-color: rgba(255, 166, 0, 0.877);
+    border-color: black;
+    font-size: 20px;
+    font-family: 'EarlyGameBoy', sans-serif;
+    -webkit-border-radius: 5%;
+    border-radius: 5%;
+}
+
+.gameInfo p {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    font-family: 'Lexend Zetta', sans-serif;
+}
+
+.timeText {
+    font-weight: bold;
+}
+
+#timeRemaining {
+    font-size: 50px;
+}
+
+input, textarea {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+  }
+
+#responseText {
+    visibility: hidden;
+    font-size: 20px;
+}
+
+.logo {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.logo p {
+    font-family: Pretendo, 'sans-serif';
+    font-size: 35px;
+}
+
+#l_1 {color:black}
+#l_2 {color:black}
+#l_3 {color:black}
+#l_4 {color:black}
+#l_5 {color:black}
+#l_6 {color:black}
+#l_7 {color:black}
+#l_8 {color:black}
+#l_9 {color:black}
+#l_10 {color:black}
+#l_11 {color:black}
+#l_12 {color:black}
+
+@media only screen and (max-width: 900px) {
+
+.container {
+    width: 300px;
+    height: 1500px;
+    margin-right: 0;
+}
+
+#game {
+    flex-direction: column-reverse;
+    align-items: center;
+    height: auto;
+}
+
+.gameInfo {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 0;
+    margin-bottom: 20px;
+    height: 140px;
+    width: 300px;
+}
+
+.gameInfo p {
+    height: auto;
+    font-family: 'Lexend Zetta', sans-serif;
+    font-size: 25px;
+}
+
+.gameInfo button {
+    margin: 0px;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    -webkit-border-radius: 2%;
+    border-radius: 2%;
+}
+
+.gameInfo button:hover {
+    cursor: pointer;
+}
+
+
+
+.timeText {
+    display: flex;
+}
+
+#timeRemaining {
+    font-size: 25px;
+}
+
+.logo {
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.logo p {
+    font-family: Pretendo, 'sans-serif';
+    font-size: 35px;
+}
+
+#responseText {
+    font-size: 12px;
+    visibility: hidden;
+}
+
+}
+
+
