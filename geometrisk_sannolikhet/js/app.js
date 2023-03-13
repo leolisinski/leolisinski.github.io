@@ -153,5 +153,5 @@ var interval = setInterval(() => {
     context_points.fill()
     
     if (repetitions >= 10000) {clearInterval(interval)}
-    },1)
+    },10)
 
