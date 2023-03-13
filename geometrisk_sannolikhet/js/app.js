@@ -133,7 +133,7 @@ var interval = setInterval(() => {
     xNumber = Math.random() * 8
     yNumber = Math.random() * 3
     repetitions = repetitions + 1
-    if (yNumber <= Math.sqrt(xNumber)) {
+    if (yNumber < Math.sqrt(xNumber)) {
         trueRepetitions = trueRepetitions + 1
         context_points.fillStyle = "green"
     }
