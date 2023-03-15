@@ -154,7 +154,7 @@ function start() {
     context_points.arc(x_coord, y_coord, 1, 0, 2 * Math.PI)
     context_points.fill()
     
-    if (repetitions >= 10000) {clearInterval(interval)}
+    if (repetitions >= 100000) {clearInterval(interval)}
     },1)
 }
 
