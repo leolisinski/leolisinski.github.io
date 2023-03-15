@@ -129,7 +129,8 @@ for (let i = 0; i <= 10000; i++) {
     context.fill()
 }
 
-var interval = setInterval(() => {
+function start() {
+    var interval = setInterval(() => {
     xNumber = Math.random() * 8
     yNumber = Math.random() * 3
     repetitions = repetitions + 1
@@ -154,4 +155,10 @@ var interval = setInterval(() => {
     
     if (repetitions >= 10000) {clearInterval(interval)}
     },10)
+}
 
+document.addEventListener('keypress', (event) => {
+    if(event.code == 'Enter') {
+        start()
+    }
+})
