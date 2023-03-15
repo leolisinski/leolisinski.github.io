@@ -155,7 +155,7 @@ function start() {
     context_points.fill()
     
     if (repetitions >= 10000) {clearInterval(interval)}
-    },10)
+    },1)
 }
 
 document.addEventListener('keypress', (event) => {
