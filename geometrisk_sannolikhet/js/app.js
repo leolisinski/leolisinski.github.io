@@ -130,6 +130,7 @@ for (let i = 0; i <= 10000; i++) {
 }
 
 function start() {
+    document.getElementById('instructions').style.visibility = 'hidden'
     var interval = setInterval(() => {
     xNumber = Math.random() * 8
     yNumber = Math.random() * 3
