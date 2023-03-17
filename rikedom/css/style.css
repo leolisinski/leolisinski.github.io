@@ -1,3 +1,11 @@
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+p {
+    font-size: 14px;
+}
+
 #main_page {
     height: 80vh;
     display: flex;
