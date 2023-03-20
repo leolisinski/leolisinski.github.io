@@ -79,6 +79,6 @@ function start() {
     updateHeights()
     days = days + 1
     daysHtml.innerHTML = days
-    },100)
+    },50)
 }
 
