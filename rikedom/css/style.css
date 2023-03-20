@@ -2,7 +2,7 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
-p {
+p, h2{
     font-size: 14px;
 }
 
@@ -33,4 +33,8 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+footer {
+    text-align: center;
 }
