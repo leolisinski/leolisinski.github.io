@@ -1,0 +1,31 @@
+#canvas {
+    border: 2px solid grey;
+    background: lightcyan;
+}
+
+section {
+    position: relative;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+h1, h2, p {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+p {
+    font-size: 20px;
+}
+
+h2 {
+    font-size: 20px;
+}
