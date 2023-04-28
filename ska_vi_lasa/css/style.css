@@ -40,11 +40,10 @@ h1 {
     flex-wrap: wrap;
 }
 
-span {
+.word {
     margin: 0 5px 0 5px;
 }
 
 span:hover {
-    color: lightgreen;
     cursor: pointer;
 }
