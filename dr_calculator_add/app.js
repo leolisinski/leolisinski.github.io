@@ -5,6 +5,7 @@ const correctSound = new Audio('audio/431329__someguy22__8-bit-powerup.mp3')
 
 startSound.volume = 0.2
 bgMusic.volume = 0.4
+bgMusic.playbackRate = 0.27
 correctSound.volume = 0.2
 
 bgMusic.loop=false
@@ -71,7 +72,7 @@ bgColorShifter()
 function countdownFunction() {
     var k = 1
     var moment = Math.round(new Date().getTime() / 1000)
-    var endMoment = moment + 60
+    var endMoment = moment + 227
     var remaining = endMoment - moment
     var countdown = setInterval(() => {
         tickSound.play()
