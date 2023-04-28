@@ -19,6 +19,11 @@ body {
     margin: 0 40px 0 40px;
 }
 
+.button:hover {
+    cursor: pointer;
+    border: 3px solid darkgreen;
+}
+
 h1 {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 40px;
