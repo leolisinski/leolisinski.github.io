@@ -7,6 +7,7 @@ var wordsAdjusted = []
 const buttonsSection = document.getElementById('buttons')
 
 const klickaAudio = new Audio('audio/klicka.mp3')
+const maskinerAudio = new Audio('audio/maskiner.mp3')
 const sommarAudio = new Audio('audio/sommar.mp3')
 const tvättmaskinTextAudio = new Audio('audio/tvättmaskinText.mp3')
 const denAudio = new Audio('audio/den.mp3')
@@ -100,19 +101,22 @@ for (let i = 0; i < words.length; i++) {
     words[i].addEventListener('click', (event) => {
        if (gameRunning) {
         if (getWord(words[i]) == secretWord) {
-            setTimeout(() => {
-                playGame()
-            }, 4500)
             rättGissatAudio.play()
+            rättGissatAudio.onended = () => {
+                setTimeout(() => {
+                    playGame()
+                }, 1000)
+                
+            }
         }
         else {
             detHärÄrOrdetAudio.play()
-            setTimeout(() => {
+            detHärÄrOrdetAudio.onended = () => {
                 eval(`${getWord(words[i])}Audio`).play()
-            },2000)
-            setTimeout(() => {
+            }
+            eval(`${getWord(words[i])}Audio`).onended = () => {
                 prövaIgenAudio.play()
-            },5000)
+            }
         }
        }
     })
@@ -135,9 +139,9 @@ function playGame() {
     var wordIndex = Math.floor(Math.random() * wordsAdjusted.length)
     secretWord = wordsAdjusted[wordIndex]
     klickaAudio.play()
-    setTimeout(() => {
+    klickaAudio.onended = () => {
         eval(`${secretWord}Audio`).play()
-    },3000)
+    }
     gameRunning = true
 }
 
