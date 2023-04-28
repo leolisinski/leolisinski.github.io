@@ -48,6 +48,8 @@ const rättGissatAudio = new Audio('audio/rätt_gissat.mp3')
 const detHärÄrOrdetAudio = new Audio('audio/det_här_är_ordet.mp3')
 const prövaIgenAudio = new Audio('audio/pröva_igen.mp3')
 
+klickaAudio.volume = 0
+
 
 var textSection = document.getElementById('text')
 var gameRunning = false
@@ -128,6 +130,12 @@ for (let i = 0; i < words.length; i++) {
         }
     })
     words[i].addEventListener('mouseleave', () => {
+        for (let j = 0; j < words[i].children.length; j++) {
+            words[i].children[j].style.color = 'black'
+        }
+        
+    })
+    words[i].addEventListener("mouseup", () => {
         for (let j = 0; j < words[i].children.length; j++) {
             words[i].children[j].style.color = 'black'
         }
