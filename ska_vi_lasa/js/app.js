@@ -52,6 +52,7 @@ const detHärÄrOrdetAudio = new Audio('audio/det_här_är_ordet.mp3')
 var textSection = document.getElementById('text')
 var gameRunning = false
 var secretWord = ""
+var guessedWrongOnce = false
 
 
 
@@ -105,17 +106,31 @@ for (let i = 0; i < words.length; i++) {
         tvättmaskinTextAudio.pause()
         tvättmaskinTextAudio.currentTime = 0
         if (getWord(words[i]) == secretWord) {
+            repeatButton.style.visibility = 'hidden'
             rättGissatAudio.play()
             rättGissatAudio.onended = () => {
-                gameRunning = false
-                repeatButton.style.visibility = 'hidden'
+                if (!document.getElementById('checkbox').checked) {
+                    gameRunning = false
+                }
+                else {
+                    setTimeout(() => {
+                        playGame()
+                    },1000)
+                }
             }
         }
         else {
-            detHärÄrOrdetAudio.play()
-            detHärÄrOrdetAudio.onended = () => {
+            if (!guessedWrongOnce) {
+                guessedWrongOnce = true
+                detHärÄrOrdetAudio.play()
+                detHärÄrOrdetAudio.onended = () => {
                 eval(`${getWord(words[i])}Audio`).play()
             }
+            }
+            else {
+                eval(`${getWord(words[i])}Audio`).play()
+            }
+            
         }
        }
     })
@@ -141,14 +156,19 @@ for (let i = 0; i < words.length; i++) {
 }
 
 function playGame() {
+    guessedWrongOnce = false
     var wordIndex = Math.floor(Math.random() * wordsAdjusted.length)
     secretWord = wordsAdjusted[wordIndex]
+    tvättmaskinTextAudio.pause()
+    tvättmaskinTextAudio.currentTime = 0
     klickaAudio.play()
     klickaAudio.onended = () => {
         eval(`${secretWord}Audio`).play()
     }
+    eval(`${secretWord}Audio`).onended = () => {
+        repeatButton.style.visibility = 'visible'    
+    }
     gameRunning = true
-    repeatButton.style.visibility = 'visible'
 }
 
 document.getElementById('button_ord').addEventListener('click', () => 
@@ -163,6 +183,8 @@ document.getElementById('button_read_text').addEventListener('click', () =>
 
 repeatButton.addEventListener('click', () => {
     if (gameRunning) {
+        tvättmaskinTextAudio.pause()
+        tvättmaskinTextAudio.currentTime = 0
         eval(`${secretWord}Audio`).play()
     }
 })
