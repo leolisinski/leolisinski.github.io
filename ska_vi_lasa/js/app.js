@@ -4,7 +4,8 @@ var wordArray = text.split(" ")
 
 var wordsAdjusted = []
 
-const buttonsSection = document.getElementById('buttons')
+var repeatButton = document.getElementById('button_repetera')
+repeatButton.style.visibility = 'hidden'
 
 const klickaAudio = new Audio('audio/klicka.mp3')
 const maskinerAudio = new Audio('audio/maskiner.mp3')
@@ -46,14 +47,13 @@ const vattenAudio = new Audio('audio/vatten.mp3')
 const värmsAudio = new Audio('audio/värms.mp3')
 const rättGissatAudio = new Audio('audio/rätt_gissat.mp3')
 const detHärÄrOrdetAudio = new Audio('audio/det_här_är_ordet.mp3')
-const prövaIgenAudio = new Audio('audio/pröva_igen.mp3')
-
-klickaAudio.volume = 0
 
 
 var textSection = document.getElementById('text')
 var gameRunning = false
 var secretWord = ""
+
+
 
 function adjustedWord(wordString) {
     var output = ""
@@ -102,22 +102,19 @@ var words = document.getElementsByClassName('word')
 for (let i = 0; i < words.length; i++) {
     words[i].addEventListener('click', (event) => {
        if (gameRunning) {
+        tvättmaskinTextAudio.pause()
+        tvättmaskinTextAudio.currentTime = 0
         if (getWord(words[i]) == secretWord) {
             rättGissatAudio.play()
             rättGissatAudio.onended = () => {
-                setTimeout(() => {
-                    playGame()
-                }, 1000)
-                
+                gameRunning = false
+                repeatButton.style.visibility = 'hidden'
             }
         }
         else {
             detHärÄrOrdetAudio.play()
             detHärÄrOrdetAudio.onended = () => {
                 eval(`${getWord(words[i])}Audio`).play()
-            }
-            eval(`${getWord(words[i])}Audio`).onended = () => {
-                prövaIgenAudio.play()
             }
         }
        }
@@ -151,6 +148,7 @@ function playGame() {
         eval(`${secretWord}Audio`).play()
     }
     gameRunning = true
+    repeatButton.style.visibility = 'visible'
 }
 
 document.getElementById('button_ord').addEventListener('click', () => 
@@ -161,4 +159,10 @@ document.getElementById('button_ord').addEventListener('click', () =>
 document.getElementById('button_read_text').addEventListener('click', () => 
 {
     tvättmaskinTextAudio.play()
+})
+
+repeatButton.addEventListener('click', () => {
+    if (gameRunning) {
+        eval(`${secretWord}Audio`).play()
+    }
 })
