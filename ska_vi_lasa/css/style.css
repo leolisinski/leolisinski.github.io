@@ -58,7 +58,15 @@ span:hover {
     width: 130px;
     height: 30px;
     border: 1px solid black;
-    margin-top: 20px;
+    margin-top: 40px;
+}
+
+#button_stava {
+    font-size: 13px;
+    width: 130px;
+    height: 30px;
+    border: 1px solid black;
+    margin-top: 10px;
 }
 
 #nytt_ord_section {

@@ -5,7 +5,9 @@ var wordArray = text.split(" ")
 var wordsAdjusted = []
 
 var repeatButton = document.getElementById('button_repetera')
+var spellButton = document.getElementById('button_stava')
 repeatButton.style.visibility = 'hidden'
+spellButton.style.visibility = 'hidden'
 
 const klickaAudio = new Audio('audio/klicka.mp3')
 const maskinerAudio = new Audio('audio/maskiner.mp3')
@@ -49,11 +51,31 @@ const rättGissatAudio = new Audio('audio/rätt_gissat.mp3')
 const detHärÄrOrdetAudio = new Audio('audio/det_här_är_ordet.mp3')
 
 
+
+
 var textSection = document.getElementById('text')
 var gameRunning = false
 var secretWord = ""
 var guessedWrongOnce = false
 
+var i = -1
+notFinished = false
+function spellWord(word) {
+    i += 1
+    if (notFinished) {
+        var letterAudio = new Audio(`audio/letters/${word[i].toLowerCase()}.mp3`) 
+        letterAudio.play()
+        letterAudio.onended = () => {
+            if (i == word.length - 1) {
+                notFinished = false
+            }
+            setTimeout(() => {
+                spellWord(word)
+            },400)
+            
+        }
+    }
+}
 
 
 function adjustedWord(wordString) {
@@ -103,10 +125,12 @@ var words = document.getElementsByClassName('word')
 for (let i = 0; i < words.length; i++) {
     words[i].addEventListener('click', (event) => {
        if (gameRunning) {
+        notFinished = false
         tvättmaskinTextAudio.pause()
         tvättmaskinTextAudio.currentTime = 0
         if (getWord(words[i]) == secretWord) {
             repeatButton.style.visibility = 'hidden'
+            spellButton.style.visibility = 'hidden'
             rättGissatAudio.play()
             rättGissatAudio.onended = () => {
                 if (!document.getElementById('checkbox').checked) {
@@ -166,7 +190,8 @@ function playGame() {
         eval(`${secretWord}Audio`).play()
     }
     eval(`${secretWord}Audio`).onended = () => {
-        repeatButton.style.visibility = 'visible'    
+        repeatButton.style.visibility = 'visible' 
+        spellButton.style.visibility = 'visible'    
     }
     gameRunning = true
 }
@@ -178,13 +203,25 @@ document.getElementById('button_ord').addEventListener('click', () =>
 
 document.getElementById('button_read_text').addEventListener('click', () => 
 {
+    notFinished = false
     tvättmaskinTextAudio.play()
 })
 
 repeatButton.addEventListener('click', () => {
     if (gameRunning) {
+        notFinished = false
         tvättmaskinTextAudio.pause()
         tvättmaskinTextAudio.currentTime = 0
         eval(`${secretWord}Audio`).play()
+    }
+})
+
+spellButton.addEventListener('click', () => {
+    if (gameRunning && !notFinished) {
+        notFinished = true
+        tvättmaskinTextAudio.pause()
+        tvättmaskinTextAudio.currentTime = 0
+        i = -1
+        spellWord(secretWord)
     }
 })
