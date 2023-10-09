@@ -4,6 +4,10 @@ const twoCounter = document.getElementById('counterTwo')
 const threeCounter = document.getElementById('counterThree')
 const fourCounter = document.getElementById('counterFour')
 const fiveCounter = document.getElementById('counterFive')
+const atLeastOneThreeCounter = document.getElementById('counterAtLeastOne3')
+const atLeastOneThreeRel = document.getElementById('relAtLeastOne3')
+const atLeastTwoThreeCounter = document.getElementById('counterAtLeastTwo3')
+const atLeastTwoThreeRel = document.getElementById('relAtLeastTwo3')
 const button = document.getElementById('button')
 const inputField = document.getElementById('input_box')
 
@@ -35,6 +39,8 @@ var twoValue = 0
 var threeValue = 0
 var fourValue = 0
 var fiveValue = 0
+var atLeastOneThreeValue = 0
+var atLeastTwoThreeValue = 0
 
 function updateValueAndHTML(identifier, value) {
     switch (identifier) {
@@ -58,11 +64,21 @@ function updateValueAndHTML(identifier, value) {
             fiveValue = value
             fiveCounter.innerHTML = `${value}`
             break
+        case 6:
+            atLeastOneThreeValue = value
+            atLeastOneThreeCounter.innerHTML = `${value}`
+            atLeastOneThreeRel.innerHTML = `${(atLeastOneThreeValue*100/rollValue).toFixed(3)}`
+            break
+        case 7:
+            atLeastTwoThreeValue = value
+            atLeastTwoThreeCounter.innerHTML = `${value}`
+            atLeastTwoThreeRel.innerHTML = `${(atLeastTwoThreeValue*100/rollValue).toFixed(3)}`
+            break
     }
 }
 
 function clearValuesAndHTML() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 7; i++) {
         updateValueAndHTML(i, 0)
     }
 }
@@ -73,6 +89,8 @@ function updateHTMLfromValues() {
     updateValueAndHTML(3, threeValue)
     updateValueAndHTML(4, fourValue)
     updateValueAndHTML(5, fiveValue)
+    updateValueAndHTML(6, atLeastOneThreeValue)
+    updateValueAndHTML(7, atLeastTwoThreeValue)
 }
 
 
@@ -152,7 +170,13 @@ function rollAllFastNrOfTimes(number) {
             case 5:
                 fiveValue += 1
                 break
-        } 
+        }
+        if(nrOfThree(result) >= 1) {
+            atLeastOneThreeValue += 1
+        }
+        if(nrOfThree(result) >= 2) {
+            atLeastTwoThreeValue += 1
+        }
         updateHTMLfromValues()
         if (i == number) {clearInterval(interval)}
         i += 1
@@ -204,6 +228,16 @@ function nrOfSame(result) {
         equalCounter.push(tempCounter)
     }
     return highestInArray(equalCounter)
+}
+
+function nrOfThree(result) {
+    var counter = 0
+    for (let i = 0; i < result.length; i++) {
+        if (result[i] == 3) {
+            counter += 1
+        }
+    }
+    return counter
 }
 
 function highestInArray(array) {
