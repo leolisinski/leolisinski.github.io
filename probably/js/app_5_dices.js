@@ -4,6 +4,7 @@ const twoCounter = document.getElementById('counterTwo')
 const threeCounter = document.getElementById('counterThree')
 const fourCounter = document.getElementById('counterFour')
 const fiveCounter = document.getElementById('counterFive')
+const fiveRel = document.getElementById('relFive')
 const atLeastOneThreeCounter = document.getElementById('counterAtLeastOne3')
 const atLeastOneThreeRel = document.getElementById('relAtLeastOne3')
 const atLeastTwoThreeCounter = document.getElementById('counterAtLeastTwo3')
@@ -63,6 +64,7 @@ function updateValueAndHTML(identifier, value) {
         case 5:
             fiveValue = value
             fiveCounter.innerHTML = `${value}`
+            fiveRel.innerHTML = `${(fiveValue*100/rollValue).toFixed(3)}`
             break
         case 6:
             atLeastOneThreeValue = value
