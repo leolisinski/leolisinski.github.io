@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: lightcyan;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#bar {
+    background:black;
+    height: 1px;
+    width: 400px;
+}
+
+#lever {
+    background: orange;
+    width: 40px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: relative;
+    top: -15px;
+    left: 0px;
+}
+
+#lever:hover {
+    cursor: grab;
+}
+
+.line {
+    background: black;
+    width: 1px;
+    height: 23px;
+}
+
+article {
+    width: 550px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+}
+
+#phone_number {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    width: 500px;
+    height: 50px;
+    text-align: center;
+}
