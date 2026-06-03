@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATHSTRIKE — Ma3c Edition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Bebas+Neue&display=swap');
+
+  :root {
+    --ct: #4fc3f7;
+    --t: #ef9a20;
+    --bg: #0a0c0e;
+    --panel: #111418;
+    --border: #2a2f3a;
+    --warn: #ff3b3b;
+    --green: #39ff14;
+    --gold: #ffd54f;
+  }
+  * { margin:0;padding:0;box-sizing:border-box; }
+  body {
+    background:var(--bg);color:#e0e6f0;
+    font-family:'Rajdhani',sans-serif;
+    overflow:hidden;height:100vh;
+    display:flex;flex-direction:column;
+    user-select:none;
+  }
+
+  /* HUD */
+  #hud {
+    display:flex;justify-content:space-between;align-items:center;
+    padding:6px 16px;background:var(--panel);
+    border-bottom:1px solid var(--border);height:44px;flex-shrink:0;
+    position:relative;
+  }
+  #hud::after {
+    content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--ct),var(--t),transparent);opacity:.3;
+  }
+  .hud-player{display:flex;align-items:center;gap:10px;min-width:200px;}
+  .hud-player.right{justify-content:flex-end;flex-direction:row-reverse;}
+  .player-name{font-family:'Bebas Neue';font-size:18px;letter-spacing:2px;}
+  .p1-name{color:var(--ct);}.p2-name{color:var(--t);}
+  .hp-bar-wrap{width:80px;height:6px;background:#1a1f28;border-radius:2px;overflow:hidden;}
+  .hp-bar{height:100%;border-radius:2px;transition:width .15s;}
+  .p1-hp{background:linear-gradient(90deg,#1565c0,var(--ct));}
+  .p2-hp{background:linear-gradient(90deg,var(--t),#c65a00);}
+  .hp-num{font-family:'Share Tech Mono';font-size:12px;opacity:.8;min-width:28px;}
+  .ammo-display{font-family:'Share Tech Mono';font-size:12px;text-align:center;}
+  .ammo-count{font-size:20px;font-family:'Bebas Neue';}
+  #round-info{text-align:center;font-family:'Bebas Neue';font-size:22px;letter-spacing:3px;color:#aab;}
+
+  /* CANVAS */
+  #gameCanvas{flex:1;display:block;}
+
+  /* MATH MODAL */
+  #mathModal {
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.88);z-index:100;
+    align-items:center;justify-content:center;
+    backdrop-filter:blur(4px);
+  }
+  #mathModal.active{display:flex;}
+  .math-box {
+    background:var(--panel);border:1px solid var(--border);
+    padding:28px 36px;min-width:420px;max-width:520px;
+    position:relative;
+    clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+  }
+  .math-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.03) 0%,transparent 60%);}
+  .math-header{font-family:'Bebas Neue';font-size:11px;letter-spacing:4px;opacity:.45;margin-bottom:4px;}
+  .math-chapter-tag{font-size:11px;font-family:'Share Tech Mono';opacity:.5;margin-bottom:6px;letter-spacing:1px;}
+  .math-player-tag{font-family:'Bebas Neue';font-size:22px;letter-spacing:3px;margin-bottom:16px;}
+  .math-question {
+    font-family:'Share Tech Mono';font-size:22px;color:#fff;
+    margin-bottom:18px;padding:14px 16px;
+    background:rgba(255,255,255,.04);border-left:3px solid;
+    word-break:break-all;line-height:1.5;
+  }
+  .math-hint-line{font-family:'Share Tech Mono';font-size:11px;opacity:.4;margin-bottom:14px;}
+  .math-timer-bar{height:3px;background:#1a1f28;margin-bottom:14px;border-radius:1px;overflow:hidden;}
+  .math-timer-fill{height:100%;border-radius:1px;transition:width .1s linear;}
+  .math-input {
+    width:100%;background:#0a0c0e;border:1px solid var(--border);
+    color:#fff;font-family:'Share Tech Mono';font-size:22px;
+    padding:10px 14px;outline:none;letter-spacing:2px;
+  }
+  .math-input:focus{border-color:#4a5568;}
+  .math-enter-hint{font-size:11px;opacity:.35;margin-top:8px;font-family:'Share Tech Mono';}
+  .math-feedback{font-family:'Share Tech Mono';font-size:13px;margin-top:10px;min-height:18px;color:var(--warn);}
+  .math-feedback.ok{color:var(--green);}
+
+  /* TOPIC BADGE */
+  .topic-badge {
+    display:inline-block;font-family:'Share Tech Mono';font-size:10px;
+    padding:2px 8px;border:1px solid;border-radius:2px;margin-bottom:12px;
+    letter-spacing:1px;text-transform:uppercase;
+  }
+
+  /* KILL FEED */
+  #killfeed{position:fixed;top:52px;right:12px;display:flex;flex-direction:column;gap:4px;z-index:50;pointer-events:none;}
+  .kill-entry{
+    font-family:'Share Tech Mono';font-size:11px;background:rgba(0,0,0,.72);
+    padding:4px 10px;border-right:2px solid var(--ct);
+    opacity:1;transition:opacity 1s;white-space:nowrap;
+  }
+
+  /* ROUND END */
+  #roundEnd{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:90;
+    align-items:center;justify-content:center;flex-direction:column;gap:20px;
+    backdrop-filter:blur(4px);
+  }
+  #roundEnd.active{display:flex;}
+  .round-winner{font-family:'Bebas Neue';font-size:64px;letter-spacing:6px;text-shadow:0 0 40px currentColor;animation:pulseGlow .8s ease-in-out infinite alternate;}
+  @keyframes pulseGlow{from{opacity:.8;transform:scale(.98);}to{opacity:1;transform:scale(1.02);}}
+  .round-sub{font-family:'Share Tech Mono';font-size:14px;opacity:.5;letter-spacing:3px;}
+  .round-scores{display:flex;gap:60px;font-family:'Bebas Neue';font-size:32px;}
+  .r-score span{font-size:52px;}
+
+  /* MAIN MENU */
+  #mainMenu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;}
+  #mainMenu.hidden{display:none;}
+  .menu-title{font-family:'Bebas Neue';font-size:72px;letter-spacing:8px;background:linear-gradient(135deg,var(--ct),#fff,var(--t));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+  .menu-sub{font-family:'Share Tech Mono';font-size:11px;letter-spacing:5px;opacity:.4;margin-top:-14px;}
+  .menu-course-tag{font-family:'Share Tech Mono';font-size:12px;color:var(--gold);letter-spacing:3px;opacity:.8;border:1px solid var(--gold);padding:3px 12px;}
+  .menu-controls{background:var(--panel);border:1px solid var(--border);padding:18px 28px;display:grid;grid-template-columns:1fr 1fr;gap:5px 28px;font-family:'Share Tech Mono';font-size:12px;margin-top:8px;}
+  .ctrl-row{display:flex;justify-content:space-between;gap:20px;}
+  .ctrl-key{background:rgba(255,255,255,.06);padding:1px 6px;border:1px solid var(--border);font-size:11px;}
+  .topics-list{font-family:'Share Tech Mono';font-size:11px;opacity:.5;text-align:center;letter-spacing:1px;line-height:1.8;}
+  .menu-btn{background:transparent;border:1px solid var(--ct);color:var(--ct);font-family:'Bebas Neue';font-size:22px;letter-spacing:4px;padding:12px 48px;cursor:pointer;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:background .15s,color .15s;margin-top:8px;}
+  .menu-btn:hover{background:var(--ct);color:#000;}
+
+  /* HITMARKER */
+  #hitmarker{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:300;opacity:0;transition:opacity .05s;font-size:26px;color:#fff;text-shadow:0 0 8px #fff;}
+
+  /* SCANLINES */
+  body::after{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);z-index:999;}
+</style>
+
+<style id="portal-back-style">
+.portal-back-link{position:fixed;left:14px;top:14px;z-index:2147483647;background:rgba(10,12,18,.88);color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:700;font-size:14px;letter-spacing:.2px;padding:10px 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.35);backdrop-filter:blur(8px)}
+.portal-back-link:hover{background:#fff;color:#111}
+</style>
+</head>
+<body>
+
+<!-- MAIN MENU -->
+<div id="mainMenu">
+  <div class="menu-title">MATHSTRIKE</div>
+  <div class="menu-sub">RELOAD WITH YOUR BRAIN</div>
+  <div class="menu-course-tag">MA3C EDITION</div>
+  <div class="topics-list">
+    KAPITEL 1: Polynom · Absolutbelopp · Rationella uttryck · Funktioner<br>
+    KAPITEL 2: Derivata · Deriveringsregler · Exponentialfunktioner · Talet e · ln<br>
+    KAPITEL 3: Teckenstudium · Extremvärden · Andraderivatan · Primitiva funktioner · Integraler<br>
+    KAPITEL 4: Trigonometri · Enhetscirkeln · Sinussatsen · Cosinussatsen · Areasatsen
+  </div>
+  <div class="menu-controls">
+    <div style="grid-column:1/-1;text-align:center;opacity:.5;font-size:11px;letter-spacing:3px;margin-bottom:6px">SPELARE 1 (CT)</div>
+    <div class="ctrl-row"><span>Rörelse</span><span class="ctrl-key">WASD</span></div>
+    <div class="ctrl-row"><span>Skjut</span><span class="ctrl-key">F</span></div>
+    <div class="ctrl-row"><span>Ladda om</span><span class="ctrl-key">R</span></div>
+    <div style="grid-column:1/-1;text-align:center;opacity:.5;font-size:11px;letter-spacing:3px;margin:6px 0">SPELARE 2 (T)</div>
+    <div class="ctrl-row"><span>Rörelse</span><span class="ctrl-key">IJKL</span></div>
+    <div class="ctrl-row"><span>Skjut</span><span class="ctrl-key">SPACE</span></div>
+    <div class="ctrl-row"><span>Ladda om</span><span class="ctrl-key">P</span></div>
+  </div>
+  <button class="menu-btn" onclick="startGame()">SPELA</button>
+</div>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-player" id="p1hud">
+    <div>
+      <div class="player-name p1-name">CT · P1</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+        <div class="hp-bar-wrap"><div class="hp-bar p1-hp" id="p1hp" style="width:100%"></div></div>
+        <span class="hp-num" id="p1hpnum">100</span>
+      </div>
+    </div>
+    <div class="ammo-display">
+      <div class="ammo-count" id="p1ammo">30</div>
+      <div style="font-size:10px;opacity:.5">AMMO</div>
+    </div>
+  </div>
+  <div id="round-info">RUNDA 1 / 5</div>
+  <div class="hud-player right" id="p2hud">
+    <div>
+      <div class="player-name p2-name">T · P2</div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:2px;flex-direction:row-reverse">
+        <div class="hp-bar-wrap"><div class="hp-bar p2-hp" id="p2hp" style="width:100%"></div></div>
+        <span class="hp-num" id="p2hpnum">100</span>
+      </div>
+    </div>
+    <div class="ammo-display">
+      <div class="ammo-count" id="p2ammo">30</div>
+      <div style="font-size:10px;opacity:.5">AMMO</div>
+    </div>
+  </div>
+</div>
+
+<canvas id="gameCanvas"></canvas>
+<div id="killfeed"></div>
+<div id="hitmarker">✕</div>
+
+<!-- ROUND END -->
+<div id="roundEnd">
+  <div class="round-sub">RUNDA SLUT</div>
+  <div class="round-winner" id="roundWinnerText"></div>
+  <div class="round-scores">
+    <div class="r-score" style="color:var(--ct)">CT <span id="scoreP1">0</span></div>
+    <div class="r-score" style="color:var(--t)">T <span id="scoreP2">0</span></div>
+  </div>
+  <div class="round-sub" id="nextRoundLabel">NÄSTA RUNDA OM 3...</div>
+</div>
+
+<!-- MATH MODAL -->
+<div id="mathModal">
+  <div class="math-box" id="mathBox">
+    <div class="math-header">OMLADDNINGSPROTOKOLL — MA3C</div>
+    <div class="math-chapter-tag" id="mathChapterTag"></div>
+    <div id="mathTopicBadge" class="topic-badge"></div>
+    <div class="math-player-tag" id="mathPlayerTag"></div>
+    <div class="math-question" id="mathQuestion"></div>
+    <div class="math-hint-line" id="mathHintLine"></div>
+    <div class="math-timer-bar"><div class="math-timer-fill" id="mathTimerFill"></div></div>
+    <input class="math-input" id="mathInput" type="text" placeholder="= ?" autocomplete="off" spellcheck="false">
+    <div class="math-enter-hint">Tryck ENTER för att bekräfta</div>
+    <div class="math-feedback" id="mathFeedback"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+//  MATHSTRIKE — Ma3c Edition
+//  Kapitel 1: Algebra/Polynom/Absolutbelopp
+//  Kapitel 2: Derivata / e / ln
+//  Kapitel 3: Extremvärden / Integraler
+//  Kapitel 4: Trigonometri
+// ══════════════════════════════════════════════════
+
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight-44; }
+resize();
+window.addEventListener('resize',()=>{ resize(); buildMap(); });
+
+let gameRunning=false, roundNum=1;
+const MAX_ROUNDS=5, scores=[0,0];
+let players=[], bullets=[], particles=[], walls=[];
+let mathActive=false, currentMath=null, mathTimerInterval=null, mathTimeLeft=0;
+const MATH_TIME=14000;
+const keysDown={};
+
+window.addEventListener('keydown',e=>{
+  keysDown[e.key]=true;
+  if(mathActive){
+    if(e.key==='Enter') submitMath();
+    return; // block all game keys while typing in math modal
+  }
+  handleReloadKey(e.key);
+  handleShootKey(e.key);
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+});
+window.addEventListener('keyup',e=>{ keysDown[e.key]=false; });
+
+// ── PLAYERS ──
+function makePlayer(id,x,y,color,keys){
+  return{id,x,y,color,hp:100,maxHp:100,ammo:30,maxAmmo:30,
+    angle:0,speed:240,size:14,keys,reloading:false,dead:false,
+    lastShot:0,fireRate:130,flash:0};
+}
+
+function spawnPlayers(){
+  const W=canvas.width,H=canvas.height;
+  players=[
+    makePlayer(0,W*.12,H*.5,'#4fc3f7',{up:'w',down:'s',left:'a',right:'d',shoot:'f',reload:'r'}),
+    makePlayer(1,W*.88,H*.5,'#ef9a20',{up:'i',down:'k',left:'j',right:'l',shoot:' ',reload:'p'}),
+  ];
+}
+
+// ── MAP ──
+function buildMap(){
+  const W=canvas.width,H=canvas.height;
+  walls=[];
+  const add=(x,y,w,h)=>walls.push({x,y,w,h});
+  add(0,0,W,8); add(0,H-8,W,8); add(0,0,8,H); add(W-8,0,8,H);
+  const cx=W/2,cy=H/2;
+  add(cx-55,cy-55,110,18); add(cx-55,cy+37,110,18);
+  add(cx-55,cy-55,18,110); add(cx+37,cy-55,18,110);
+  add(W*.18,H*.2,15,H*.22); add(W*.1,H*.55,W*.12,15); add(W*.18,H*.72,15,H*.15);
+  add(W*.82,H*.2,15,H*.22); add(W*.78,H*.55,W*.12,15); add(W*.82,H*.72,15,H*.15);
+  add(W*.33,H*.3,13,H*.12); add(W*.33,H*.58,13,H*.12);
+  add(W*.63,H*.3,13,H*.12); add(W*.63,H*.58,13,H*.12);
+  add(W*.42,H*.08,W*.16,13); add(W*.42,H*.88,W*.16,13);
+}
+
+// ════════════════════════════════════════════════
+//  MA3C FRÅGEBANK
+// ════════════════════════════════════════════════
+
+const MA3C_QUESTIONS = [
+
+  // ── KAPITEL 1: ALGEBRA, POLYNOM, ABSOLUTBELOPP ──
+
+  // Absolutbelopp
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|−7 − 5|',a:12,hint:'|x| = avstånd från noll'},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|3 − 11|',a:8},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|−4 − (−9)|',a:5},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|−2| + |−8|',a:10},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|5 − 5|',a:0},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'Lös: |x| = 6  →  antal lösningar?',a:2,hint:'x = 6 eller x = −6'},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|−13|',a:13},
+  {ch:'Kap 1',topic:'Absolutbelopp',q:'|2 − 9| − |−1|',a:6},
+
+  // Polynom
+  {ch:'Kap 1',topic:'Polynom',q:'Vad är graden av  3x⁴ − 2x² + 7?',a:4,hint:'Högsta exponentens värde'},
+  {ch:'Kap 1',topic:'Polynom',q:'Beräkna  p(2)  om  p(x) = x² − 3x + 1',a:-1,hint:'Sätt in x = 2'},
+  {ch:'Kap 1',topic:'Polynom',q:'Beräkna  p(−1)  om  p(x) = 2x³ + x − 1',a:-4},
+  {ch:'Kap 1',topic:'Polynom',q:'Koefficienten för x²  i  (x+1)²?',a:1,hint:'Utveckla (x+1)² = x² + 2x + 1'},
+  {ch:'Kap 1',topic:'Polynom',q:'Antal termer i ett polynom av grad 3 (max)?',a:4,hint:'ax³+bx²+cx+d'},
+  {ch:'Kap 1',topic:'Polynom',q:'p(x) = x² + 5x + 6.  Vad är p(0)?',a:6},
+  {ch:'Kap 1',topic:'Polynom',q:'Faktorisera x² − 9  →  (x−3)(x+?)',a:3},
+
+  // Rationella uttryck
+  {ch:'Kap 1',topic:'Rationella uttryck',q:'Förenkla:  (x²−4)/(x−2)  =  x + ?',a:2,hint:'Faktorisera täljaren'},
+  {ch:'Kap 1',topic:'Rationella uttryck',q:'Vilket x saknas i definitionsmängden för  1/(x−5)?',a:5,hint:'Nämnaren ≠ 0'},
+  {ch:'Kap 1',topic:'Rationella uttryck',q:'Förenkla:  (6x)/(3x)  (x≠0)',a:2},
+  {ch:'Kap 1',topic:'Rationella uttryck',q:'Förenkla:  (x²+x)/(x)  (x≠0)',a:'x+1',strMatch:true,hint:'Bryt ut x ur täljaren'},
+
+  // Gränsvärden
+  {ch:'Kap 1',topic:'Gränsvärde',q:'lim(x→2) (x² − 4)/(x − 2)  =  ?',a:4,hint:'Faktorisera: (x−2)(x+2)/(x−2)'},
+  {ch:'Kap 1',topic:'Gränsvärde',q:'lim(x→0) sin(x)/x  =  ?',a:1,hint:'Standardgränsvärde'},
+  {ch:'Kap 1',topic:'Gränsvärde',q:'lim(x→∞) 1/x  =  ?',a:0},
+  {ch:'Kap 1',topic:'Gränsvärde',q:'lim(x→3) (x² − 9)/(x − 3)  =  ?',a:6,hint:'Faktorisera täljaren'},
+
+  // ── KAPITEL 2: DERIVATA ──
+
+  // Grundläggande derivata
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = x³  →  f'(x) = ?",a:'3x^2',strMatch:true,hint:"f'(x) = nx^(n-1)"},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = x⁵  →  f'(x) = ?",a:'5x^4',strMatch:true},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = x²  →  f'(x) = ?",a:'2x',strMatch:true},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = 4x³  →  f'(x) = ?",a:'12x^2',strMatch:true,hint:'Konstanten multiplicerar'},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = 7x  →  f'(x) = ?",a:7,hint:'Derivata av kx är k'},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = 5  →  f'(x) = ?",a:0,hint:'Konstanter deriveras till 0'},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = x⁴ − 2x²  →  f'(0) = ?",a:0,hint:"f'(x)=4x³−4x, sätt in x=0"},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = 3x² − 6x  →  f'(1) = ?",a:0,hint:"f'(x)=6x−6, sätt in x=1"},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"Vad är f'(2) om f(x) = x³?",a:12,hint:"f'(x)=3x², f'(2)=12"},
+  {ch:'Kap 2',topic:'Derivata – potensregeln',q:"f(x) = 2x⁴ − x  →  f'(x) vid x=1 = ?",a:7,hint:"f'(x)=8x³−1"},
+
+  // Exponential och e
+  {ch:'Kap 2',topic:'Derivata – e^x',q:"d/dx [ eˣ ]  =  ?",a:'e^x',strMatch:true,hint:'Unik egenskap: deriveras till sig självt'},
+  {ch:'Kap 2',topic:'Derivata – e^x',q:"d/dx [ e^(3x) ]  =  ?",a:'3e^(3x)',strMatch:true,hint:'Kedjeregeln: k·e^(kx)'},
+  {ch:'Kap 2',topic:'Derivata – e^x',q:"d/dx [ e^(2x) ]  =  ?",a:'2e^(2x)',strMatch:true},
+  {ch:'Kap 2',topic:'Derivata – e^x',q:"d/dx [ 5eˣ ]  =  ?",a:'5e^x',strMatch:true},
+  {ch:'Kap 2',topic:'Derivata – e^x',q:"Vad är derivatan av f(x) = e^(kx)?",a:'ke^(kx)',strMatch:true},
+
+  // Naturlig logaritm
+  {ch:'Kap 2',topic:'Derivata – ln(x)',q:"d/dx [ ln(x) ]  =  ?",a:'1/x',strMatch:true,hint:'Grundläggande deriveringsregel'},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"ln(e)  =  ?",a:1},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"ln(1)  =  ?",a:0},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"ln(e²)  =  ?",a:2,hint:'ln(eⁿ) = n'},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"Lös: eˣ = e⁴  →  x = ?",a:4},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"Lös: eˣ = 1  →  x = ?",a:0,hint:'ln(1) = 0'},
+  {ch:'Kap 2',topic:'Naturlig logaritm',q:"ln(e³) + ln(1)  =  ?",a:3},
+
+  // Tangentlinje
+  {ch:'Kap 2',topic:'Tangent och lutning',q:"Lutningen hos tangenten till f(x)=x² vid x=3?",a:6,hint:"f'(3) = 2·3"},
+  {ch:'Kap 2',topic:'Tangent och lutning',q:"Tangentlutning till f(x)=eˣ vid x=0?",a:1,hint:"f'(0) = e⁰ = 1"},
+  {ch:'Kap 2',topic:'Tangent och lutning',q:"f(x)=x³−3x. Lutning vid x=2?",a:9,hint:"f'(x)=3x²−3, f'(2)=9"},
+  {ch:'Kap 2',topic:'Sekant',q:"Ändringskvot för f(x)=x² från x=1 till x=3?",a:4,hint:"(f(3)−f(1))/(3−1) = (9−1)/2"},
+
+  // ── KAPITEL 3: KURVOR, EXTREMVÄRDEN, INTEGRALER ──
+
+  // Teckenstudium & monotoni
+  {ch:'Kap 3',topic:'Monotoni',q:"f'(x) > 0 i ett intervall → funktionen är ...?\n(1=växande, 2=avtagande)",a:1,hint:'Positiv derivata ⟹ växande'},
+  {ch:'Kap 3',topic:'Monotoni',q:"f'(x) < 0 i ett intervall → funktionen är ...?\n(1=växande, 2=avtagande)",a:2},
+  {ch:'Kap 3',topic:'Extremvärden',q:"Vid ett lokalt minimum: f'(x₀) = ?",a:0,hint:'Derivatan = 0 i stationär punkt'},
+  {ch:'Kap 3',topic:'Extremvärden',q:"f(x) = x² − 4x + 1.  x-värde för minimum?",a:2,hint:"f'(x)=2x−4=0 → x=2"},
+  {ch:'Kap 3',topic:'Extremvärden',q:"f(x) = −x² + 6x.  x-värde för maximum?",a:3,hint:"f'(x)=−2x+6=0 → x=3"},
+  {ch:'Kap 3',topic:'Extremvärden',q:"f(x) = x³ − 3x.  f'(x) = 0 vid x = ?  (positiv rot)",a:1,hint:"3x²−3=0 → x=±1"},
+  {ch:'Kap 3',topic:'Extremvärden',q:"Maximivärde för f(x) = −x² + 6x?",a:9,hint:"x=3 → f(3) = −9+18"},
+
+  // Andraderivatan
+  {ch:'Kap 3',topic:'Andraderivatan',q:"f(x) = x³.  f''(x) = ?",a:'6x',strMatch:true,hint:"f'=3x², f''=6x"},
+  {ch:'Kap 3',topic:'Andraderivatan',q:"f''(x₀) > 0 vid stationär punkt → ?  (1=min, 2=max)",a:1,hint:'Konvex kurva → minimum'},
+  {ch:'Kap 3',topic:'Andraderivatan',q:"f''(x₀) < 0 vid stationär punkt → ?  (1=min, 2=max)",a:2},
+  {ch:'Kap 3',topic:'Andraderivatan',q:"f(x) = 2x² − 4x.  f''(x) = ?",a:4,hint:"f'=4x−4, f''=4"},
+  {ch:'Kap 3',topic:'Andraderivatan',q:"f(x) = x⁴.  f''(0) = ?",a:0,hint:"f'=4x³, f''=12x²"},
+
+  // Primitiv funktion
+  {ch:'Kap 3',topic:'Primitiv funktion',q:"Primitiv till f(x) = 2x  →  F(x) = ?",a:'x^2+C',strMatch:true,hint:'∫2x dx = x²+C'},
+  {ch:'Kap 3',topic:'Primitiv funktion',q:"Primitiv till f(x) = 3x²  →  F(x) = ?",a:'x^3+C',strMatch:true},
+  {ch:'Kap 3',topic:'Primitiv funktion',q:"Primitiv till f(x) = eˣ  →  F(x) = ?",a:'e^x+C',strMatch:true},
+  {ch:'Kap 3',topic:'Primitiv funktion',q:"Primitiv till f(x) = 1/x  →  F(x) = ?",a:'ln(x)+C',strMatch:true},
+  {ch:'Kap 3',topic:'Primitiv funktion',q:"∫ 4x³ dx  →  koefficienten för x⁴?",a:1,hint:'∫4x³dx = x⁴+C'},
+
+  // Integraler (bestämda)
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₀² 2x dx  =  ?",a:4,hint:'[x²]₀² = 4−0'},
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₁³ 1 dx  =  ?",a:2,hint:'Area under y=1 från 1 till 3'},
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₀¹ x² dx  =  ?",a:'1/3',strMatch:true,hint:'[x³/3]₀¹'},
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₀² x dx  =  ?",a:2,hint:'[x²/2]₀² = 2'},
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₁⁴ 1 dx  =  ?",a:3},
+  {ch:'Kap 3',topic:'Bestämd integral',q:"∫₀³ 2 dx  =  ?",a:6,hint:'2 · (3−0)'},
+
+  // ── KAPITEL 4: TRIGONOMETRI ──
+
+  // Enhetscirkeln – exakta värden
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"sin(0°)  =  ?",a:0},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"sin(30°)  =  ?  (bråkform: 1/2)",a:'1/2',strMatch:true,hint:'sin(30°) = 0.5'},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"sin(90°)  =  ?",a:1},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"cos(0°)  =  ?",a:1},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"cos(90°)  =  ?",a:0},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"cos(180°)  =  ?",a:-1},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"sin(180°)  =  ?",a:0},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"sin(270°)  =  ?",a:-1},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"cos(60°)  =  ?  (bråkform: 1/2)",a:'1/2',strMatch:true},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"tan(45°)  =  ?",a:1,hint:'sin(45°)/cos(45°) = 1'},
+  {ch:'Kap 4',topic:'Enhetscirkeln',q:"tan(0°)  =  ?",a:0},
+
+  // Pythagoreiska ettan
+  {ch:'Kap 4',topic:'Trigonometrisk identitet',q:"sin²(x) + cos²(x)  =  ?",a:1,hint:'Pythagoreiska ettan – grundidentitet'},
+  {ch:'Kap 4',topic:'Trigonometrisk identitet',q:"Om sin(x) = 3/5, vad är cos²(x)?",a:'16/25',strMatch:true,hint:'1 − (3/5)² = 16/25'},
+
+  // Sinussatsen
+  {ch:'Kap 4',topic:'Sinussatsen',q:"Sinussatsen: a/sin(A) = ?",a:'b/sin(B)',strMatch:true,hint:'a/sin(A) = b/sin(B) = c/sin(C)'},
+  {ch:'Kap 4',topic:'Sinussatsen',q:"Triangel: A=30°, a=5, b=?\nOm B=90° (ge b, heltal)",a:10,hint:'b/sin(90°) = 5/sin(30°)'},
+
+  // Cosinussatsen
+  {ch:'Kap 4',topic:'Cosinussatsen',q:"Cosinussatsen: c² = a²+b² − ?",a:'2ab·cos(C)',strMatch:true,hint:'c² = a²+b²−2ab·cos(C)'},
+  {ch:'Kap 4',topic:'Cosinussatsen',q:"Rätvinklig triangel (C=90°): c² = ?",a:'a^2+b^2',strMatch:true,hint:'Pythagoras – special av cosinussatsen'},
+  {ch:'Kap 4',topic:'Cosinussatsen',q:"a=3, b=4, C=90°.  c = ?",a:5,hint:'c²=9+16=25'},
+
+  // Areasatsen
+  {ch:'Kap 4',topic:'Areasatsen',q:"Areasatsen: A = ½·a·b·sin(?)",a:'C',strMatch:true,hint:'A = ½ab·sin(C)'},
+  {ch:'Kap 4',topic:'Areasatsen',q:"Triangel: a=4, b=5, C=30°.\nArea = ½·4·5·sin(30°) = ?",a:5,hint:'½·20·(1/2)=5'},
+  {ch:'Kap 4',topic:'Areasatsen',q:"Triangel: a=6, b=6, C=60°. Area = ?",a:'9*sqrt(3)',strMatch:true,hint:'½·36·sin(60°)=9√3'},
+
+  // Trigonometriska ekvationer
+  {ch:'Kap 4',topic:'Trigon. ekvationer',q:"sin(x) = 0  →  x = n·? (grader, n∈ℤ)",a:180,hint:'x = 0°, 180°, 360°…'},
+  {ch:'Kap 4',topic:'Trigon. ekvationer',q:"cos(x) = 1  →  x = n·? (grader)",a:360,hint:'cos(x)=1 bara vid 0°, 360°…'},
+  {ch:'Kap 4',topic:'Trigon. ekvationer',q:"Antal lösningar för sin(x)=0.5 i [0°,360°)?",a:2,hint:'x=30° och x=150°'},
+];
+
+// ── QUESTION PICKER ──
+function pickQuestion(){
+  const idx=Math.floor(Math.random()*MA3C_QUESTIONS.length);
+  return Object.assign({},MA3C_QUESTIONS[idx]);
+}
+
+// ── CHAPTER COLOR MAP ──
+function chapterColor(ch){
+  if(ch==='Kap 1') return '#a78bfa';
+  if(ch==='Kap 2') return '#4fc3f7';
+  if(ch==='Kap 3') return '#34d399';
+  if(ch==='Kap 4') return '#fb923c';
+  return '#aaa';
+}
+
+// ── MATH MODAL ──
+function triggerReload(pidx){
+  const p=players[pidx];
+  if(!p||p.dead||p.reloading||p.ammo>=p.maxAmmo) return;
+  if(mathActive&&currentMath&&currentMath.playerIdx===pidx) return;
+  const q=pickQuestion();
+  q.playerIdx=pidx;
+  q.reloadAmmo=p.maxAmmo;
+  openMathModal(q);
+}
+
+function openMathModal(math){
+  mathActive=true; currentMath=math;
+  const p=players[math.playerIdx];
+  p.reloading=true;
+  const modal=document.getElementById('mathModal');
+  const isP1=math.playerIdx===0;
+  const col=isP1?'var(--ct)':'var(--t)';
+  const chCol=chapterColor(math.ch);
+
+  document.getElementById('mathPlayerTag').textContent=isP1?'◈ SPELARE 1 · CT':'◈ SPELARE 2 · T';
+  document.getElementById('mathPlayerTag').style.color=col;
+  document.getElementById('mathQuestion').style.borderColor=chCol;
+  document.getElementById('mathChapterTag').textContent=math.ch+' · '+math.topic;
+  document.getElementById('mathChapterTag').style.color=chCol;
+
+  const badge=document.getElementById('mathTopicBadge');
+  badge.textContent=math.topic;
+  badge.style.color=chCol; badge.style.borderColor=chCol;
+
+  const fill=document.getElementById('mathTimerFill');
+  fill.style.background=isP1?'var(--ct)':'var(--t)';
+
+  document.getElementById('mathQuestion').textContent=math.q;
+  document.getElementById('mathHintLine').textContent=math.hint?'Tips: '+math.hint:'';
+  document.getElementById('mathInput').value='';
+  document.getElementById('mathFeedback').textContent='';
+  document.getElementById('mathFeedback').className='math-feedback';
+
+  modal.classList.add('active');
+  setTimeout(()=>document.getElementById('mathInput').focus(),50);
+
+  mathTimeLeft=MATH_TIME;
+  fill.style.width='100%';
+  clearInterval(mathTimerInterval);
+  mathTimerInterval=setInterval(()=>{
+    mathTimeLeft-=100;
+    fill.style.width=Math.max(0,(mathTimeLeft/MATH_TIME)*100)+'%';
+    if(mathTimeLeft<=4000) fill.style.background='var(--warn)';
+    if(mathTimeLeft<=0){ clearInterval(mathTimerInterval); failMath('TIMEOUT — INGEN OMLADDNING'); }
+  },100);
+}
+
+function normalizeAnswer(str){
+  return String(str)
+    .toLowerCase()
+    .replace(/\s+/g,'')
+    .replace(/·/g,'*')
+    .replace(/√/g,'sqrt');
+}
+
+function submitMath(){
+  const inp=document.getElementById('mathInput');
+  const fb=document.getElementById('mathFeedback');
+  const raw=inp.value.trim();
+  if(!raw) return;
+
+  const math=currentMath;
+  let correct=false;
+
+  if(math.strMatch){
+    const userAns=normalizeAnswer(raw);
+    const correctAns=normalizeAnswer(math.a);
+    correct=(userAns===correctAns);
+  } else {
+    let userValue;
+
+    if(raw.includes('/')){
+      const parts=raw.split('/');
+      if(parts.length===2){
+        const num=parseFloat(parts[0].replace(/,/g,'.'));
+        const den=parseFloat(parts[1].replace(/,/g,'.'));
+        if(!isNaN(num) && !isNaN(den) && den!==0){
+          userValue=num/den;
+        }
+      }
+    } else {
+      userValue=parseFloat(raw.replace(/,/g,'.').replace(/[^0-9.\-]/g,''));
+    }
+
+    const correctValue=typeof math.a === 'number' ? math.a : parseFloat(math.a);
+    correct=(!isNaN(userValue) && !isNaN(correctValue) && Math.abs(userValue-correctValue)<0.01);
+  }
+
+  if(correct){
+    fb.textContent='✓ RÄTT — LADDAR OM';
+    fb.className='math-feedback ok';
+    clearInterval(mathTimerInterval);
+    setTimeout(()=>closeMathModal(true),600);
+  } else {
+    fb.textContent='✗ FEL — försök igen  (svar: '+math.a+')';
+    fb.className='math-feedback';
+    inp.value='';
+    inp.focus();
+    mathTimeLeft=Math.max(0,mathTimeLeft-2500);
+  }
+}
+
+function failMath(msg){
+  document.getElementById('mathFeedback').textContent=msg||'MISSLYCKADES';
+  setTimeout(()=>closeMathModal(false),800);
+}
+
+function closeMathModal(success){
+  clearInterval(mathTimerInterval);
+  document.getElementById('mathModal').classList.remove('active');
+  mathActive=false;
+  const p=players[currentMath.playerIdx];
+  if(p){ p.reloading=false; if(success){ p.ammo=currentMath.reloadAmmo; spawnParticles(p.x,p.y,p.color,12,'reload'); } }
+  currentMath=null;
+}
+
+// ── SHOOT ──
+function handleShootKey(key){
+  const idx=key==='f'?0:key===' '?1:-1;
+  if(idx<0||!gameRunning) return;
+  const p=players[idx];
+  if(!p||p.dead||p.reloading) return;
+  const now=Date.now();
+  if(now-p.lastShot<p.fireRate) return;
+  if(p.ammo<=0){ addKillfeedMsg(`P${idx+1} TOM — LADDA OM!`,'#ff3b3b'); return; }
+  p.lastShot=now; p.ammo--; fireBullet(p); p.flash=1;
+}
+function handleReloadKey(key){
+  const idx=key==='r'?0:key==='p'?1:-1;
+  if(idx<0||!gameRunning) return;
+  triggerReload(idx);
+}
+function fireBullet(p){
+  const spd=480;
+  bullets.push({x:p.x+Math.cos(p.angle)*(p.size+2),y:p.y+Math.sin(p.angle)*(p.size+2),vx:Math.cos(p.angle)*spd,vy:Math.sin(p.angle)*spd,owner:p.id,color:p.color,life:1.8,r:3});
+  spawnParticles(p.x+Math.cos(p.angle)*(p.size+4),p.y+Math.sin(p.angle)*(p.size+4),p.color,5,'muzzle',p.angle);
+}
+
+// ── PARTICLES ──
+function spawnParticles(x,y,color,count,type,angle){
+  for(let i=0;i<count;i++){
+    let vx,vy,life,r,col=color;
+    if(type==='blood'){const a=Math.random()*Math.PI*2,s=30+Math.random()*80;vx=Math.cos(a)*s;vy=Math.sin(a)*s;life=.4+Math.random()*.4;r=2+Math.random()*3;col=`hsl(0,80%,${30+Math.random()*25}%)`;}
+    else if(type==='muzzle'){const sp=(Math.random()-.5)*.8,s=60+Math.random()*100;vx=Math.cos(angle+sp)*s;vy=Math.sin(angle+sp)*s;life=.08+Math.random()*.1;r=1+Math.random()*2;}
+    else if(type==='reload'){const a=Math.random()*Math.PI*2;vx=Math.cos(a)*(20+Math.random()*50);vy=Math.sin(a)*(20+Math.random()*50);life=.5+Math.random()*.5;r=2+Math.random()*2;}
+    else if(type==='wall'){const a=angle+(Math.random()-.5)*1.2,s=40+Math.random()*80;vx=Math.cos(a)*s;vy=Math.sin(a)*s;life=.15+Math.random()*.2;r=1+Math.random()*2;col=`hsl(30,20%,${50+Math.random()*30}%)`;}
+    else{vx=(Math.random()-.5)*100;vy=(Math.random()-.5)*100;life=.3+Math.random()*.3;r=2;}
+    particles.push({x,y,vx,vy,life,maxLife:life,r,color:col});
+  }
+}
+
+// ── COLLISION ──
+function circleVsRect(cx,cy,cr,rx,ry,rw,rh){const nx=Math.max(rx,Math.min(cx,rx+rw)),ny=Math.max(ry,Math.min(cy,ry+rh)),dx=cx-nx,dy=cy-ny;return dx*dx+dy*dy<cr*cr;}
+function resolvePlayerWalls(p){
+  for(const w of walls){
+    if(circleVsRect(p.x,p.y,p.size,w.x,w.y,w.w,w.h)){
+      const cx=w.x+w.w/2,cy=w.y+w.h/2,dx=p.x-cx,dy=p.y-cy;
+      const ox=(w.w/2+p.size)-Math.abs(dx),oy=(w.h/2+p.size)-Math.abs(dy);
+      if(ox<oy) p.x+=Math.sign(dx)*ox; else p.y+=Math.sign(dy)*oy;
+    }
+  }
+  p.x=Math.max(p.size+8,Math.min(canvas.width-p.size-8,p.x));
+  p.y=Math.max(p.size+8,Math.min(canvas.height-p.size-8,p.y));
+}
+
+// ── KILLFEED ──
+function addKillfeedMsg(msg,color){
+  const feed=document.getElementById('killfeed');
+  const el=document.createElement('div');
+  el.className='kill-entry'; el.textContent=msg;
+  el.style.borderColor=color||'var(--ct)'; el.style.color=color||'#fff';
+  feed.prepend(el);
+  setTimeout(()=>{el.style.opacity='0';setTimeout(()=>el.remove(),1000);},2500);
+}
+function showHitmarker(){const hm=document.getElementById('hitmarker');hm.style.opacity='1';setTimeout(()=>hm.style.opacity='0',120);}
+
+// ── ROUND END ──
+function triggerRoundEnd(winner){
+  gameRunning=false; scores[winner]++;
+  const panel=document.getElementById('roundEnd');
+  document.getElementById('roundWinnerText').textContent=winner===0?'CT VINNER':'T VINNER';
+  document.getElementById('roundWinnerText').style.color=winner===0?'var(--ct)':'var(--t)';
+  document.getElementById('scoreP1').textContent=scores[0];
+  document.getElementById('scoreP2').textContent=scores[1];
+  const label=document.getElementById('nextRoundLabel');
+  panel.classList.add('active');
+  addKillfeedMsg(`${winner===0?'CT':'T'} vinner runda ${roundNum}!`,winner===0?'var(--ct)':'var(--t)');
+
+  if(roundNum>=MAX_ROUNDS){
+    const champ=scores[0]>scores[1]?'CT':scores[1]>scores[0]?'T':'OAVGJORT';
+    label.textContent=`MATCH SLUT — ${champ} VINNER!`;
+    setTimeout(()=>{panel.classList.remove('active');document.getElementById('mainMenu').classList.remove('hidden');roundNum=1;scores[0]=0;scores[1]=0;},5000);
+  } else {
+    let cd=3;
+    const tick=setInterval(()=>{cd--;label.textContent=cd>0?`NÄSTA RUNDA OM ${cd}...`:'KÖR!';if(cd<=0){clearInterval(tick);setTimeout(()=>{panel.classList.remove('active');roundNum++;startRound();},600);}},1000);
+  }
+}
+
+function startRound(){
+  bullets=[];particles=[];mathActive=false;currentMath=null;
+  clearInterval(mathTimerInterval);
+  document.getElementById('mathModal').classList.remove('active');
+  spawnPlayers();
+  document.getElementById('round-info').textContent=`RUNDA ${roundNum} / ${MAX_ROUNDS}`;
+  gameRunning=true; updateHUD();
+}
+
+function startGame(){
+  document.getElementById('mainMenu').classList.add('hidden');
+  buildMap(); startRound();
+}
+
+function updateHUD(){
+  if(!players.length) return;
+  for(let i=0;i<2;i++){
+    const p=players[i];
+    document.getElementById(`p${i+1}hp`).style.width=Math.max(0,(p.hp/p.maxHp)*100)+'%';
+    document.getElementById(`p${i+1}hpnum`).textContent=Math.max(0,p.hp);
+    document.getElementById(`p${i+1}ammo`).textContent=p.reloading?'…':p.ammo;
+  }
+}
+
+// ── AIM ──
+function updateAim(p){
+  if(p.dead) return;
+  const o=players[1-p.id];
+  if(!o||o.dead) return;
+  p.angle=Math.atan2(o.y-p.y,o.x-p.x);
+}
+
+// ── DRAW ──
+function drawFloor(){
+  const W=canvas.width,H=canvas.height;
+  ctx.fillStyle='#0d1014'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.02)'; ctx.lineWidth=1;
+  for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.fillStyle='rgba(79,195,247,.012)'; ctx.fillRect(0,0,W*.35,H);
+  ctx.fillStyle='rgba(239,154,32,.012)'; ctx.fillRect(W*.65,0,W*.35,H);
+}
+function drawWalls(){
+  for(const w of walls){
+    ctx.fillStyle='#1a1f28'; ctx.fillRect(w.x,w.y,w.w,w.h);
+    ctx.strokeStyle='#2a3040'; ctx.lineWidth=1; ctx.strokeRect(w.x,w.y,w.w,w.h);
+    ctx.fillStyle='rgba(255,255,255,.04)'; ctx.fillRect(w.x,w.y,w.w,3);
+  }
+}
+function drawPlayer(p){
+  ctx.save(); ctx.translate(p.x,p.y);
+  if(p.dead){ctx.globalAlpha=.2;ctx.beginPath();ctx.arc(0,0,p.size,0,Math.PI*2);ctx.fillStyle='#333';ctx.fill();ctx.restore();return;}
+  ctx.shadowBlur=18; ctx.shadowColor=p.color;
+  ctx.beginPath();ctx.arc(0,0,p.size,0,Math.PI*2);ctx.fillStyle=p.color+'22';ctx.fill();
+  ctx.strokeStyle=p.color;ctx.lineWidth=2;ctx.stroke();
+  ctx.beginPath();ctx.arc(0,0,4,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();
+  ctx.strokeStyle=p.flash>.5?'#ffffff':p.color;ctx.lineWidth=3;
+  ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(Math.cos(p.angle)*(p.size+10),Math.sin(p.angle)*(p.size+10));ctx.stroke();
+  if(p.flash>0){ctx.globalAlpha=p.flash*.6;ctx.beginPath();ctx.arc(Math.cos(p.angle)*(p.size+10),Math.sin(p.angle)*(p.size+10),6,0,Math.PI*2);ctx.fillStyle='#ffffaa';ctx.shadowBlur=20;ctx.shadowColor='#ffff00';ctx.fill();}
+  if(p.hp<p.maxHp){ctx.globalAlpha=.7;ctx.beginPath();ctx.arc(0,0,p.size+5,-Math.PI/2,-Math.PI/2+(p.hp/p.maxHp)*Math.PI*2);ctx.strokeStyle=p.hp<30?'var(--warn)':p.color;ctx.lineWidth=2;ctx.stroke();}
+  ctx.restore();
+  const dist=28,x2=p.x+Math.cos(p.angle)*dist,y2=p.y+Math.sin(p.angle)*dist;
+  ctx.save();ctx.translate(x2,y2);ctx.strokeStyle=p.color+'aa';ctx.lineWidth=1.5;
+  [[1,0],[-1,0],[0,1],[0,-1]].forEach(([dx,dy])=>{ctx.beginPath();ctx.moveTo(dx*3,dy*3);ctx.lineTo(dx*5,dy*5);ctx.stroke();});
+  ctx.restore();
+  ctx.font="bold 10px 'Share Tech Mono'";ctx.fillStyle=p.color;ctx.textAlign='center';ctx.globalAlpha=.8;
+  ctx.fillText(`P${p.id+1}`,p.x,p.y-p.size-6);ctx.globalAlpha=1;
+}
+
+// ── MAIN LOOP ──
+let lastTime=0;
+function update(ts){
+  const dt=Math.min((ts-lastTime)/1000,.05); lastTime=ts;
+  if(!gameRunning){requestAnimationFrame(update);return;}
+
+  for(const p of players){
+    if(p.dead) continue;
+    const k=p.keys; let mx=0,my=0;
+    if(keysDown[k.up])my-=1; if(keysDown[k.down])my+=1;
+    if(keysDown[k.left])mx-=1; if(keysDown[k.right])mx+=1;
+    const len=Math.sqrt(mx*mx+my*my)||1;
+    if(mx||my){p.x+=(mx/len)*p.speed*dt;p.y+=(my/len)*p.speed*dt;}
+    resolvePlayerWalls(p);
+    updateAim(p);
+    if(p.flash>0) p.flash=Math.max(0,p.flash-dt*8);
+  }
+
+  for(let i=bullets.length-1;i>=0;i--){
+    const b=bullets[i]; b.x+=b.vx*dt; b.y+=b.vy*dt; b.life-=dt;
+    if(b.life<=0){bullets.splice(i,1);continue;}
+    let wallHit=false;
+    for(const w of walls){if(b.x>w.x&&b.x<w.x+w.w&&b.y>w.y&&b.y<w.y+w.h){spawnParticles(b.x,b.y,'#aaa',6,'wall',Math.atan2(b.vy,b.vx)+Math.PI);bullets.splice(i,1);wallHit=true;break;}}
+    if(wallHit) continue;
+    for(const p of players){
+      if(p.id===b.owner||p.dead) continue;
+      const dx=b.x-p.x,dy=b.y-p.y;
+      if(dx*dx+dy*dy<(p.size+b.r)*(p.size+b.r)){
+        const dmg=12+Math.floor(Math.random()*8); p.hp-=dmg;
+        spawnParticles(b.x,b.y,p.color,8,'blood'); showHitmarker(); bullets.splice(i,1);
+        if(p.hp<=0){p.dead=true;const kl=players[b.owner];addKillfeedMsg(`P${b.owner+1} → P${p.id+1} [${dmg}dmg KO]`,kl.color);spawnParticles(p.x,p.y,p.color,20,'blood');setTimeout(()=>triggerRoundEnd(b.owner),600);}
+        break;
+      }
+    }
+  }
+
+  for(let i=particles.length-1;i>=0;i--){
+    const pt=particles[i]; pt.x+=pt.vx*dt; pt.y+=pt.vy*dt;
+    pt.vx*=.88; pt.vy*=.88; pt.life-=dt;
+    if(pt.life<=0) particles.splice(i,1);
+  }
+
+  updateHUD();
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  drawFloor(); drawWalls();
+  for(const pt of particles){ctx.globalAlpha=pt.life/pt.maxLife;ctx.beginPath();ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);ctx.fillStyle=pt.color;ctx.fill();}
+  ctx.globalAlpha=1;
+  for(const b of bullets){ctx.save();ctx.shadowBlur=8;ctx.shadowColor=b.color;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.color;ctx.fill();ctx.strokeStyle=b.color+'66';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x-b.vx*.018,b.y-b.vy*.018);ctx.stroke();ctx.restore();}
+  for(const p of players) drawPlayer(p);
+
+  requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+</script>
+
+<a class="portal-back-link" href="index.html">← Till spelportalen</a>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deriverbanan — Matematik 3c</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#170c2e; --sky-mid:#37185a; --sky-low:#7a2f63; --horizon:#cf5a3d;
+    --amber:#ffb24c; --coral:#ff5d73; --track:#ffd27a; --track-glow:#ff9e44;
+    --mint:#3fe0bd; --rose:#ff5d73; --gold:#ffe27a;
+    --ink:#f6eeff; --muted:#bcacdd;
+    --panel:rgba(26,14,48,.66); --line:rgba(255,210,122,.22);
+    --display:'Bricolage Grotesque',sans-serif; --body:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--body);color:var(--ink);min-height:100%;display:flex;justify-content:center;
+    padding:clamp(8px,2vw,26px);overflow-x:hidden;
+    background:radial-gradient(120% 80% at 50% 6%,rgba(255,178,76,.10),transparent 60%),
+      linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 44%,var(--sky-low) 80%,var(--horizon) 100%);}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:radial-gradient(1.4px 1.4px at 12% 16%,#fff,transparent),
+      radial-gradient(1.1px 1.1px at 78% 10%,#fff,transparent),radial-gradient(1.5px 1.5px at 36% 7%,#fff,transparent),
+      radial-gradient(1.1px 1.1px at 62% 24%,#fff,transparent),radial-gradient(1.3px 1.3px at 88% 28%,#fff,transparent),
+      radial-gradient(1px 1px at 24% 32%,#fff,transparent),radial-gradient(1.2px 1.2px at 50% 14%,#fff,transparent);}
+  .stage{position:relative;z-index:1;width:100%;max-width:920px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+  .brand h1{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,4.6vw,2.6rem);line-height:.98;
+    letter-spacing:-.02em;background:linear-gradient(92deg,var(--amber),var(--coral) 62%,#ff8fae);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .brand p{color:var(--muted);font-size:.84rem;margin-top:4px}
+  .hud{display:flex;gap:9px;flex-wrap:wrap}
+  .chip{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:7px 13px;
+    min-width:62px;text-align:center;backdrop-filter:blur(6px)}
+  .chip .k{font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .chip .v{font-family:var(--mono);font-size:1.05rem;color:var(--track);font-weight:500;white-space:nowrap}
+
+  .board{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:0 24px 60px -20px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.03);
+    background:linear-gradient(180deg,rgba(12,6,28,.15),rgba(12,6,28,.5))}
+  canvas{display:block;width:100%;height:auto}
+
+  .panel{margin-top:13px;background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:14px 16px;backdrop-filter:blur(8px);display:none}
+  .row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .row+.row{margin-top:12px}
+  .hint{font-size:.94rem;line-height:1.45;color:var(--ink);flex:1 1 100%}
+  .hint b{color:var(--track)}
+  .fx{font-family:var(--mono);color:var(--mint);background:rgba(63,224,189,.08);padding:1px 6px;border-radius:6px}
+
+  .eq{font-family:var(--mono);font-size:1.02rem;line-height:1.7;color:var(--track);
+    background:rgba(255,210,122,.06);border:1px solid var(--line);border-radius:12px;padding:10px 14px;width:100%}
+  .eq .d{color:var(--mint);font-size:.92rem}
+  .eq sup{font-size:.7em}
+
+  .sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px 14px;width:100%}
+  .sld{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:8px 11px}
+  .sld .lab{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+  .sld .lab .nm{font-family:var(--mono);font-size:.82rem;color:var(--ink)}
+  .sld .lab .nm sub{color:var(--coral)} .sld .lab .nm sup{font-size:.7em}
+  .sld .lab .val{font-family:var(--mono);font-size:.92rem;color:var(--track);font-weight:500}
+  input[type=range]{width:100%;accent-color:var(--coral);height:4px}
+
+  .launch{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.78rem;color:var(--muted);flex:1 1 210px;min-width:180px}
+  .launch input{flex:1}
+  .toggle{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;color:var(--muted);cursor:pointer;user-select:none}
+  .spacer{flex:1}
+
+  button{font-family:var(--body);font-weight:700;font-size:.9rem;cursor:pointer;border:none;border-radius:12px;
+    padding:10px 17px;color:#1a0f33;background:linear-gradient(180deg,#ffd27a,#ff9e44);
+    box-shadow:0 8px 20px -8px rgba(255,158,68,.7);transition:transform .12s,filter .12s,box-shadow .12s}
+  button:hover{transform:translateY(-2px);filter:brightness(1.05)}
+  button:active{transform:translateY(0)}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+  button.ghost:hover{border-color:var(--track);color:var(--track)}
+  button.big{font-size:1.05rem;padding:14px 34px}
+
+  .toast{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);z-index:6;
+    background:rgba(20,10,40,.9);border:1px solid var(--line);border-radius:14px;padding:11px 18px;
+    color:var(--ink);font-size:.92rem;backdrop-filter:blur(8px);display:none;text-align:center;max-width:82%}
+  .toast.show{display:block;animation:pop .25s ease}
+  .toast.bad{border-color:rgba(255,93,115,.5);color:#ffd0d8}
+  @keyframes pop{from{opacity:0;transform:translate(-50%,8px)}to{opacity:1;transform:translate(-50%,0)}}
+
+  .overlay{position:absolute;inset:0;z-index:7;display:flex;align-items:center;justify-content:center;padding:22px;
+    background:radial-gradient(80% 80% at 50% 30%,rgba(40,18,70,.82),rgba(12,6,28,.94));backdrop-filter:blur(4px);text-align:center}
+  .overlay.hidden{display:none}
+  .card{max-width:580px}
+  .card h2{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.0;
+    letter-spacing:-.02em;margin-bottom:12px;background:linear-gradient(92deg,var(--amber),var(--coral));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .card .lede{color:var(--ink);font-size:1.04rem;line-height:1.55;margin-bottom:6px}
+  .card p{color:var(--muted);line-height:1.6;margin-bottom:14px;font-size:.96rem}
+  .rules{text-align:left;margin:16px auto 22px;max-width:470px;display:grid;gap:9px}
+  .rules div{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;color:var(--ink)}
+  .rules .ic{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    background:rgba(255,210,122,.12);color:var(--track);font-family:var(--mono);font-size:.74rem}
+  .lvls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px}
+  .footnote{margin-top:14px;font-size:.74rem;color:var(--muted);opacity:.8;text-align:center}
+</style>
+
+<style id="portal-back-style">
+.portal-back-link{position:fixed;left:14px;top:14px;z-index:2147483647;background:rgba(10,12,18,.88);color:#fff;text-decoration:none;font-family:Arial,sans-serif;font-weight:700;font-size:14px;letter-spacing:.2px;padding:10px 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;box-shadow:0 8px 30px rgba(0,0,0,.35);backdrop-filter:blur(8px)}
+.portal-back-link:hover{background:#fff;color:#111}
+</style>
+</head>
+<body>
+<div class="stage">
+  <header>
+    <div class="brand">
+      <h1>Deriverbanan</h1>
+      <p>Forma polynomet · släpp vagnen · Matematik 3c</p>
+    </div>
+    <div class="hud">
+      <div class="chip"><div class="k">Bana</div><div class="v" id="lvlName">–</div></div>
+      <div class="chip"><div class="k">Stjärnor</div><div class="v" id="starHud">0/0</div></div>
+      <div class="chip"><div class="k">f′(x)</div><div class="v" id="slopeHud">—</div></div>
+    </div>
+  </header>
+
+  <div class="board">
+    <canvas id="cv" width="1700" height="900"></canvas>
+    <div class="toast" id="toast"></div>
+
+    <div class="overlay" id="menu">
+      <div class="card">
+        <h2>Deriverbanan</h2>
+        <p class="lede">Bygg en bergochdalbana av matematik — och åk den.</p>
+        <p>Banan ÄR en polynomfunktion. Vrid på en slider för varje <b>koefficient</b> så formas kurvan, och släpp sedan iväg vagnen som rullar med riktig fysik. Forma kurvan rätt så den fångar alla stjärnor och når mål!</p>
+        <div class="rules">
+          <div><span class="ic">c₀</span><span>Varje slider styr en <b>konstant</b> i f(x). Funktionen och derivatan f′(x) visas live.</span></div>
+          <div><span class="ic">f′</span><span>Topparna/dalarna markeras där <span class="fx">f′(x)=0</span>. Fart kommer från höjdfallet.</span></div>
+          <div><span class="ic">★</span><span><b>Sex banor</b> i stigande svårighet — tryck <b>Nästa</b> för att ta dig vidare.</span></div>
+        </div>
+        <div class="lvls">
+          <button class="big" id="playBtn">▶ Spela</button>
+          <button class="big ghost" id="sandboxBtn">🛠️ Sandlåda</button>
+        </div>
+        <div class="footnote">Spela klarar du de sex banorna i tur och ordning · Sandlådan är fri lek utan mål.</div>
+      </div>
+    </div>
+
+    <div class="overlay hidden" id="win">
+      <div class="card">
+        <h2 id="winTitle">Banan klarad! 🎢</h2>
+        <p id="winMsg"></p>
+        <div class="lvls" id="winBtns"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel">
+    <div class="row"><div class="hint" id="hint"></div></div>
+    <div class="row"><div class="eq" id="eq"></div></div>
+    <div class="row"><div class="sliders" id="sliders"></div></div>
+    <div class="row">
+      <div class="launch"><span>🚀 Startfart</span><input type="range" id="launch" min="0" max="100" value="34"><span id="launchVal">3.4</span></div>
+      <label class="toggle"><input type="checkbox" id="showFp" checked> Visa f′ vid vagnen</label>
+      <div class="spacer"></div>
+      <button class="ghost" id="resetBtn">Nollställ</button>
+      <button class="ghost" id="menuBtn">Meny</button>
+      <button id="rideBtn">▶ Provkör</button>
+    </div>
+  </div>
+
+  <p class="footnote">Matte 3c i farten: lutningen i en punkt är <span class="fx">f′(x)</span> · topparna/dalarna ligger där <span class="fx">f′(x)=0</span> · vagnens fart byggs upp av höjdskillnaden (lägesenergi → rörelseenergi).</p>
+</div>
+
+<script>
+"use strict";
+const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+const W=cv.width, H=cv.height;
+const el=id=>document.getElementById(id);
+
+const evalPoly=(c,x)=>{let s=0,p=1;for(let i=0;i<c.length;i++){s+=c[i]*p;p*=x;}return s;};
+const dCoeffs=c=>c.slice(1).map((a,i)=>a*(i+1));
+function findExtrema(c,d0,d1){
+  const d=dCoeffs(c),dd=dCoeffs(d),N=1400,out=[];let prev=evalPoly(d,d0),px=d0;
+  for(let i=1;i<=N;i++){const x=d0+(d1-d0)*i/N,v=evalPoly(d,x);
+    if(prev*v<0){let a=px,b=x,fa=prev;for(let k=0;k<36;k++){const m=(a+b)/2,fm=evalPoly(d,m);if(fa*fm<=0)b=m;else{a=m;fa=fm;}}
+      const xr=(a+b)/2; out.push({x:xr,max:evalPoly(dd,xr)<0});}
+    prev=v;px=x;}
+  return out;
+}
+
+const RANGE=[10,4,2,0.4,0.08];
+const STEP =[0.1,0.05,0.02,0.005,0.001];
+const DECP =[1,2,2,3,3];
+const SUB=['₀','₁','₂','₃','₄'], SUP={2:'²',3:'³',4:'⁴'};
+
+const DOM=[-5,5], YR=[-4.5,10];
+/* Kampanj — i stigande svårighetsordning */
+const LEVELS=[
+  {name:'Studsen', deg:2, launch:3.4, init:[3,-0.4,0],
+   stars:[{x:-2.6,y:2.93},{x:2.8,y:2.07}],
+   hint:'Ett <b>andragradspolynom</b> f(x)=c₂x²+c₁x+c₀. Gör c₂ positiv så banan blir en dal som fångar båda stjärnorna och låter vagnen rulla upp till mål.'},
+  {name:'Svanken', deg:3, launch:3.6, init:[3,-0.5,0,0],
+   stars:[{x:-1.6,y:2.6},{x:1.8,y:5.4},{x:3.4,y:4.93}],
+   hint:'<b>Tredjegradare</b> — en topp och en dal. x³-termen ger S-formen. Justera alla fyra koefficienterna tills kurvan tråcklar stjärnorna och slutar lågt.'},
+  {name:'Backtagningen', deg:3, launch:4.0, init:[4,-0.5,0,0],
+   stars:[{x:-2.4,y:1.4},{x:1,y:6.4},{x:3.2,y:7.42}],
+   hint:'En hög puckel i mitten. Bygg ett rejält fall till vänster (rätt c₀ och c₁) så vagnen får fart nog uppför.'},
+  {name:'Dubbeldraken', deg:4, launch:4.2, init:[4,-0.4,0,0,0],
+   stars:[{x:-2.6,y:1.8},{x:0.2,y:6},{x:3,y:1.6},{x:4.4,y:1.28}],
+   hint:'<b>Fjärdegradare</b> med två toppar och två dalar — fem koefficienter. Liten positiv c₄ böjer upp ändarna; c₂ gör mittendippen.'},
+  {name:'Looping-landet', deg:4, launch:4.6, init:[4,-0.4,0,0,0],
+   stars:[{x:-2.7,y:1.2},{x:0.3,y:6.8},{x:3.2,y:1.3},{x:4.4,y:0.67}],
+   hint:'Brantare vågor och hög mittopp. Finlir med c₄, c₃ och c₂ krävs för att nå alla fyra stjärnorna.'},
+  {name:'Mästarbanan', deg:4, launch:5.0, init:[4,-0.4,0,0,0],
+   stars:[{x:-2.8,y:1},{x:-0.4,y:6.4},{x:2.2,y:1.2},{x:4,y:-2.89}],
+   hint:'Sista utmaningen: fyra extrempunkter och knappa marginaler. Kombinera alla koefficienter — höj startfarten om det kniper.'},
+];
+const SANDBOX={name:'Sandlåda', deg:4, launch:3.6, init:[2,-0.3,0,0,0], stars:[],
+   hint:'Fri lek! Skruva på koefficienterna och provkör. Topparna/dalarna (f′=0) och derivatan f′(x) visas medan du bygger.'};
+
+let state='menu', lvl=null, lvlIdx=0, sandboxMode=false;
+let coeffs=[], extrema=[], view=null;
+let starsLeft=0, totalStars=0, showFp=true, launchSpeed=3.4;
+let cart=null, trail=[], particles=[], shake=0, rideRAF=0, lastT=0, stallTimer=0;
+
+let actx=null;
+function blip(freq,dur,type,vol){ if(!actx)return;
+  const o=actx.createOscillator(),g=actx.createGain();o.type=type||'sine';o.frequency.value=freq;
+  g.gain.setValueAtTime(0,actx.currentTime);g.gain.linearRampToValueAtTime(vol||0.12,actx.currentTime+0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+(dur||0.18));
+  o.connect(g).connect(actx.destination);o.start();o.stop(actx.currentTime+(dur||0.18)+0.02);}
+const sStar=()=>{blip(880,0.12,'triangle',0.13);setTimeout(()=>blip(1320,0.14,'triangle',0.11),60);};
+const sWin =()=>{[523,659,784,1046].forEach((f,i)=>setTimeout(()=>blip(f,0.22,'triangle',0.13),i*110));};
+const sBad =()=>blip(150,0.3,'sawtooth',0.09);
+
+function buildView(){
+  const padX=70, top=42, bot=H-54;
+  view={ toX:x=>padX+(x-DOM[0])/(DOM[1]-DOM[0])*(W-2*padX),
+         toY:y=>bot-(y-YR[0])/(YR[1]-YR[0])*(bot-top),
+         ground:bot, top };
+}
+function recompute(){extrema=findExtrema(coeffs,DOM[0],DOM[1]);updateEq();}
+
+function fmt(c){
+  let terms=[];
+  for(let k=c.length-1;k>=0;k--){const v=c[k];if(Math.abs(v)<0.005)continue;
+    const dec=k>=3?3:2, mag=Math.abs(v).toFixed(dec);
+    let t = k===0?mag : k===1?mag+'x' : mag+'x<sup>'+(SUP[k]||k)+'</sup>';
+    terms.push({neg:v<0,t});}
+  if(!terms.length)return '0';
+  return terms.map((tm,i)=> i===0 ? (tm.neg?'−':'')+tm.t : (tm.neg?' − ':' + ')+tm.t ).join('');
+}
+function updateEq(){ el('eq').innerHTML = 'f(x) = '+fmt(coeffs) + '<br><span class="d">f′(x) = '+fmt(dCoeffs(coeffs))+'</span>'; }
+
+function buildSliders(){
+  const box=el('sliders'); box.innerHTML='';
+  for(let k=0;k<=lvl.deg;k++){
+    const wrap=document.createElement('div'); wrap.className='sld';
+    const term = k===0?'(konstant)' : k===1?'· x' : '· x<sup>'+(SUP[k]||k)+'</sup>';
+    const lab=document.createElement('div'); lab.className='lab';
+    lab.innerHTML='<span class="nm">c<sub>'+SUB[k]+'</sub> '+term+'</span><span class="val" id="v'+k+'">'+coeffs[k].toFixed(DECP[k])+'</span>';
+    const inp=document.createElement('input'); inp.type='range';
+    inp.min=-RANGE[k]; inp.max=RANGE[k]; inp.step=STEP[k]; inp.value=coeffs[k];
+    inp.oninput=()=>{ if(state!=='build')return; coeffs[k]=parseFloat(inp.value);
+      el('v'+k).textContent=coeffs[k].toFixed(DECP[k]); recompute(); draw(); };
+    wrap.append(lab,inp); box.append(wrap);
+  }
+}
+function syncSliders(){ for(let k=0;k<=lvl.deg;k++){const inp=el('sliders').children[k].querySelector('input');
+  inp.value=coeffs[k]; el('v'+k).textContent=coeffs[k].toFixed(DECP[k]);} }
+
+function applyLevel(L, sandbox){
+  lvl=L; sandboxMode=sandbox;
+  buildView();
+  coeffs=L.init.slice();
+  launchSpeed=L.launch; el('launch').value=Math.round(launchSpeed*10); el('launchVal').textContent=launchSpeed.toFixed(1);
+  totalStars=L.stars.length; starsLeft=totalStars; L.stars.forEach(s=>s.got=false);
+  buildSliders(); recompute();
+  state='build';
+  el('lvlName').textContent=L.name;
+  el('starHud').textContent='0/'+totalStars;
+  el('slopeHud').textContent='—';
+  el('hint').innerHTML=L.hint;
+  el('rideBtn').textContent='▶ Provkör';
+  el('panel').style.display='block';
+  el('menu').classList.add('hidden'); el('win').classList.add('hidden');
+  hideToast(); draw();
+}
+function loadLevel(i){ lvlIdx=i; applyLevel(LEVELS[i], false); }
+function loadSandbox(){ applyLevel(SANDBOX, true); }
+function toMenu(){ cancelAnimationFrame(rideRAF); state='menu'; el('panel').style.display='none';
+  el('win').classList.add('hidden'); el('menu').classList.remove('hidden'); }
+
+/* ride */
+function startRide(){
+  cart={x:DOM[0]+0.05, v:launchSpeed}; trail=[]; particles=[]; shake=0; stallTimer=0;
+  lvl.stars.forEach(s=>s.got=false); starsLeft=totalStars; el('starHud').textContent='0/'+totalStars;
+  state='ride'; el('rideBtn').textContent='■ Bygg om';
+  lastT=performance.now(); cancelAnimationFrame(rideRAF); rideRAF=requestAnimationFrame(loop);
+}
+function stopRide(){cancelAnimationFrame(rideRAF);state='build';el('rideBtn').textContent='▶ Provkör';hideToast();draw();}
+
+const G=15, FRIC=0.05, VMAX=18;
+function physStep(h){
+  const m=evalPoly(dCoeffs(coeffs),cart.x), denom=Math.sqrt(1+m*m);
+  cart.v+=(-G*m/denom)*h; cart.v-=FRIC*cart.v*h;
+  cart.v=Math.max(-VMAX,Math.min(VMAX,cart.v)); cart.x+=(cart.v/denom)*h;
+}
+function loop(now){
+  if(state!=='ride')return;
+  let dt=Math.min(0.045,(now-lastT)/1000); lastT=now;
+  const sub=10,h=dt/sub;
+  for(let s=0;s<sub;s++){
+    physStep(h);
+    if(cart.x<=DOM[0]){cart.x=DOM[0];if(cart.v<0)cart.v=0;}
+    const cy=evalPoly(coeffs,cart.x);
+    lvl.stars.forEach(st=>{if(!st.got&&Math.abs(st.x-cart.x)<0.55&&Math.abs(st.y-cy)<0.85){
+      st.got=true;starsLeft--;sStar();shake=Math.min(14,shake+9);el('starHud').textContent=(totalStars-starsLeft)+'/'+totalStars;
+      for(let q=0;q<18;q++)particles.push({x:view.toX(st.x),y:view.toY(st.y),vx:(Math.random()-.5)*9,vy:(Math.random()-.5)*9-2,life:1,c:'#ffe27a'});}});
+    if(cart.x>=DOM[1]-0.06){return finish();}
+  }
+  trail.push([view.toX(cart.x),view.toY(evalPoly(coeffs,cart.x))]); if(trail.length>46)trail.shift();
+  if(Math.abs(cart.v)<0.18)stallTimer+=dt;else stallTimer=0;
+  if(stallTimer>1.0){return stall();}
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.45;p.life-=0.02;}); particles=particles.filter(p=>p.life>0);
+  shake*=0.86; el('slopeHud').textContent=evalPoly(dCoeffs(coeffs),cart.x).toFixed(2);
+  draw(); rideRAF=requestAnimationFrame(loop);
+}
+function finish(){
+  if(starsLeft>0 && !sandboxMode){ state='build'; el('rideBtn').textContent='▶ Provkör';
+    showToast('Du nådde mål men missade '+starsLeft+' stjärna(or). Forma kurvan så den går genom dem!',true); sBad(); draw(); return; }
+  cancelAnimationFrame(rideRAF); state='won'; sWin();
+  for(let q=0;q<40;q++)particles.push({x:view.toX(DOM[1]),y:view.toY(evalPoly(coeffs,DOM[1])),vx:(Math.random()-.5)*12,vy:(Math.random()-.7)*12,life:1,c:Math.random()<.5?'#ffe27a':'#3fe0bd'});
+  draw(); showWin();
+}
+function addBtn(parent,txt,cls,fn){const b=document.createElement('button');b.textContent=txt;if(cls)b.className=cls;b.onclick=fn;parent.appendChild(b);}
+function showWin(){
+  const btns=el('winBtns'); btns.innerHTML='';
+  if(sandboxMode){
+    el('winTitle').textContent='Snyggt åk! 🎢';
+    el('winMsg').innerHTML='Du byggde en egen polynombana och körde den. Lägg märke till hur farten ökade i nedförsbackarna (f′&lt;0) och bromsade uppför (f′&gt;0).';
+    addBtn(btns,'Fortsätt bygga',null,()=>{el('win').classList.add('hidden');state='build';el('rideBtn').textContent='▶ Provkör';draw();});
+    addBtn(btns,'Spela kampanjen','ghost',()=>loadLevel(0));
+    addBtn(btns,'Meny','ghost',toMenu);
+  } else if(lvlIdx>=LEVELS.length-1){
+    el('winTitle').textContent='🎉 Alla banor klarade!';
+    el('winMsg').innerHTML='Snyggt jobbat — du tog dig genom alla sex banorna! Du har byggt allt från andragradskurvor till fjärdegradare och läst av f′(x) hela vägen. Vill du leka vidare fritt?';
+    addBtn(btns,'Sandlåda →',null,loadSandbox);
+    addBtn(btns,'Spela igen','ghost',()=>loadLevel(0));
+    addBtn(btns,'Meny','ghost',toMenu);
+  } else {
+    el('winTitle').textContent='Banan klarad! 🎢';
+    el('winMsg').innerHTML='Vagnen tog alla stjärnor och rullade i mål! Topparna du byggde ligger precis där f′(x)=0, och farten kom från höjdskillnaden.';
+    addBtn(btns,'Nästa bana →',null,()=>loadLevel(lvlIdx+1));
+    addBtn(btns,'Meny','ghost',toMenu);
+  }
+  el('win').classList.remove('hidden');
+}
+function stall(){ cancelAnimationFrame(rideRAF); state='build'; el('rideBtn').textContent='▶ Provkör'; sBad();
+  showToast('Vagnen stannade! 🛑 Bygg ett större fall i starten (justera c₀/c₁) eller höj startfarten.',true); draw(); }
+
+let toastT=0;
+function showToast(m,bad){const t=el('toast');t.innerHTML=m;t.className='toast show'+(bad?' bad':'');clearTimeout(toastT);toastT=setTimeout(hideToast,4600);}
+function hideToast(){el('toast').className='toast';}
+
+/* rendering */
+function draw(){
+  ctx.save();
+  if(shake>0.4)ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake);
+  ctx.clearRect(-20,-20,W+40,H+40);
+  const v=view;
+
+  let mg=ctx.createRadialGradient(W-150,108,8,W-150,108,78);
+  mg.addColorStop(0,'rgba(255,238,200,.9)');mg.addColorStop(1,'rgba(255,238,200,0)');
+  ctx.fillStyle=mg;ctx.beginPath();ctx.arc(W-150,108,78,0,7);ctx.fill();
+  ctx.fillStyle='#fff7e0';ctx.beginPath();ctx.arc(W-150,108,33,0,7);ctx.fill();
+
+  ctx.fillStyle='rgba(10,4,22,.55)';ctx.fillRect(0,v.ground,W,H-v.ground);
+  ctx.strokeStyle='rgba(255,210,122,.16)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,v.ground);ctx.lineTo(W,v.ground);ctx.stroke();
+
+  const y0=v.toY(0), x0=v.toX(0);
+  ctx.strokeStyle='rgba(255,255,255,.10)';ctx.setLineDash([6,9]);ctx.lineWidth=1.4;
+  ctx.beginPath();ctx.moveTo(40,y0);ctx.lineTo(W-40,y0);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x0,v.top);ctx.lineTo(x0,v.ground);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='20px DM Mono';ctx.fillText('0',x0+6,y0-7);
+
+  const N=520, pts=[];
+  for(let i=0;i<=N;i++){const x=DOM[0]+(DOM[1]-DOM[0])*i/N;pts.push([v.toX(x),v.toY(evalPoly(coeffs,x)),x]);}
+
+  ctx.strokeStyle='rgba(255,158,68,.15)';ctx.lineWidth=2.4;
+  for(let i=8;i<N;i+=22){const px=pts[i][0],py=pts[i][1];if(py<v.ground&&py>v.top){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,v.ground);ctx.stroke();}}
+
+  const fxx=v.toX(DOM[1]);
+  ctx.fillStyle='rgba(63,224,189,.06)';ctx.fillRect(fxx-26,v.top,40,v.ground-v.top);
+
+  lvl.stars.forEach(st=>{if(st.got)return;drawStar(v.toX(st.x),v.toY(st.y),16);});
+
+  ctx.lineJoin='round';ctx.lineCap='round';
+  ctx.save();ctx.beginPath();ctx.rect(0,v.top-4,W,v.ground-v.top+8);ctx.clip();
+  ctx.save();ctx.shadowColor='#ff9e44';ctx.shadowBlur=22;ctx.strokeStyle='rgba(255,158,68,.5)';ctx.lineWidth=13;trace(pts);ctx.stroke();ctx.restore();
+  ctx.strokeStyle='#ffd27a';ctx.lineWidth=6;trace(pts);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=2;trace(pts);ctx.stroke();
+  ctx.strokeStyle='rgba(26,15,51,.55)';ctx.lineWidth=3;
+  for(let i=4;i<N;i+=9){const px=pts[i][0],py=pts[i][1];ctx.beginPath();ctx.moveTo(px-6,py-7);ctx.lineTo(px+6,py+7);ctx.stroke();}
+  ctx.restore();
+
+  extrema.forEach(ex=>{const yv=evalPoly(coeffs,ex.x),py=v.toY(yv);if(py<v.top||py>v.ground)return;const px=v.toX(ex.x);
+    ctx.strokeStyle=ex.max?'rgba(255,93,115,.85)':'rgba(63,224,189,.85)';ctx.lineWidth=2.5;ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.arc(px,py,12,0,7);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=ex.max?'#ff5d73':'#3fe0bd';ctx.font='500 18px DM Mono';ctx.textAlign='center';ctx.fillText("f′=0",px,py-18);ctx.textAlign='left';});
+
+  drawFinishFlag(fxx,v.toY(evalPoly(coeffs,DOM[1])));
+
+  if(state==='ride'||state==='won'){
+    for(let i=1;i<trail.length;i++){const a=trail[i-1],b=trail[i];
+      ctx.strokeStyle='rgba(255,158,68,'+(i/trail.length*0.5)+')';ctx.lineWidth=i/trail.length*7;
+      ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();}
+    if(cart){ if(showFp)drawTangent(cart.x); drawCart(cart.x);
+      const spd=Math.abs(cart.v);
+      if(spd>5){const px=v.toX(cart.x),py=v.toY(evalPoly(coeffs,cart.x));ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=2;
+        for(let k=0;k<3;k++){const o=(k+1)*9;ctx.beginPath();ctx.moveTo(px-26-o,py-4-k*5);ctx.lineTo(px-46-o-spd,py-4-k*5);ctx.stroke();}}}
+  }
+  particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,3.2,0,7);ctx.fill();});
+  ctx.globalAlpha=1; ctx.restore();
+}
+function trace(pts){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));}
+function angleAt(x){const v=view,h=(DOM[1]-DOM[0])/520;return Math.atan2(v.toY(evalPoly(coeffs,x+h))-v.toY(evalPoly(coeffs,x-h)),v.toX(x+h)-v.toX(x-h));}
+function drawCart(x){
+  const v=view,px=v.toX(x),py=v.toY(evalPoly(coeffs,x)),a=angleAt(x);
+  ctx.save();ctx.translate(px,py-2);ctx.rotate(a);
+  ctx.fillStyle='#ff5d73';ctx.strokeStyle='rgba(26,15,51,.85)';ctx.lineWidth=3;rr(-25,-29,50,27,9);ctx.fill();ctx.stroke();
+  ctx.fillStyle='rgba(26,15,51,.85)';rr(-17,-25,34,12,5);ctx.fill();
+  ctx.fillStyle='#ffe27a';ctx.beginPath();ctx.arc(0,-30,6,0,7);ctx.fill();
+  ctx.fillStyle='#1a0f33';ctx.beginPath();ctx.arc(-14,2,7,0,7);ctx.fill();ctx.beginPath();ctx.arc(14,2,7,0,7);ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.6)';ctx.beginPath();ctx.arc(-14,2,2.4,0,7);ctx.fill();ctx.beginPath();ctx.arc(14,2,2.4,0,7);ctx.fill();
+  ctx.restore();
+}
+function drawTangent(x){
+  const v=view,m=evalPoly(dCoeffs(coeffs),x),y=evalPoly(coeffs,x),dx=(DOM[1]-DOM[0])*0.16;
+  const p1=[v.toX(x-dx),v.toY(y-m*dx)],p2=[v.toX(x+dx),v.toY(y+m*dx)];
+  ctx.save();ctx.strokeStyle='#3fe0bd';ctx.lineWidth=3;ctx.setLineDash([9,7]);ctx.shadowColor='#3fe0bd';ctx.shadowBlur=10;
+  ctx.beginPath();ctx.moveTo(p1[0],p1[1]);ctx.lineTo(p2[0],p2[1]);ctx.stroke();ctx.restore();
+  ctx.font='500 21px DM Mono';ctx.fillStyle='#3fe0bd';
+  ctx.fillText('f′='+m.toFixed(2)+(m>0.05?' ↗':m<-0.05?' ↘':' →'),p2[0]+8,p2[1]-4);
+}
+function drawStar(x,y,r){
+  ctx.save();ctx.translate(x,y);ctx.shadowColor='#ffe27a';ctx.shadowBlur=18;ctx.fillStyle='#ffe27a';
+  ctx.beginPath();for(let i=0;i<10;i++){const ang=-Math.PI/2+i*Math.PI/5,rad=i%2?r*0.45:r;ctx.lineTo(Math.cos(ang)*rad,Math.sin(ang)*rad);}
+  ctx.closePath();ctx.fill();ctx.restore();
+}
+function drawFinishFlag(x,y){
+  if(y<view.top)y=view.top+8; if(y>view.ground)y=view.ground;
+  ctx.save();ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-56);ctx.stroke();
+  const fw=34,fh=24;for(let r=0;r<3;r++)for(let c=0;c<4;c++){ctx.fillStyle=((r+c)%2)?'#fff':'#3fe0bd';ctx.fillRect(x+c*fw/4,y-56+r*fh/3,fw/4,fh/3);}
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,5,0,7);ctx.fill();ctx.restore();
+}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+el('playBtn').onclick=()=>{ensureAudio();loadLevel(0);};
+el('sandboxBtn').onclick=()=>{ensureAudio();loadSandbox();};
+el('rideBtn').onclick=()=>{if(state==='build')startRide();else stopRide();};
+el('resetBtn').onclick=()=>{if(state!=='build')return;coeffs=lvl.init.slice();syncSliders();recompute();draw();};
+el('menuBtn').onclick=toMenu;
+el('launch').oninput=e=>{launchSpeed=e.target.value/10;el('launchVal').textContent=launchSpeed.toFixed(1);};
+el('showFp').onchange=e=>{showFp=e.target.checked;draw();};
+function ensureAudio(){if(!actx){try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}}}
+
+/* initial bakgrund bakom menyn */
+lvl=LEVELS[0];buildView();coeffs=lvl.init.slice();recompute();state='_idle';draw();state='menu';
+</script>
+
+<a class="portal-back-link" href="index.html">← Till spelportalen</a>
+</body>
+</html>

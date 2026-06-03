@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="sv">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spelportal · MA3C TE24B</title>
+<style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#080b17;--panel:rgba(255,255,255,.07);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#aeb6d7}
+    body{min-height:100vh;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at 15% 12%,rgba(71,118,255,.32),transparent 34%),radial-gradient(circle at 85% 10%,rgba(255,72,188,.24),transparent 30%),radial-gradient(circle at 50% 100%,rgba(0,255,204,.13),transparent 35%),linear-gradient(180deg,#090b19,#050711 70%,#03040a);padding:58px 20px 34px}
+    .wrap{width:min(1500px,100%);margin:0 auto}
+    header{text-align:center;margin-bottom:38px}
+    .class-label{display:inline-block;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:#cdd5ff;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 14px;margin-bottom:16px;backdrop-filter:blur(10px)}
+    h1{font-size:clamp(2.2rem,6vw,4.8rem);line-height:1.05;letter-spacing:-.06em;background:linear-gradient(90deg,#fff,#9efcff 35%,#ff9ee6 70%,#ffe79c);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 60px rgba(102,238,255,.18)}
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:stretch}
+    .game-card{min-height:100%;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));border-radius:22px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.26);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;position:relative}
+    .game-card:hover,.game-card:focus-within{transform:translateY(-5px);border-color:color-mix(in srgb,var(--accent),white 18%);box-shadow:0 28px 90px rgba(0,0,0,.38),0 0 0 1px color-mix(in srgb,var(--accent),transparent 40%)}
+    .card-link{display:flex;flex-direction:column;height:100%;color:inherit;text-decoration:none}
+    .thumb{height:150px;position:relative;overflow:hidden;background:#111;display:flex;align-items:flex-end;padding:14px;border-bottom:1px solid rgba(255,255,255,.12)}
+    .thumb::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 24%,color-mix(in srgb,var(--accent),white 25%),transparent 24%),linear-gradient(135deg,color-mix(in srgb,var(--accent),#000 25%),#111827 70%);opacity:.92}
+    .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 0 48%,rgba(255,255,255,.10) 49% 50%,transparent 51% 100%);background-size:100% 14px;opacity:.22}
+    .thumb-1::before{background:radial-gradient(circle at 15% 20%,#00ffcc,transparent 22%),radial-gradient(circle at 78% 32%,#ff6b35,transparent 18%),linear-gradient(135deg,#09091d,#102b3a 55%,#000)}
+    .thumb-2::before{background:radial-gradient(circle at 75% 18%,#ffd27a,transparent 22%),linear-gradient(160deg,#170c2e,#7a2f63 65%,#cf5a3d)}
+    .thumb-3::before{background:radial-gradient(circle at 20% 20%,#ff00ff,transparent 24%),radial-gradient(circle at 80% 30%,#00ffff,transparent 20%),linear-gradient(135deg,#050014,#18002f 60%,#000)}
+    .thumb-4::before{background:radial-gradient(circle at 25% 20%,#4fc3f7,transparent 23%),radial-gradient(circle at 80% 28%,#ef9a20,transparent 20%),linear-gradient(135deg,#0a0c0e,#151922)}
+    .thumb-title{position:relative;z-index:2;font-weight:900;font-size:clamp(1.08rem,1.45vw,1.35rem);line-height:1;letter-spacing:-.04em;text-shadow:0 8px 30px rgba(0,0,0,.55)}
+    .thumb-glow{position:absolute;inset:auto 16px 14px 16px;height:2px;background:var(--accent);box-shadow:0 0 24px var(--accent);z-index:2}
+    .card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1;position:relative}
+    .tag{color:var(--accent);font-weight:750;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;min-height:2.1em;line-height:1.25}
+    h2{font-size:1.08rem;letter-spacing:-.02em}
+    .desc{display:none}
+    .play{display:inline-flex;align-self:flex-start;margin-top:4px;background:var(--accent);color:#051018;font-weight:900;border-radius:999px;padding:8px 15px;font-size:.92rem;box-shadow:0 10px 28px color-mix(in srgb,var(--accent),transparent 68%)}
+    .description-panel{margin:28px auto 0;width:min(860px,100%);min-height:122px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border-radius:24px;padding:22px 28px;box-shadow:0 24px 70px rgba(0,0,0,.20);text-align:center;display:flex;align-items:center;justify-content:center;transition:border-color .18s ease,box-shadow .18s ease}
+    .description-panel .placeholder{font-size:1.08rem;font-style:italic;color:rgba(255,255,255,.72)}
+    .description-panel .desc-text{display:none;color:#edf2ff;line-height:1.58;font-size:1rem;text-align:left;max-width:780px}
+    .description-panel .desc-text b{display:block;color:#fff;font-size:1.12rem;margin-bottom:6px}
+    .grid:has(.game-card:nth-child(1):hover) ~ .description-panel,.grid:has(.game-card:nth-child(1):focus-within) ~ .description-panel{border-color:#00ffcc;box-shadow:0 24px 70px rgba(0,0,0,.20),0 0 38px rgba(0,255,204,.16)}
+    .grid:has(.game-card:nth-child(2):hover) ~ .description-panel,.grid:has(.game-card:nth-child(2):focus-within) ~ .description-panel{border-color:#ffb24c;box-shadow:0 24px 70px rgba(0,0,0,.20),0 0 38px rgba(255,178,76,.16)}
+    .grid:has(.game-card:nth-child(3):hover) ~ .description-panel,.grid:has(.game-card:nth-child(3):focus-within) ~ .description-panel{border-color:#ff00ff;box-shadow:0 24px 70px rgba(0,0,0,.20),0 0 38px rgba(255,0,255,.16)}
+    .grid:has(.game-card:nth-child(4):hover) ~ .description-panel,.grid:has(.game-card:nth-child(4):focus-within) ~ .description-panel{border-color:#4fc3f7;box-shadow:0 24px 70px rgba(0,0,0,.20),0 0 38px rgba(79,195,247,.16)}
+    .grid:has(.game-card:hover) ~ .description-panel .placeholder,.grid:has(.game-card:focus-within) ~ .description-panel .placeholder{display:none}
+    .grid:has(.game-card:nth-child(1):hover) ~ .description-panel .desc-1,.grid:has(.game-card:nth-child(1):focus-within) ~ .description-panel .desc-1{display:block}
+    .grid:has(.game-card:nth-child(2):hover) ~ .description-panel .desc-2,.grid:has(.game-card:nth-child(2):focus-within) ~ .description-panel .desc-2{display:block}
+    .grid:has(.game-card:nth-child(3):hover) ~ .description-panel .desc-3,.grid:has(.game-card:nth-child(3):focus-within) ~ .description-panel .desc-3{display:block}
+    .grid:has(.game-card:nth-child(4):hover) ~ .description-panel .desc-4,.grid:has(.game-card:nth-child(4):focus-within) ~ .description-panel .desc-4{display:block}
+    footer{text-align:center;color:rgba(255,255,255,.44);font-size:.85rem;margin-top:22px}
+    @media (max-width:1180px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}body{padding-top:42px}}
+    @media (max-width:620px){body{padding:30px 14px 42px}.grid{grid-template-columns:1fr}.thumb{height:140px}.description-panel{display:none}.desc{display:block;color:var(--muted);line-height:1.5;font-size:.92rem;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:12px;margin-top:4px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div class="class-label">MA3C klass TE24B</div>
+<h1>Spelportal</h1>
+</header>
+<main class="grid">
+<article class="game-card" style="--accent:#00ffcc">
+<a aria-label="Spela Variablernas värld" class="card-link" href="Derivatajägaren.html">
+<div class="thumb thumb-1">
+<div class="thumb-title">Variablernas värld</div>
+<div class="thumb-glow"></div>
+</div>
+<div class="card-body">
+<p class="tag">Derivata · integraler · gränsvärden · logaritmer</p>
+<h2>Variablernas värld</h2>
+<p class="desc">Variablernas värld är ett matematikspel för Ma3c där du utforskar en mystisk värld fylld med matematiska utmaningar. Genom att springa och hoppa på rätt svar tränar du på derivator, integraler, gränsvärden och logaritmer – viktiga delar av kursen Matematik 3c. Varje rätt svar ger poäng, medan fel svar kostar både poäng och liv. Hur länge kan du överleva och hur hög poäng kan du samla?</p>
+<span class="play">Spela</span>
+</div>
+</a>
+</article>
+<article class="game-card" style="--accent:#ffb24c">
+<a aria-label="Spela Deriverbanan" class="card-link" href="deriverbanan.html">
+<div class="thumb thumb-2">
+<div class="thumb-title">Deriverbanan</div>
+<div class="thumb-glow"></div>
+</div>
+<div class="card-body">
+<p class="tag">Polynom · derivata · extrempunkter</p>
+<h2>Deriverbanan</h2>
+<p class="desc">Deriverbanan är ett bygg- och åkspel för Matematik 3c där du skapar en bergochdalbana av matematik. Banan är en polynomfunktion, och du formar den genom att vrida på en slider för varje koefficient — kurvan, funktionsuttrycket f(x), derivatan f′(x) och extrempunkterna (där f′(x) = 0) uppdateras live medan du bygger. Sedan släpper du iväg en vagn som rullar med riktig fysik: den gasar i nedförsbackar (f′ &lt; 0) och bromsar uppför (f′ &gt; 0). Forma kurvan rätt så vagnen fångar alla stjärnor och når mål. Sex banor i stigande svårighet, från andragradskurvor till fjärdegradare.</p>
+<span class="play">Spela</span>
+</div>
+</a>
+</article>
+<article class="game-card" style="--accent:#ff00ff">
+<a aria-label="Spela Absolutbelopp Äventyr" class="card-link" href="absolutbeloppäventyr.html">
+<div class="thumb thumb-3">
+<div class="thumb-title">Absolutbelopp Äventyr</div>
+<div class="thumb-glow"></div>
+</div>
+<div class="card-body">
+<p class="tag">Absolutbelopp · huvudräkning</p>
+<h2>Absolutbelopp Äventyr</h2>
+<p class="desc">Absolutbelopp Äventyr är ett plattformsspel där spelaren löser uppgifter med absolutbelopp genom att hoppa på fiender med rätt svar. Rätt svar ger poäng, medan fel svar kostar både poäng och liv. Ett snabbt och actionfyllt sätt att träna huvudräkning och absolutbelopp.</p>
+<span class="play">Spela</span>
+</div>
+</a>
+</article>
+<article class="game-card" style="--accent:#4fc3f7">
+<a aria-label="Spela MATHSTRIKE" class="card-link" href="idk.html">
+<div class="thumb thumb-4">
+<div class="thumb-title">MATHSTRIKE</div>
+<div class="thumb-glow"></div>
+</div>
+<div class="card-body">
+<p class="tag">Ma3c-duell · algebra · derivata · trigonometri</p>
+<h2>MATHSTRIKE</h2>
+<p class="desc">MATHSTRIKE är ett tvåspelarspel inspirerat av actionspel, där matematiken blir en del av striden. Spelarna rör sig på banan, skjuter och behöver lösa Ma3c-uppgifter för att ladda om. Spelet innehåller bland annat polynom, absolutbelopp, derivator, integraler, extremvärden och trigonometri.</p>
+<span class="play">Spela</span>
+</div>
+</a>
+</article>
+</main><section aria-live="polite" class="description-panel"><p class="placeholder">Håll muspekaren över ett spelkort för att läsa beskrivningen.</p><p class="desc-text desc-1"><b>Variablernas värld</b>Variablernas värld är ett matematikspel för Ma3c där du utforskar en mystisk värld fylld med matematiska utmaningar. Genom att springa och hoppa på rätt svar tränar du på derivator, integraler, gränsvärden och logaritmer – viktiga delar av kursen Matematik 3c. Varje rätt svar ger poäng, medan fel svar kostar både poäng och liv. Hur länge kan du överleva och hur hög poäng kan du samla?</p><p class="desc-text desc-2"><b>Deriverbanan</b>Deriverbanan är ett bygg- och åkspel för Matematik 3c där du skapar en bergochdalbana av matematik. Banan är en polynomfunktion, och du formar den genom att vrida på en slider för varje koefficient — kurvan, funktionsuttrycket f(x), derivatan f′(x) och extrempunkterna (där f′(x) = 0) uppdateras live medan du bygger. Sedan släpper du iväg en vagn som rullar med riktig fysik: den gasar i nedförsbackar (f′ &lt; 0) och bromsar uppför (f′ &gt; 0). Forma kurvan rätt så vagnen fångar alla stjärnor och når mål. Sex banor i stigande svårighet, från andragradskurvor till fjärdegradare.</p><p class="desc-text desc-3"><b>Absolutbelopp Äventyr</b>Absolutbelopp Äventyr är ett plattformsspel där spelaren löser uppgifter med absolutbelopp genom att hoppa på fiender med rätt svar. Rätt svar ger poäng, medan fel svar kostar både poäng och liv. Ett snabbt och actionfyllt sätt att träna huvudräkning och absolutbelopp.</p><p class="desc-text desc-4"><b>MATHSTRIKE</b>MATHSTRIKE är ett tvåspelarspel inspirerat av actionspel, där matematiken blir en del av striden. Spelarna rör sig på banan, skjuter och behöver lösa Ma3c-uppgifter för att ladda om. Spelet innehåller bland annat polynom, absolutbelopp, derivator, integraler, extremvärden och trigonometri.</p></section>
+<footer>MA3C · TE24B · AI-skapade matematikspel</footer>
+</div>
+</body>
+</html>
