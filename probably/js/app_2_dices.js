@@ -1,123 +1,160 @@
-const dice1 = document.getElementById("dice_1");
-const dice2 = document.getElementById("dice_2");
+const dice1 = document.getElementById('dice_1')
+const dice2 = document.getElementById('dice_2')
 
-const inputBox = document.getElementById("input_box_one_dice");
+const inputField = document.getElementById('input_box_one_dice')
+const counter = document.getElementById('counterRolls')
 
-const counterRolls = document.getElementById("counterRolls");
-const counterSum11 = document.getElementById("counterSum11");
-const counterProduct12 = document.getElementById("counterProduct12");
-const counterMixed = document.getElementById("counterMixed");
-
-let rolls = 0;
-
-let sum11 = 0;
-let product12 = 0;
-let mixed = 0;
+const sum11Counter = document.getElementById('counterSum11')
+const product12Counter = document.getElementById('counterProduct12')
+const mixedCounter = document.getElementById('counterMixed')
 
 
-// Slå de två tärningarna en gång
-function rollDice() {
+// Klick i inputfältet
+inputField.addEventListener('click', () => {
+    if (inputField.value == "Antal slag + ENTER") {
+        inputField.value = ""
+        inputField.style.fontSize = "30px"
+    }
+})
 
-    const roll1 = Math.floor(Math.random() * 6) + 1;
-    const roll2 = Math.floor(Math.random() * 6) + 1;
 
-    rolls++;
+// ENTER startar simuleringen
+document.addEventListener('keypress', (event) => {
+    if (
+        (event.code == "Enter" || event.code == "NumpadEnter") &&
+        inputField.value != "Antal slag + ENTER" &&
+        inputField.value != ""
+    ) {
+        const numberOfRolls = eval(inputField.value)
+
+        if (numberOfRolls >= 10) {
+            rollDiceAnimated(numberOfRolls, 1)
+        }
+        else {
+            rollDiceAnimated(numberOfRolls, 500)
+        }
+    }
+})
+
+
+// Återställ texten i inputfältet
+document.addEventListener('click', (event) => {
+    if (
+        inputField.value == "" &&
+        event.target.id != 'input_box_one_dice'
+    ) {
+        inputField.style.fontSize = "15px"
+        inputField.value = "Antal slag + ENTER"
+    }
+})
+
+
+// Räknare
+var rollValue = 0
+var sum11Value = 0
+var product12Value = 0
+var mixedValue = 0
+
+
+// Uppdatera statistik
+function updateValueAndHTML(roll1, roll2) {
+
+    rollValue += 1
+
+    counter.innerHTML = `${rollValue}`
+
 
     // Händelse 1:
     // Summan är 11
     if (roll1 + roll2 === 11) {
-        sum11++;
+        sum11Value += 1
     }
+
 
     // Händelse 2:
     // Produkten är större än eller lika med 12
     if (roll1 * roll2 >= 12) {
-        product12++;
+        product12Value += 1
     }
 
+
     // Händelse 3:
-    // En tärning är större än 3
-    // och den andra är mindre än 5
+    // En är större än 3 och den andra mindre än 5
     if (
         (roll1 > 3 && roll2 < 5) ||
         (roll2 > 3 && roll1 < 5)
     ) {
-        mixed++;
+        mixedValue += 1
     }
 
-    return [roll1, roll2];
+
+    // Uppdatera relativa frekvenser
+    sum11Counter.innerHTML =
+        `${(sum11Value * 100 / rollValue).toFixed(3)}`
+
+    product12Counter.innerHTML =
+        `${(product12Value * 100 / rollValue).toFixed(3)}`
+
+    mixedCounter.innerHTML =
+        `${(mixedValue * 100 / rollValue).toFixed(3)}`
 }
 
 
-// Uppdatera räknarna på sidan
-function updateCounters() {
-
-    counterRolls.textContent = rolls;
-
-    counterSum11.textContent =
-        ((sum11 / rolls) * 100).toFixed(2);
-
-    counterProduct12.textContent =
-        ((product12 / rolls) * 100).toFixed(2);
-
-    counterMixed.textContent =
-        ((mixed / rolls) * 100).toFixed(2);
+// Ändra tärningsbild
+function changeDiceFace(dice, newFace) {
+    dice.src = `img/dice_${newFace}.png`
 }
 
 
-// Visa senaste tärningsslaget
-function showDice(roll1, roll2) {
+// Animerad simulering
+function rollDiceAnimated(times, speed) {
 
-    dice1.src = "img/dice_" + roll1 + ".png";
-    dice2.src = "img/dice_" + roll2 + ".png";
+    var i = 1
+
+    while (i <= times) {
+
+        setTimeout(() => {
+
+            // Slå båda tärningarna
+            var roll1 = Math.floor(Math.random() * 6) + 1
+            var roll2 = Math.floor(Math.random() * 6) + 1
+
+            // Visa resultaten
+            changeDiceFace(dice1, roll1)
+            changeDiceFace(dice2, roll2)
+
+            // Uppdatera statistiken
+            updateValueAndHTML(roll1, roll2)
+
+        }, speed * i)
+
+        i += 1
+    }
 }
 
 
-// Kör ett antal simuleringar
-function simulate(numberOfRolls) {
+// Klick på en tärning = ett nytt slag
+dice1.addEventListener('click', () => {
+    rollDiceAnimated(1, 1)
+})
 
-    let lastRoll;
+dice2.addEventListener('click', () => {
+    rollDiceAnimated(1, 1)
+})
 
-    for (let i = 0; i < numberOfRolls; i++) {
-        lastRoll = rollDice();
-    }
 
-    showDice(lastRoll[0], lastRoll[1]);
-    updateCounters();
+// Slumpmässiga tärningar när sidan öppnas
+function initialize() {
+
+    var firstDiceFace =
+        Math.floor(Math.random() * 6) + 1
+
+    var secondDiceFace =
+        Math.floor(Math.random() * 6) + 1
+
+    changeDiceFace(dice1, firstDiceFace)
+    changeDiceFace(dice2, secondDiceFace)
 }
 
 
-// ENTER i inmatningsrutan
-inputBox.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-
-        const numberOfRolls = parseInt(inputBox.value);
-
-        if (!isNaN(numberOfRolls) && numberOfRolls > 0) {
-
-            simulate(numberOfRolls);
-
-            inputBox.value = "Antal slag + ENTER";
-        }
-    }
-});
-
-
-// Klick på någon av tärningarna = ett slag
-dice1.addEventListener("click", function() {
-    simulate(1);
-});
-
-dice2.addEventListener("click", function() {
-    simulate(1);
-});
-
-
-// Markera standardtexten när man klickar i rutan
-inputBox.addEventListener("focus", function() {
-
-    if (inputBox.value === "Antal slag + ENTER") {
-        inputBox.select();
-    }
-});
+initialize()
