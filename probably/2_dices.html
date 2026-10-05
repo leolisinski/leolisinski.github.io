@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Två tärningar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="flex_wrapper">
+        <img id="dice_1" class="dice" src="img/dice_1.png" alt="Tärning 1">
+        <img id="dice_2" class="dice" src="img/dice_1.png" alt="Tärning 2">
+    </div>
+
+    <div class="counters_wrapper">
+
+        <div id="input_wrapper">
+            <input
+                id="input_box_one_dice"
+                type="text"
+                value="Antal slag + ENTER">
+        </div>
+
+        <div>
+            Antal slag totalt:
+            <span id="counterRolls">0</span>
+        </div>
+
+        <br>
+
+        <div>
+            P(summan är 11):
+            <span id="counterSum11">0</span> %
+        </div>
+
+        <div>
+            P(produkten är större eller lika med 12):
+            <span id="counterProduct12">0</span> %
+        </div>
+
+        <div>
+            P(en större än 3, den andra mindre än 5):
+            <span id="counterMixed">0</span> %
+        </div>
+
+    </div>
+
+    <script src="js/app_2_dices.js"></script>
+
+</body>
+</html>
