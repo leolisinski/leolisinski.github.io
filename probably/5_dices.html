@@ -1,36 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Fem tärningar</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/style.css?v=6">
 </head>
-<body>
-    <div class="flex_wrapper">
-    <img id="0" class="dice" src="img/dice_1.png" alt="">
-    <img id="1" class="dice" src="img/dice_1.png" alt="">
-    <img id="2" class="dice" src="img/dice_1.png" alt="">
-    <img id="3" class="dice" src="img/dice_1.png" alt="">
-    <img id="4" class="dice" src="img/dice_1.png" alt="">
-    </div>
-    <div class="counters_wrapper">
-        <div id="input_wrapper">
-            <input id="input_box" type="text" value="Antal slag + ENTER"></input>
-            <div class="button" id="b2">till 2 lika</div>
-            <div class="button" id="b3">till 3 lika</div>
-            <div class="button" id="b4">till 4 lika</div>
-            <div class="button" id="b5">till 5 lika</div>
+
+<body class="five-dices-page">
+
+    <main class="simulation">
+
+        <h1>Fem tärningar</h1>
+
+        <p class="instruction">
+            Ange antal kast och starta simuleringen
+        </p>
+
+
+        <div class="dice-area">
+
+            <img
+                id="dice_1"
+                class="dice"
+                src="img/dice_1.png"
+                alt="Tärning 1"
+            >
+
+            <img
+                id="dice_2"
+                class="dice"
+                src="img/dice_1.png"
+                alt="Tärning 2"
+            >
+
+            <img
+                id="dice_3"
+                class="dice"
+                src="img/dice_1.png"
+                alt="Tärning 3"
+            >
+
+            <img
+                id="dice_4"
+                class="dice"
+                src="img/dice_1.png"
+                alt="Tärning 4"
+            >
+
+            <img
+                id="dice_5"
+                class="dice"
+                src="img/dice_1.png"
+                alt="Tärning 5"
+            >
+
         </div>
-        <div>Antal slag totalt: <span id="counterRolls">0</span></div>
-        <br>
-        <div>Antal slag med 2 lika: <span id="counterTwo">0</span></div>
-        <div>Antal slag med 3 lika: <span id="counterThree">0</span></div>
-        <div>Antal slag med 4 lika: <span id="counterFour">0</span></div><br>
-        <div>Antal slag med 5 lika (YATZY): <span id="counterFive">0</span> (<span id="relFive">0</span> %)</div></div><br>
-        <div>Antal slag med minst en trea: <span id="counterAtLeastOne3">0</span> (<span id="relAtLeastOne3">0</span> %)</div>
-        <div>Antal slag med minst två treor: <span id="counterAtLeastTwo3">0</span> (<span id="relAtLeastTwo3">0</span> %)</div>
-    </div>
-    <script src="js/app_5_dices.js"></script>
+
+
+        <div class="controls">
+
+            <div class="control-group">
+
+                <label for="input_box_five_dice">
+                    Antal kast
+                </label>
+
+                <input
+                    id="input_box_five_dice"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    placeholder="T.ex. 100"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="control-group">
+
+                <label for="speedSelect">
+                    Kast per sekund
+                </label>
+
+                <select id="speedSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+
+            </div>
+
+
+            <button id="startButton" type="button">
+                KÖR
+            </button>
+
+        </div>
+
+
+        <div class="counters_wrapper">
+
+            <div class="total-rolls">
+                Antal kast totalt:
+                <span id="counterRolls">0</span>
+            </div>
+
+
+            <div class="probabilities">
+
+                <div class="probability-row">
+
+                    <span class="probability-label">
+                        P(minst en trea)
+                    </span>
+
+                    <span class="probability-value">
+                        <span id="counterAtLeastOneThree">0.000</span> %
+                    </span>
+
+                </div>
+
+
+                <div class="probability-row">
+
+                    <span class="probability-label">
+                        P(YATZY, dvs alla lika)
+                    </span>
+
+                    <span class="probability-value">
+                        <span id="counterYatzy">0.000</span> %
+                    </span>
+
+                </div>
+
+
+                <div class="probability-row">
+
+                    <span class="probability-label">
+                        P(minst två treor)
+                    </span>
+
+                    <span class="probability-value">
+                        <span id="counterAtLeastTwoThrees">0.000</span> %
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/app_5_dices.js?v=6"></script>
+
 </body>
+
 </html>
