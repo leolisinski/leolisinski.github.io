@@ -2,6 +2,9 @@ const dice1 = document.getElementById('dice_1')
 const dice2 = document.getElementById('dice_2')
 
 const inputField = document.getElementById('input_box_one_dice')
+const speedSelect = document.getElementById('speedSelect')
+const startButton = document.getElementById('startButton')
+
 const counter = document.getElementById('counterRolls')
 
 const sum11Counter = document.getElementById('counterSum11')
@@ -9,9 +12,9 @@ const product12Counter = document.getElementById('counterProduct12')
 const mixedCounter = document.getElementById('counterMixed')
 
 
-// ------------------------------
-// Räknare
-// ------------------------------
+// ========================================
+// RÄKNARE
+// ========================================
 
 let rollValue = 0
 let sum11Value = 0
@@ -21,67 +24,72 @@ let mixedValue = 0
 let simulationRunning = false
 
 
-// ------------------------------
-// Inputfält
-// ------------------------------
+// ========================================
+// STARTA SIMULERING
+// ========================================
 
-inputField.addEventListener('focus', () => {
+function startSimulation() {
 
-    if (inputField.value === "Antal slag + ENTER") {
-        inputField.value = ""
-        inputField.style.fontSize = "30px"
-    }
-
-})
-
-
-// ENTER startar simuleringen
-inputField.addEventListener('keydown', (event) => {
-
-    if (event.key !== "Enter") {
-        return
-    }
-
-    event.preventDefault()
-
-    const numberOfRolls = parseInt(inputField.value, 10)
-
-    // Kontrollera att ett positivt heltal har skrivits in
-    if (
-        isNaN(numberOfRolls) ||
-        numberOfRolls <= 0
-    ) {
-        return
-    }
-
-    // Starta inte en ny simulering
-    // medan en annan fortfarande körs
+    // Om en simulering redan körs händer inget
     if (simulationRunning) {
         return
     }
 
-    // 100 ms mellan varje kast = 10 kast per sekund
-    const speed = 100
+
+    const numberOfRolls = parseInt(inputField.value, 10)
+    const rollsPerSecond = parseInt(speedSelect.value, 10)
+
+
+    // Kontrollera antal kast
+    if (
+        isNaN(numberOfRolls) ||
+        numberOfRolls <= 0
+    ) {
+        inputField.focus()
+        return
+    }
+
+
+    // Beräkna tid mellan varje kast
+    const speed = 1000 / rollsPerSecond
+
 
     rollDiceAnimated(numberOfRolls, speed)
+
+}
+
+
+// ========================================
+// KÖR-KNAPP
+// ========================================
+
+startButton.addEventListener('click', () => {
+
+    startSimulation()
 
 })
 
 
-// Återställ inputfältet när fokus lämnas
-inputField.addEventListener('blur', () => {
+// ========================================
+// ENTER PÅ DATOR
+// ========================================
 
-    if (inputField.value === "") {
-        inputField.style.fontSize = "15px"
-        inputField.value = "Antal slag + ENTER"
+inputField.addEventListener('keydown', (event) => {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault()
+
+        startSimulation()
+
     }
 
 })
 
 
-// ------------------------------
-// Uppdatera statistik
-// ------------------------------
+// ========================================
+// UPPDATERA STATISTIK
+// ========================================
 
 function updateValueAndHTML(roll1, roll2) {
 
@@ -93,14 +101,18 @@ function updateValueAndHTML(roll1, roll2) {
     // Händelse 1:
     // Summan är 11
     if (roll1 + roll2 === 11) {
+
         sum11Value++
+
     }
 
 
     // Händelse 2:
     // Produkten är större än eller lika med 12
     if (roll1 * roll2 >= 12) {
+
         product12Value++
+
     }
 
 
@@ -111,11 +123,13 @@ function updateValueAndHTML(roll1, roll2) {
         (roll1 > 3 && roll2 < 5) ||
         (roll2 > 3 && roll1 < 5)
     ) {
+
         mixedValue++
+
     }
 
 
-    // Uppdatera relativa frekvenser
+    // Relativa frekvenser
     sum11Counter.textContent =
         (sum11Value * 100 / rollValue).toFixed(3)
 
@@ -128,9 +142,9 @@ function updateValueAndHTML(roll1, roll2) {
 }
 
 
-// ------------------------------
-// Ändra tärningsbilder
-// ------------------------------
+// ========================================
+// ÄNDRA TÄRNINGSBILD
+// ========================================
 
 function changeDiceFace(dice, newFace) {
 
@@ -139,9 +153,9 @@ function changeDiceFace(dice, newFace) {
 }
 
 
-// ------------------------------
-// Ett kast med två tärningar
-// ------------------------------
+// ========================================
+// ETT KAST MED TVÅ TÄRNINGAR
+// ========================================
 
 function makeOneRoll() {
 
@@ -152,26 +166,29 @@ function makeOneRoll() {
         Math.floor(Math.random() * 6) + 1
 
 
-    // Visa de nya tärningssidorna
     changeDiceFace(dice1, roll1)
     changeDiceFace(dice2, roll2)
 
 
-    // Uppdatera statistik
     updateValueAndHTML(roll1, roll2)
 
 }
 
 
-// ------------------------------
-// Animerad simulering
-// ------------------------------
+// ========================================
+// ANIMERAD SIMULERING
+// ========================================
 
 function rollDiceAnimated(times, speed) {
 
     simulationRunning = true
 
     let rollsCompleted = 0
+
+
+    // Visa att simuleringen körs
+    startButton.disabled = true
+    startButton.textContent = "KÖR..."
 
 
     function nextRoll() {
@@ -186,28 +203,35 @@ function rollDiceAnimated(times, speed) {
             setTimeout(nextRoll, speed)
 
         }
+
         else {
 
             simulationRunning = false
+
+            startButton.disabled = false
+            startButton.textContent = "KÖR"
 
         }
 
     }
 
 
+    // Första kastet direkt
     nextRoll()
 
 }
 
 
-// ------------------------------
-// Klick på tärning = ett kast
-// ------------------------------
+// ========================================
+// KLICKA PÅ TÄRNING = ETT KAST
+// ========================================
 
 dice1.addEventListener('click', () => {
 
     if (!simulationRunning) {
+
         makeOneRoll()
+
     }
 
 })
@@ -216,15 +240,17 @@ dice1.addEventListener('click', () => {
 dice2.addEventListener('click', () => {
 
     if (!simulationRunning) {
+
         makeOneRoll()
+
     }
 
 })
 
 
-// ------------------------------
-// Startläge
-// ------------------------------
+// ========================================
+// STARTLÄGE
+// ========================================
 
 function initialize() {
 
