@@ -6,7 +6,7 @@
 
 
 /* ========================================
-   GEMENSAM STYLING
+   GRUND
    ======================================== */
 
 body {
@@ -23,7 +23,9 @@ body {
 }
 
 
-/* Tärningar */
+/* ========================================
+   TÄRNINGAR
+   ======================================== */
 
 .dice {
     position: relative;
@@ -39,7 +41,9 @@ body {
 }
 
 
-/* Befintlig wrapper */
+/* ========================================
+   BEFINTLIG FLEX WRAPPER
+   ======================================== */
 
 .flex_wrapper {
     display: flex;
@@ -54,7 +58,9 @@ body {
 }
 
 
-/* Input */
+/* ========================================
+   BEFINTLIGA INPUT-FÄLT
+   ======================================== */
 
 #input_wrapper {
     height: auto;
@@ -92,11 +98,6 @@ body {
     width: 170px;
     height: 50px;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
     font-size: 15px;
     text-align: center;
 
@@ -104,7 +105,9 @@ body {
 }
 
 
-/* Knappar */
+/* ========================================
+   BEFINTLIGA KNAPPAR
+   ======================================== */
 
 .button {
     background: lightslategrey;
@@ -126,13 +129,16 @@ body {
     font-size: 12px;
 }
 
+
 .button:hover {
     background: lightgreen;
     cursor: pointer;
 }
 
 
-/* Räknare */
+/* ========================================
+   RÄKNARE
+   ======================================== */
 
 .counters_wrapper {
     width: 100vw;
@@ -145,13 +151,11 @@ body {
 }
 
 
-
 /* ========================================
-   TVÅ TÄRNINGAR
+   SIDAN MED TVÅ TÄRNINGAR
    ======================================== */
 
 .two-dices-page {
-
     background-color: #f4f7ed;
 
     color: #27352c;
@@ -162,10 +166,11 @@ body {
 }
 
 
-/* Hela simuleringen */
+/* ========================================
+   HUVUDINNEHÅLL
+   ======================================== */
 
 .two-dices-page .simulation {
-
     width: 100%;
     max-width: 800px;
 
@@ -176,28 +181,24 @@ body {
 }
 
 
-/* Rubrik */
+/* ========================================
+   RUBRIK
+   ======================================== */
 
 .two-dices-page h1 {
-
     font-size: 42px;
     font-weight: 600;
 
     margin-bottom: 8px;
-
-    color: #27352c;
 }
 
 
-/* Instruktion */
-
 .two-dices-page .instruction {
-
     font-size: 18px;
 
     color: #657069;
 
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 
@@ -206,7 +207,6 @@ body {
    ======================================== */
 
 .two-dices-page .dice-area {
-
     display: flex;
 
     justify-content: center;
@@ -214,72 +214,83 @@ body {
 
     gap: 25px;
 
-    min-height: 180px;
+    min-height: 170px;
 }
 
 
 .two-dices-page .dice {
-
-    width: 130px;
-    height: 130px;
+    width: 125px;
+    height: 125px;
 
     margin: 10px;
 
-    transition:
-        transform 0.12s ease,
-        filter 0.12s ease;
+    transition: transform 0.12s ease;
 }
 
 
 .two-dices-page .dice:hover {
-
     transform: scale(1.05);
-
-    filter: brightness(1.03);
-
-    cursor: pointer;
 }
 
 
 /* ========================================
-   INPUT
+   KONTROLLER
    ======================================== */
 
-.two-dices-page #input_wrapper {
+.two-dices-page .controls {
+    display: flex;
 
-    width: 100%;
+    align-items: flex-end;
+    justify-content: center;
 
-    margin: 20px 0 30px 0;
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin: 15px 0 30px 0;
 }
 
 
+.two-dices-page .control-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.two-dices-page .control-group label {
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #526158;
+}
+
+
+/* ========================================
+   ANTAL KAST
+   ======================================== */
+
 .two-dices-page #input_box_one_dice {
+    width: 170px;
+    height: 52px;
 
-    width: 240px;
-    height: 60px;
+    padding: 0 12px;
 
-    padding: 0 15px;
+    background: white;
 
     border: 2px solid #aeb8ae;
-    border-radius: 12px;
-
-    background-color: white;
+    border-radius: 10px;
 
     color: #27352c;
 
-    font-size: 17px;
-    text-align: center;
+    font-size: 18px;
 
     outline: none;
-
-    transition:
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
 }
 
 
 .two-dices-page #input_box_one_dice:focus {
-
     border-color: #607b68;
 
     box-shadow:
@@ -288,57 +299,130 @@ body {
 
 
 /* ========================================
-   STATISTIK
+   HASTIGHET
+   ======================================== */
+
+.two-dices-page #speedSelect {
+    width: 150px;
+    height: 52px;
+
+    padding: 0 12px;
+
+    background: white;
+
+    border: 2px solid #aeb8ae;
+    border-radius: 10px;
+
+    color: #27352c;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+
+.two-dices-page #speedSelect:focus {
+    border-color: #607b68;
+}
+
+
+/* ========================================
+   KÖR-KNAPP
+   ======================================== */
+
+.two-dices-page #startButton {
+    height: 52px;
+
+    min-width: 100px;
+
+    padding: 0 22px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #526f5b;
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.15s ease,
+        transform 0.1s ease;
+}
+
+
+.two-dices-page #startButton:hover {
+    background-color: #405b49;
+}
+
+
+.two-dices-page #startButton:active {
+    transform: scale(0.97);
+}
+
+
+.two-dices-page #startButton:disabled {
+    opacity: 0.6;
+
+    cursor: default;
+}
+
+
+/* ========================================
+   ANTAL KAST TOTALT
    ======================================== */
 
 .two-dices-page .counters_wrapper {
-
     width: 100%;
 }
 
 
 .two-dices-page .total-rolls {
-
-    font-size: 23px;
+    font-size: 22px;
     font-weight: 500;
 
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 }
 
 
 .two-dices-page #counterRolls {
+    margin-left: 5px;
 
-    font-size: 28px;
+    font-size: 27px;
     font-weight: 700;
 
-    margin-left: 5px;
+    font-variant-numeric: tabular-nums;
 }
 
 
-/* Rutan med sannolikheter */
+/* ========================================
+   SANNOLIKHETER
+   ======================================== */
 
 .two-dices-page .probabilities {
-
     width: 100%;
     max-width: 600px;
+
+    padding: 10px 26px;
 
     background-color: rgba(255, 255, 255, 0.65);
 
     border: 1px solid #d7ded4;
     border-radius: 16px;
 
-    padding: 12px 28px;
-
     box-shadow:
         0 5px 20px rgba(45, 60, 48, 0.06);
 }
 
 
-/* En sannolikhet per rad */
-
 .two-dices-page .probability-row {
-
-    min-height: 68px;
+    min-height: 65px;
 
     display: flex;
 
@@ -352,36 +436,28 @@ body {
 
 
 .two-dices-page .probability-row:last-child {
-
     border-bottom: none;
 }
 
 
-/* Händelsen */
-
 .two-dices-page .probability-label {
-
-    font-size: 21px;
+    font-size: 20px;
     font-weight: 500;
 }
 
 
-/* Relativ frekvens */
-
 .two-dices-page .probability-value {
-
     min-width: 130px;
 
     text-align: right;
 
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
 
     font-variant-numeric: tabular-nums;
 
     color: #496353;
 }
-
 
 
 /* ========================================
@@ -391,71 +467,109 @@ body {
 @media (max-width: 600px) {
 
     .two-dices-page {
+        justify-content: flex-start;
 
-        padding: 20px 15px;
+        padding: 25px 15px;
     }
 
 
     .two-dices-page h1 {
-
         font-size: 34px;
     }
 
 
     .two-dices-page .instruction {
-
         font-size: 16px;
+
+        text-align: center;
     }
 
 
     .two-dices-page .dice-area {
+        min-height: 140px;
 
-        gap: 10px;
-
-        min-height: 150px;
+        gap: 8px;
     }
 
 
     .two-dices-page .dice {
-
-        width: 105px;
-        height: 105px;
+        width: 100px;
+        height: 100px;
 
         margin: 8px;
     }
 
 
-    .two-dices-page #input_box_one_dice {
+    /* Kontrollerna läggs under varandra på mobil */
 
-        width: 220px;
+    .two-dices-page .controls {
+        width: 100%;
+        max-width: 320px;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+
+        margin-top: 10px;
+    }
+
+
+    .two-dices-page #input_box_one_dice {
+        width: 100%;
+        height: 55px;
+
+        font-size: 20px;
+    }
+
+
+    .two-dices-page #speedSelect {
+        width: 100%;
+        height: 55px;
+
+        font-size: 19px;
+    }
+
+
+    /* Stor och lätttryckt KÖR-knapp på mobil */
+
+    .two-dices-page #startButton {
+        width: 100%;
+        height: 58px;
+
+        margin-top: 4px;
+
+        font-size: 20px;
+    }
+
+
+    .two-dices-page .total-rolls {
+        font-size: 19px;
     }
 
 
     .two-dices-page .probabilities {
-
-        padding: 8px 18px;
+        padding: 8px 16px;
     }
 
 
     .two-dices-page .probability-row {
+        min-height: 70px;
 
-        min-height: 72px;
-
-        gap: 15px;
+        gap: 12px;
     }
 
 
     .two-dices-page .probability-label {
-
-        font-size: 17px;
+        font-size: 16px;
     }
 
 
     .two-dices-page .probability-value {
+        min-width: 100px;
 
-        min-width: 105px;
-
-        font-size: 18px;
+        font-size: 17px;
     }
 
 }
