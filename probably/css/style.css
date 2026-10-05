@@ -152,10 +152,12 @@ body {
 
 
 /* ========================================
-   SIDAN MED TVÅ TÄRNINGAR
+   TVÅ OCH FEM TÄRNINGAR
    ======================================== */
 
-.two-dices-page {
+.two-dices-page,
+.five-dices-page {
+
     background-color: #f4f7ed;
 
     color: #27352c;
@@ -170,9 +172,11 @@ body {
    HUVUDINNEHÅLL
    ======================================== */
 
-.two-dices-page .simulation {
+.two-dices-page .simulation,
+.five-dices-page .simulation {
+
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
 
     display: flex;
     flex-direction: column;
@@ -185,7 +189,9 @@ body {
    RUBRIK
    ======================================== */
 
-.two-dices-page h1 {
+.two-dices-page h1,
+.five-dices-page h1 {
+
     font-size: 42px;
     font-weight: 600;
 
@@ -193,7 +199,9 @@ body {
 }
 
 
-.two-dices-page .instruction {
+.two-dices-page .instruction,
+.five-dices-page .instruction {
+
     font-size: 18px;
 
     color: #657069;
@@ -203,22 +211,29 @@ body {
 
 
 /* ========================================
-   TÄRNINGAR
+   TÄRNINGSOMRÅDE
    ======================================== */
 
-.two-dices-page .dice-area {
+.two-dices-page .dice-area,
+.five-dices-page .dice-area {
+
     display: flex;
 
     justify-content: center;
     align-items: center;
 
-    gap: 25px;
+    flex-wrap: wrap;
+
+    gap: 18px;
 
     min-height: 170px;
 }
 
 
+/* Två tärningar */
+
 .two-dices-page .dice {
+
     width: 125px;
     height: 125px;
 
@@ -228,7 +243,22 @@ body {
 }
 
 
-.two-dices-page .dice:hover {
+/* Fem tärningar */
+
+.five-dices-page .dice {
+
+    width: 105px;
+    height: 105px;
+
+    margin: 6px;
+
+    transition: transform 0.12s ease;
+}
+
+
+.two-dices-page .dice:hover,
+.five-dices-page .dice:hover {
+
     transform: scale(1.05);
 }
 
@@ -237,7 +267,9 @@ body {
    KONTROLLER
    ======================================== */
 
-.two-dices-page .controls {
+.two-dices-page .controls,
+.five-dices-page .controls {
+
     display: flex;
 
     align-items: flex-end;
@@ -251,7 +283,9 @@ body {
 }
 
 
-.two-dices-page .control-group {
+.two-dices-page .control-group,
+.five-dices-page .control-group {
+
     display: flex;
     flex-direction: column;
 
@@ -259,7 +293,9 @@ body {
 }
 
 
-.two-dices-page .control-group label {
+.two-dices-page .control-group label,
+.five-dices-page .control-group label {
+
     font-size: 15px;
     font-weight: 600;
 
@@ -268,10 +304,12 @@ body {
 
 
 /* ========================================
-   ANTAL KAST
+   INPUT
    ======================================== */
 
-.two-dices-page #input_box_one_dice {
+.two-dices-page #input_box_one_dice,
+.five-dices-page #input_box_five_dice {
+
     width: 170px;
     height: 52px;
 
@@ -285,12 +323,15 @@ body {
     color: #27352c;
 
     font-size: 18px;
+    text-align: center;
 
     outline: none;
 }
 
 
-.two-dices-page #input_box_one_dice:focus {
+.two-dices-page #input_box_one_dice:focus,
+.five-dices-page #input_box_five_dice:focus {
+
     border-color: #607b68;
 
     box-shadow:
@@ -302,7 +343,9 @@ body {
    HASTIGHET
    ======================================== */
 
-.two-dices-page #speedSelect {
+.two-dices-page #speedSelect,
+.five-dices-page #speedSelect {
+
     width: 150px;
     height: 52px;
 
@@ -323,7 +366,9 @@ body {
 }
 
 
-.two-dices-page #speedSelect:focus {
+.two-dices-page #speedSelect:focus,
+.five-dices-page #speedSelect:focus {
+
     border-color: #607b68;
 }
 
@@ -332,7 +377,9 @@ body {
    KÖR-KNAPP
    ======================================== */
 
-.two-dices-page #startButton {
+.two-dices-page #startButton,
+.five-dices-page #startButton {
+
     height: 52px;
 
     min-width: 100px;
@@ -357,17 +404,23 @@ body {
 }
 
 
-.two-dices-page #startButton:hover {
+.two-dices-page #startButton:hover,
+.five-dices-page #startButton:hover {
+
     background-color: #405b49;
 }
 
 
-.two-dices-page #startButton:active {
+.two-dices-page #startButton:active,
+.five-dices-page #startButton:active {
+
     transform: scale(0.97);
 }
 
 
-.two-dices-page #startButton:disabled {
+.two-dices-page #startButton:disabled,
+.five-dices-page #startButton:disabled {
+
     opacity: 0.6;
 
     cursor: default;
@@ -378,12 +431,16 @@ body {
    ANTAL KAST TOTALT
    ======================================== */
 
-.two-dices-page .counters_wrapper {
+.two-dices-page .counters_wrapper,
+.five-dices-page .counters_wrapper {
+
     width: 100%;
 }
 
 
-.two-dices-page .total-rolls {
+.two-dices-page .total-rolls,
+.five-dices-page .total-rolls {
+
     font-size: 22px;
     font-weight: 500;
 
@@ -391,7 +448,9 @@ body {
 }
 
 
-.two-dices-page #counterRolls {
+.two-dices-page #counterRolls,
+.five-dices-page #counterRolls {
+
     margin-left: 5px;
 
     font-size: 27px;
@@ -405,23 +464,29 @@ body {
    SANNOLIKHETER
    ======================================== */
 
-.two-dices-page .probabilities {
+.two-dices-page .probabilities,
+.five-dices-page .probabilities {
+
     width: 100%;
     max-width: 600px;
 
     padding: 10px 26px;
 
-    background-color: rgba(255, 255, 255, 0.65);
+    background-color:
+        rgba(255, 255, 255, 0.65);
 
     border: 1px solid #d7ded4;
     border-radius: 16px;
 
     box-shadow:
-        0 5px 20px rgba(45, 60, 48, 0.06);
+        0 5px 20px
+        rgba(45, 60, 48, 0.06);
 }
 
 
-.two-dices-page .probability-row {
+.two-dices-page .probability-row,
+.five-dices-page .probability-row {
+
     min-height: 65px;
 
     display: flex;
@@ -431,22 +496,29 @@ body {
 
     gap: 30px;
 
-    border-bottom: 1px solid #dce2da;
+    border-bottom:
+        1px solid #dce2da;
 }
 
 
-.two-dices-page .probability-row:last-child {
+.two-dices-page .probability-row:last-child,
+.five-dices-page .probability-row:last-child {
+
     border-bottom: none;
 }
 
 
-.two-dices-page .probability-label {
+.two-dices-page .probability-label,
+.five-dices-page .probability-label {
+
     font-size: 20px;
     font-weight: 500;
 }
 
 
-.two-dices-page .probability-value {
+.two-dices-page .probability-value,
+.five-dices-page .probability-value {
+
     min-width: 130px;
 
     text-align: right;
@@ -466,26 +538,35 @@ body {
 
 @media (max-width: 600px) {
 
-    .two-dices-page {
+    .two-dices-page,
+    .five-dices-page {
+
         justify-content: flex-start;
 
         padding: 25px 15px;
     }
 
 
-    .two-dices-page h1 {
+    .two-dices-page h1,
+    .five-dices-page h1 {
+
         font-size: 34px;
     }
 
 
-    .two-dices-page .instruction {
+    .two-dices-page .instruction,
+    .five-dices-page .instruction {
+
         font-size: 16px;
 
         text-align: center;
     }
 
 
+    /* Två tärningar på mobil */
+
     .two-dices-page .dice-area {
+
         min-height: 140px;
 
         gap: 8px;
@@ -493,6 +574,7 @@ body {
 
 
     .two-dices-page .dice {
+
         width: 100px;
         height: 100px;
 
@@ -500,9 +582,35 @@ body {
     }
 
 
-    /* Kontrollerna läggs under varandra på mobil */
+    /* Fem tärningar på mobil */
 
-    .two-dices-page .controls {
+    .five-dices-page .dice-area {
+
+        width: 100%;
+        max-width: 360px;
+
+        min-height: 120px;
+
+        gap: 5px;
+
+        flex-wrap: nowrap;
+    }
+
+
+    .five-dices-page .dice {
+
+        width: 58px;
+        height: 58px;
+
+        margin: 3px;
+    }
+
+
+    /* Kontroller */
+
+    .two-dices-page .controls,
+    .five-dices-page .controls {
+
         width: 100%;
         max-width: 320px;
 
@@ -516,7 +624,9 @@ body {
     }
 
 
-    .two-dices-page #input_box_one_dice {
+    .two-dices-page #input_box_one_dice,
+    .five-dices-page #input_box_five_dice {
+
         width: 100%;
         height: 55px;
 
@@ -524,7 +634,9 @@ body {
     }
 
 
-    .two-dices-page #speedSelect {
+    .two-dices-page #speedSelect,
+    .five-dices-page #speedSelect {
+
         width: 100%;
         height: 55px;
 
@@ -532,9 +644,11 @@ body {
     }
 
 
-    /* Stor och lätttryckt KÖR-knapp på mobil */
+    /* Stor KÖR-knapp på mobil */
 
-    .two-dices-page #startButton {
+    .two-dices-page #startButton,
+    .five-dices-page #startButton {
+
         width: 100%;
         height: 58px;
 
@@ -544,29 +658,39 @@ body {
     }
 
 
-    .two-dices-page .total-rolls {
+    .two-dices-page .total-rolls,
+    .five-dices-page .total-rolls {
+
         font-size: 19px;
     }
 
 
-    .two-dices-page .probabilities {
+    .two-dices-page .probabilities,
+    .five-dices-page .probabilities {
+
         padding: 8px 16px;
     }
 
 
-    .two-dices-page .probability-row {
+    .two-dices-page .probability-row,
+    .five-dices-page .probability-row {
+
         min-height: 70px;
 
         gap: 12px;
     }
 
 
-    .two-dices-page .probability-label {
+    .two-dices-page .probability-label,
+    .five-dices-page .probability-label {
+
         font-size: 16px;
     }
 
 
-    .two-dices-page .probability-value {
+    .two-dices-page .probability-value,
+    .five-dices-page .probability-value {
+
         min-width: 100px;
 
         font-size: 17px;
