@@ -1,273 +1,314 @@
-const dices = document.getElementsByClassName('dice')
-const rollCounter = document.getElementById('counterRolls')
-const twoCounter = document.getElementById('counterTwo')
-const threeCounter = document.getElementById('counterThree')
-const fourCounter = document.getElementById('counterFour')
-const fiveCounter = document.getElementById('counterFive')
-const fiveRel = document.getElementById('relFive')
-const atLeastOneThreeCounter = document.getElementById('counterAtLeastOne3')
-const atLeastOneThreeRel = document.getElementById('relAtLeastOne3')
-const atLeastTwoThreeCounter = document.getElementById('counterAtLeastTwo3')
-const atLeastTwoThreeRel = document.getElementById('relAtLeastTwo3')
-const button = document.getElementById('button')
-const inputField = document.getElementById('input_box')
+const dice1 = document.getElementById('dice_1')
+const dice2 = document.getElementById('dice_2')
+const dice3 = document.getElementById('dice_3')
+const dice4 = document.getElementById('dice_4')
+const dice5 = document.getElementById('dice_5')
 
-inputField.addEventListener('click', () => {
-    if (inputField.value == "Antal slag + ENTER")
-    inputField.value = ""
-    inputField.style.fontSize = "30px"
+const dices = [
+    dice1,
+    dice2,
+    dice3,
+    dice4,
+    dice5
+]
+
+const inputField =
+    document.getElementById('input_box_five_dice')
+
+const speedSelect =
+    document.getElementById('speedSelect')
+
+const startButton =
+    document.getElementById('startButton')
+
+const counter =
+    document.getElementById('counterRolls')
+
+const atLeastOneThreeCounter =
+    document.getElementById('counterAtLeastOneThree')
+
+const yatzyCounter =
+    document.getElementById('counterYatzy')
+
+const atLeastTwoThreesCounter =
+    document.getElementById('counterAtLeastTwoThrees')
+
+
+// ========================================
+// RÄKNARE
+// ========================================
+
+let rollValue = 0
+
+let atLeastOneThreeValue = 0
+let yatzyValue = 0
+let atLeastTwoThreesValue = 0
+
+let simulationRunning = false
+
+
+// ========================================
+// STARTA SIMULERING
+// ========================================
+
+function startSimulation() {
+
+    // Starta inte en ny simulering
+    // om en redan körs
+    if (simulationRunning) {
+        return
+    }
+
+
+    const numberOfRolls =
+        parseInt(inputField.value, 10)
+
+    const rollsPerSecond =
+        parseInt(speedSelect.value, 10)
+
+
+    // Kontrollera inmatningen
+    if (
+        isNaN(numberOfRolls) ||
+        numberOfRolls <= 0
+    ) {
+        inputField.focus()
+        return
+    }
+
+
+    // Tid mellan varje kast
+    const speed = 1000 / rollsPerSecond
+
+
+    rollDiceAnimated(numberOfRolls, speed)
+
+}
+
+
+// ========================================
+// KÖR-KNAPP
+// ========================================
+
+startButton.addEventListener('click', () => {
+
+    startSimulation()
+
 })
 
-document.addEventListener('keypress', (event) => {
-    if (event.code == "Enter" && inputField.value != "Antal slag + ENTER" && inputField.value != "") {
-        rollAllFastNrOfTimes(eval(inputField.value))
+
+// ========================================
+// ENTER PÅ DATOR
+// ========================================
+
+inputField.addEventListener('keydown', (event) => {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault()
+
+        startSimulation()
+
     }
+
 })
 
-document.addEventListener('click', (event) => {
-    if (inputField.value == "" && event.target.id != 'input_box') {
-        inputField.style.fontSize = "15px"
-        inputField.value = "Antal slag + ENTER"
-    }
-    if (event.target.id[0] == "b") {
-        rollAllFastManyTimesUntilNrOfSame(event.target.id.slice(1,event.target.id.length))        
-    }
-})
+
+// ========================================
+// UPPDATERA STATISTIK
+// ========================================
+
+function updateValueAndHTML(rolls) {
+
+    rollValue++
+
+    counter.textContent = rollValue
 
 
-var rollValue = 0
-var twoValue = 0
-var threeValue = 0
-var fourValue = 0
-var fiveValue = 0
-var atLeastOneThreeValue = 0
-var atLeastTwoThreeValue = 0
-
-function updateValueAndHTML(identifier, value) {
-    switch (identifier) {
-        case 1:
-            rollValue = value
-            rollCounter.innerHTML = `${value}`
-            break
-        case 2:
-            twoValue = value
-            twoCounter.innerHTML = `${value}`
-            break
-        case 3:
-            threeValue = value
-            threeCounter.innerHTML = `${value}`
-            break
-        case 4:
-            fourValue = value
-            fourCounter.innerHTML = `${value}`
-            break
-        case 5:
-            fiveValue = value
-            fiveCounter.innerHTML = `${value}`
-            fiveRel.innerHTML = `${(fiveValue*100/rollValue).toFixed(3)}`
-            break
-        case 6:
-            atLeastOneThreeValue = value
-            atLeastOneThreeCounter.innerHTML = `${value}`
-            atLeastOneThreeRel.innerHTML = `${(atLeastOneThreeValue*100/rollValue).toFixed(3)}`
-            break
-        case 7:
-            atLeastTwoThreeValue = value
-            atLeastTwoThreeCounter.innerHTML = `${value}`
-            atLeastTwoThreeRel.innerHTML = `${(atLeastTwoThreeValue*100/rollValue).toFixed(3)}`
-            break
-    }
-}
-
-function clearValuesAndHTML() {
-    for (let i = 1; i <= 7; i++) {
-        updateValueAndHTML(i, 0)
-    }
-}
-
-function updateHTMLfromValues() {
-    updateValueAndHTML(1, rollValue)
-    updateValueAndHTML(2, twoValue)
-    updateValueAndHTML(3, threeValue)
-    updateValueAndHTML(4, fourValue)
-    updateValueAndHTML(5, fiveValue)
-    updateValueAndHTML(6, atLeastOneThreeValue)
-    updateValueAndHTML(7, atLeastTwoThreeValue)
-}
+    // Räkna hur många treor kastet innehåller
+    const numberOfThrees =
+        rolls.filter(value => value === 3).length
 
 
-function changeDiceFace(diceIndex, newFace) {
-    var dice = dices[diceIndex]
-    dice.src = dice.src.slice(0, dice.src.length - 5) + `${newFace}` + ".png"
-}
+    // Händelse 1:
+    // Minst en av de fem tärningarna är en trea
+    if (numberOfThrees >= 1) {
 
-function rollDiceAnimated(diceIndex, time) {
-    clearValuesAndHTML()
-    var dice = dices[diceIndex] 
-    var i = 0
-    var direction = Math.floor(Math.random() * 4)
-    var diceFace = Math.floor(Math.random() * 6) + 1
-    while (i <= time) { 
-            setTimeout(() => {
-                let tempDir = Math.floor(Math.random() * 4)
-                while (tempDir == direction) {tempDir = Math.floor(Math.random() * 4)}
-                direction = tempDir
-                let tempFace = Math.floor(Math.random() * 6) + 1 
-                while (tempFace == diceFace) {tempFace = Math.floor(Math.random() * 6) + 1}
-                diceFace = tempFace
-                dice.src = dice.src.slice(0, dice.src.length - 5) + `${diceFace}` + ".png"
-                switch (direction) {
-                    case 0: 
-                        dice.style.top = "5px"
-                    break
-                    case 1: 
-                    dice.style.left = "5px"
-                    break
-                    case 2: 
-                    dice.style.left = "-5px"
-                    break
-                    case 3: 
-                    dice.style.top = "-5px"
-                    break
-                }
-            }, 100 + 200*i)
+        atLeastOneThreeValue++
 
-            setTimeout(() => {
-                dice.style.top = "0px"
-                dice.style.left = "0px"
-            }, 200 + 200*i)
-
-            i += 1
-
-        }
     }
 
-function rollAllOneTime() {
-    var result = []
-    for (let i = 0; i < dices.length; i ++) {
-        var roll = Math.floor(Math.random() * 6) + 1
-        result.push(roll)
-        changeDiceFace(i, roll)
+
+    // Händelse 2:
+    // YATZY - alla fem tärningarna visar samma tal
+    if (
+        rolls.every(value => value === rolls[0])
+    ) {
+
+        yatzyValue++
+
     }
-    return result
-}   
 
-function rollAllFastNrOfTimes(number) {
-    singleRoll = false
-    var i = 1
-    clearValuesAndHTML()
-    var interval = setInterval(() => {
-        rollValue += 1
-        result = rollAllOneTime()
-        switch(nrOfSame(result)) {
-            case 2:
-                twoValue += 1
-                break
-            case 3: 
-                threeValue += 1
-                break
-            case 4:
-                fourValue += 1
-                break
-            case 5:
-                fiveValue += 1
-                break
-        }
-        if(nrOfThree(result) >= 1) {
-            atLeastOneThreeValue += 1
-        }
-        if(nrOfThree(result) >= 2) {
-            atLeastTwoThreeValue += 1
-        }
-        updateHTMLfromValues()
-        if (i == number) {clearInterval(interval)}
-        i += 1
-},1)
-}
 
-function rollAllFastManyTimesUntilNrOfSame(number) {
-    singleRoll = false
-    clearValuesAndHTML()
-    var interval = setInterval(() => {
-        result = rollAllOneTime()
-        switch(nrOfSame(result)) {
-            case 2:
-                twoValue += 1
-                break
-            case 3: 
-                threeValue += 1
-                break
-            case 4:
-                fourValue += 1
-                break
-            case 5:
-                fiveValue += 1
-                break
-        } 
-        if (nrOfSame(result) == number) {
-            clearInterval(interval)
-        }
-        rollValue += 1
-        updateHTMLfromValues()
-    },1) 
-}
+    // Händelse 3:
+    // Minst två av de fem tärningarna är treor
+    if (numberOfThrees >= 2) {
 
-function allSame(result) {
-    for (let i = 1; i < result.length; i++) {
-        if (result[i] != result[0]) {return false}
+        atLeastTwoThreesValue++
+
     }
-    return true
+
+
+    // Uppdatera relativa frekvenser
+
+    atLeastOneThreeCounter.textContent =
+        (
+            atLeastOneThreeValue *
+            100 /
+            rollValue
+        ).toFixed(3)
+
+
+    yatzyCounter.textContent =
+        (
+            yatzyValue *
+            100 /
+            rollValue
+        ).toFixed(3)
+
+
+    atLeastTwoThreesCounter.textContent =
+        (
+            atLeastTwoThreesValue *
+            100 /
+            rollValue
+        ).toFixed(3)
+
 }
 
-function nrOfSame(result) {
-    var equalCounter = []
-    var tempCounter
-    for (let i = 1; i <= 6; i++) {
-        tempCounter = 0
-        for (let j = 0; j < result.length; j++) {
-            if (result[j] == i) {tempCounter += 1}
-        }
-        equalCounter.push(tempCounter)
-    }
-    return highestInArray(equalCounter)
+
+// ========================================
+// ÄNDRA TÄRNINGSBILD
+// ========================================
+
+function changeDiceFace(dice, newFace) {
+
+    dice.src = `img/dice_${newFace}.png`
+
 }
 
-function nrOfThree(result) {
-    var counter = 0
-    for (let i = 0; i < result.length; i++) {
-        if (result[i] == 3) {
-            counter += 1
-        }
-    }
-    return counter
-}
 
-function highestInArray(array) {
-    output = array[0]
-    if (array.length == 1) {return output}
-    for (let i = 1; i < array.length; i++) {
-        if (array[i] > output) {output = array[i]} 
-    }
-    return output
-}
+// ========================================
+// ETT KAST MED FEM TÄRNINGAR
+// ========================================
 
-function rollAllDicesAnimated(time) {
+function makeOneRoll() {
+
+    const rolls = []
+
+
     for (let i = 0; i < dices.length; i++) {
-    rollDiceAnimated(i, time)
-}}
+
+        const roll =
+            Math.floor(Math.random() * 6) + 1
+
+        rolls.push(roll)
+
+        changeDiceFace(dices[i], roll)
+
+    }
+
+
+    updateValueAndHTML(rolls)
+
+}
+
+
+// ========================================
+// ANIMERAD SIMULERING
+// ========================================
+
+function rollDiceAnimated(times, speed) {
+
+    simulationRunning = true
+
+    let rollsCompleted = 0
+
+
+    startButton.disabled = true
+    startButton.textContent = "KÖR..."
+
+
+    function nextRoll() {
+
+        makeOneRoll()
+
+        rollsCompleted++
+
+
+        if (rollsCompleted < times) {
+
+            setTimeout(nextRoll, speed)
+
+        }
+
+        else {
+
+            simulationRunning = false
+
+            startButton.disabled = false
+            startButton.textContent = "KÖR"
+
+        }
+
+    }
+
+
+    // Första kastet sker direkt
+    nextRoll()
+
+}
+
+
+// ========================================
+// KLICKA PÅ EN TÄRNING
+// = ETT KAST MED ALLA FEM
+// ========================================
+
+dices.forEach(dice => {
+
+    dice.addEventListener('click', () => {
+
+        if (!simulationRunning) {
+
+            makeOneRoll()
+
+        }
+
+    })
+
+})
+
+
+// ========================================
+// STARTLÄGE
+// ========================================
 
 function initialize() {
-for (let i = 0; i < dices.length; i++) {
-    let firstDiceFace = Math.floor(Math.random() * 6) + 1
-    let dice = dices[i]
-    dice.src = dice.src.slice(0, dice.src.length - 5) + `${firstDiceFace}` + ".png"
-    dice.addEventListener('click', (event) => rollDiceAnimated(event.target.id,5)
-    )
-    dice.addEventListener('dblclick', () => rollAllDicesAnimated(5))
-}}
 
-function rollDice() { 
-    return Math.floor(Math.random() * 6) + 1
+    for (let i = 0; i < dices.length; i++) {
+
+        const randomFace =
+            Math.floor(Math.random() * 6) + 1
+
+        changeDiceFace(
+            dices[i],
+            randomFace
+        )
+
+    }
+
 }
+
 
 initialize()
