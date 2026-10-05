@@ -7,7 +7,7 @@
 
     <title>Två tärningar</title>
 
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 
 <body class="two-dices-page">
@@ -17,8 +17,9 @@
         <h1>Två tärningar</h1>
 
         <p class="instruction">
-            Ange antal kast och tryck ENTER
+            Ange antal kast och starta simuleringen
         </p>
+
 
         <div class="dice-area">
 
@@ -38,17 +39,51 @@
 
         </div>
 
-        <div id="input_wrapper">
 
-            <input
-                id="input_box_one_dice"
-                type="text"
-                inputmode="numeric"
-                value="Antal slag + ENTER"
-                autocomplete="off"
-            >
+        <div class="controls">
+
+            <div class="control-group">
+
+                <label for="input_box_one_dice">
+                    Antal kast
+                </label>
+
+                <input
+                    id="input_box_one_dice"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    placeholder="T.ex. 100"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="control-group">
+
+                <label for="speedSelect">
+                    Kast per sekund
+                </label>
+
+                <select id="speedSelect">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="5">5</option>
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+
+            </div>
+
+
+            <button id="startButton" type="button">
+                KÖR
+            </button>
 
         </div>
+
 
         <div class="counters_wrapper">
 
@@ -56,6 +91,7 @@
                 Antal kast totalt:
                 <span id="counterRolls">0</span>
             </div>
+
 
             <div class="probabilities">
 
@@ -71,6 +107,7 @@
 
                 </div>
 
+
                 <div class="probability-row">
 
                     <span class="probability-label">
@@ -82,6 +119,7 @@
                     </span>
 
                 </div>
+
 
                 <div class="probability-row">
 
@@ -101,7 +139,8 @@
 
     </main>
 
-    <script src="js/app_2_dices.js?v=4"></script>
+
+    <script src="js/app_2_dices.js?v=5"></script>
 
 </body>
 
