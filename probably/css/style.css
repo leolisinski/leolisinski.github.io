@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -157,7 +158,6 @@ body {
 
 .two-dices-page,
 .five-dices-page {
-
     background-color: #f4f7ed;
 
     color: #27352c;
@@ -174,7 +174,6 @@ body {
 
 .two-dices-page .simulation,
 .five-dices-page .simulation {
-
     width: 100%;
     max-width: 900px;
 
@@ -191,7 +190,6 @@ body {
 
 .two-dices-page h1,
 .five-dices-page h1 {
-
     font-size: 42px;
     font-weight: 600;
 
@@ -201,7 +199,6 @@ body {
 
 .two-dices-page .instruction,
 .five-dices-page .instruction {
-
     font-size: 18px;
 
     color: #657069;
@@ -216,7 +213,6 @@ body {
 
 .two-dices-page .dice-area,
 .five-dices-page .dice-area {
-
     display: flex;
 
     justify-content: center;
@@ -233,7 +229,6 @@ body {
 /* Två tärningar */
 
 .two-dices-page .dice {
-
     width: 125px;
     height: 125px;
 
@@ -246,7 +241,6 @@ body {
 /* Fem tärningar */
 
 .five-dices-page .dice {
-
     width: 105px;
     height: 105px;
 
@@ -258,7 +252,6 @@ body {
 
 .two-dices-page .dice:hover,
 .five-dices-page .dice:hover {
-
     transform: scale(1.05);
 }
 
@@ -269,7 +262,6 @@ body {
 
 .two-dices-page .controls,
 .five-dices-page .controls {
-
     display: flex;
 
     align-items: flex-end;
@@ -285,7 +277,6 @@ body {
 
 .two-dices-page .control-group,
 .five-dices-page .control-group {
-
     display: flex;
     flex-direction: column;
 
@@ -295,7 +286,6 @@ body {
 
 .two-dices-page .control-group label,
 .five-dices-page .control-group label {
-
     font-size: 15px;
     font-weight: 600;
 
@@ -309,7 +299,6 @@ body {
 
 .two-dices-page #input_box_one_dice,
 .five-dices-page #input_box_five_dice {
-
     width: 170px;
     height: 52px;
 
@@ -331,7 +320,6 @@ body {
 
 .two-dices-page #input_box_one_dice:focus,
 .five-dices-page #input_box_five_dice:focus {
-
     border-color: #607b68;
 
     box-shadow:
@@ -345,7 +333,6 @@ body {
 
 .two-dices-page #speedSelect,
 .five-dices-page #speedSelect {
-
     width: 150px;
     height: 52px;
 
@@ -368,7 +355,6 @@ body {
 
 .two-dices-page #speedSelect:focus,
 .five-dices-page #speedSelect:focus {
-
     border-color: #607b68;
 }
 
@@ -379,7 +365,6 @@ body {
 
 .two-dices-page #startButton,
 .five-dices-page #startButton {
-
     height: 52px;
 
     min-width: 100px;
@@ -406,21 +391,18 @@ body {
 
 .two-dices-page #startButton:hover,
 .five-dices-page #startButton:hover {
-
     background-color: #405b49;
 }
 
 
 .two-dices-page #startButton:active,
 .five-dices-page #startButton:active {
-
     transform: scale(0.97);
 }
 
 
 .two-dices-page #startButton:disabled,
 .five-dices-page #startButton:disabled {
-
     opacity: 0.6;
 
     cursor: default;
@@ -433,14 +415,12 @@ body {
 
 .two-dices-page .counters_wrapper,
 .five-dices-page .counters_wrapper {
-
     width: 100%;
 }
 
 
 .two-dices-page .total-rolls,
 .five-dices-page .total-rolls {
-
     font-size: 22px;
     font-weight: 500;
 
@@ -450,7 +430,6 @@ body {
 
 .two-dices-page #counterRolls,
 .five-dices-page #counterRolls {
-
     margin-left: 5px;
 
     font-size: 27px;
@@ -466,7 +445,6 @@ body {
 
 .two-dices-page .probabilities,
 .five-dices-page .probabilities {
-
     width: 100%;
     max-width: 600px;
 
@@ -486,7 +464,6 @@ body {
 
 .two-dices-page .probability-row,
 .five-dices-page .probability-row {
-
     min-height: 65px;
 
     display: flex;
@@ -503,14 +480,12 @@ body {
 
 .two-dices-page .probability-row:last-child,
 .five-dices-page .probability-row:last-child {
-
     border-bottom: none;
 }
 
 
 .two-dices-page .probability-label,
 .five-dices-page .probability-label {
-
     font-size: 20px;
     font-weight: 500;
 }
@@ -518,7 +493,6 @@ body {
 
 .two-dices-page .probability-value,
 .five-dices-page .probability-value {
-
     min-width: 130px;
 
     text-align: right;
@@ -540,7 +514,6 @@ body {
 
     .two-dices-page,
     .five-dices-page {
-
         justify-content: flex-start;
 
         padding: 25px 15px;
@@ -549,14 +522,12 @@ body {
 
     .two-dices-page h1,
     .five-dices-page h1 {
-
         font-size: 34px;
     }
 
 
     .two-dices-page .instruction,
     .five-dices-page .instruction {
-
         font-size: 16px;
 
         text-align: center;
@@ -566,7 +537,6 @@ body {
     /* Två tärningar på mobil */
 
     .two-dices-page .dice-area {
-
         min-height: 140px;
 
         gap: 8px;
@@ -574,7 +544,6 @@ body {
 
 
     .two-dices-page .dice {
-
         width: 100px;
         height: 100px;
 
@@ -585,7 +554,6 @@ body {
     /* Fem tärningar på mobil */
 
     .five-dices-page .dice-area {
-
         width: 100%;
         max-width: 360px;
 
@@ -598,7 +566,6 @@ body {
 
 
     .five-dices-page .dice {
-
         width: 58px;
         height: 58px;
 
@@ -610,7 +577,6 @@ body {
 
     .two-dices-page .controls,
     .five-dices-page .controls {
-
         width: 100%;
         max-width: 320px;
 
@@ -626,7 +592,6 @@ body {
 
     .two-dices-page #input_box_one_dice,
     .five-dices-page #input_box_five_dice {
-
         width: 100%;
         height: 55px;
 
@@ -636,7 +601,6 @@ body {
 
     .two-dices-page #speedSelect,
     .five-dices-page #speedSelect {
-
         width: 100%;
         height: 55px;
 
@@ -648,7 +612,6 @@ body {
 
     .two-dices-page #startButton,
     .five-dices-page #startButton {
-
         width: 100%;
         height: 58px;
 
@@ -660,21 +623,18 @@ body {
 
     .two-dices-page .total-rolls,
     .five-dices-page .total-rolls {
-
         font-size: 19px;
     }
 
 
     .two-dices-page .probabilities,
     .five-dices-page .probabilities {
-
         padding: 8px 16px;
     }
 
 
     .two-dices-page .probability-row,
     .five-dices-page .probability-row {
-
         min-height: 70px;
 
         gap: 12px;
@@ -683,17 +643,148 @@ body {
 
     .two-dices-page .probability-label,
     .five-dices-page .probability-label {
-
         font-size: 16px;
     }
 
 
     .two-dices-page .probability-value,
     .five-dices-page .probability-value {
-
         min-width: 100px;
 
         font-size: 17px;
+    }
+
+}
+
+
+/* ========================================
+   YATZY-FYRVERKERI
+   ======================================== */
+
+.yatzy-fireworks {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+    overflow: hidden;
+}
+
+
+/* YATZY-text i mitten */
+
+.yatzy-message {
+    position: relative;
+    z-index: 2;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(48px, 12vw, 100px);
+    font-weight: 900;
+
+    color: #e6a400;
+
+    text-shadow:
+        0 3px 0 #fff,
+        0 6px 20px rgba(0, 0, 0, 0.25);
+
+    animation: yatzy-pop 1.5s ease-out forwards;
+}
+
+
+/* Färgglada fyrverkeripartiklar */
+
+.yatzy-particle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    animation: yatzy-burst 1.3s ease-out forwards;
+}
+
+
+/* Texten växer fram och försvinner */
+
+@keyframes yatzy-pop {
+
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+
+    20% {
+        transform: scale(1.25);
+        opacity: 1;
+    }
+
+    35% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+
+}
+
+
+/* Gnistorna skjuts ut från mitten */
+
+@keyframes yatzy-burst {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            scale(0.3);
+
+        opacity: 1;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            scale(0.1);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* Tillgänglighet: minska animation vid behov */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .yatzy-message {
+        animation: none;
+        opacity: 1;
+    }
+
+    .yatzy-particle {
+        display: none;
     }
 
 }
